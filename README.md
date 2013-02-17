@@ -1,2 +1,2 @@
-vivst-karelia
+visit-karelia
 =============
