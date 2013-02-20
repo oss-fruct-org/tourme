@@ -2,10 +2,19 @@
 <resources>
 
     <string name="app_name">Visit Karelia</string>
+    <string name="actionbar_main">Main</string>
+    <string name="actionbar_map">Map</string>
+    <string name="actionbar_nearby">Nearby</string>
+    <string name="actionbar_favourites">Favourites</string>
+    <string name="actionbar_log">Travel Log</string>
+    <string name="menu_settings">Settings</string>
     <string name="title_section3">Section 3</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section1">Section 1</string>
     <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_nearby">NearbyActivity</string>
+    <string name="title_activity_favour">FavourActivity</string>
+    <string name="title_activity_travellog">TravellogActivity</string>
 
 </resources>
