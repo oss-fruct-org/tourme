@@ -24,8 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
 
-//test
-
 public class MainActivity extends FragmentActivity implements
 		ActionBar.OnNavigationListener {
 
