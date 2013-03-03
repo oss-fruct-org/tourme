@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.fruct.oss.visitkarelia"
+    package="org.fruct.oss.tourme"
     android:installLocation="preferExternal"
     android:versionCode="1"
     android:versionName="1.0" >
@@ -21,7 +21,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="org.fruct.oss.visitkarelia.MainActivity"
+            android:name="org.fruct.oss.tourme.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,36 +30,36 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.fruct.oss.visitkarelia.MapActivity"
+            android:name="org.fruct.oss.tourme.MapActivity"
             android:label="@string/title_activity_map"
-            android:parentActivityName="org.fruct.oss.visitkarelia.MainActivity" >
+            android:parentActivityName="org.fruct.oss.tourme.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.fruct.oss.visitkarelia.MainActivity" />
+                android:value="org.fruct.oss.tourme.MainActivity" />
         </activity>
         <activity
-            android:name="org.fruct.oss.visitkarelia.NearbyActivity"
+            android:name="org.fruct.oss.tourme.NearbyActivity"
             android:label="@string/title_activity_nearby"
-            android:parentActivityName="org.fruct.oss.visitkarelia.MainActivity" >
+            android:parentActivityName="org.fruct.oss.tourme.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.fruct.oss.visitkarelia.MainActivity" />
+                android:value="org.fruct.oss.tourme.MainActivity" />
         </activity>
         <activity
-            android:name="org.fruct.oss.visitkarelia.FavourActivity"
+            android:name="org.fruct.oss.tourme.FavourActivity"
             android:label="@string/title_activity_favour"
-            android:parentActivityName="org.fruct.oss.visitkarelia.MainActivity" >
+            android:parentActivityName="org.fruct.oss.tourme.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.fruct.oss.visitkarelia.MainActivity" />
+                android:value="org.fruct.oss.tourme.MainActivity" />
         </activity>
         <activity
-            android:name="org.fruct.oss.visitkarelia.TravellogActivity"
+            android:name="org.fruct.oss.tourme.TravellogActivity"
             android:label="@string/title_activity_travellog"
-            android:parentActivityName="org.fruct.oss.visitkarelia.MainActivity" >
+            android:parentActivityName="org.fruct.oss.tourme.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.fruct.oss.visitkarelia.MainActivity" />
+                android:value="org.fruct.oss.tourme.MainActivity" />
         </activity>
     </application>
 

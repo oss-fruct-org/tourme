@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package org.fruct.oss.visitkarelia;
+package org.fruct.oss.tourme;
 
 public final class R {
     public static final class attr {
