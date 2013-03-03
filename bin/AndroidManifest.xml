@@ -31,7 +31,7 @@
         </activity>
         <activity
             android:name="org.fruct.oss.tourme.MapActivity"
-            android:label="@string/title_activity_map"
+            android:label="@string/actionbar_map"
             android:parentActivityName="org.fruct.oss.tourme.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -39,7 +39,7 @@
         </activity>
         <activity
             android:name="org.fruct.oss.tourme.NearbyActivity"
-            android:label="@string/title_activity_nearby"
+            android:label="@string/actionbar_nearby"
             android:parentActivityName="org.fruct.oss.tourme.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -47,7 +47,7 @@
         </activity>
         <activity
             android:name="org.fruct.oss.tourme.FavourActivity"
-            android:label="@string/title_activity_favour"
+            android:label="@string/actionbar_favour"
             android:parentActivityName="org.fruct.oss.tourme.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -55,7 +55,7 @@
         </activity>
         <activity
             android:name="org.fruct.oss.tourme.TravellogActivity"
-            android:label="@string/title_activity_travellog"
+            android:label="@string/actionbar_log"
             android:parentActivityName="org.fruct.oss.tourme.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

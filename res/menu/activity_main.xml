@@ -11,7 +11,7 @@
         android:id="@+id/menu_favourites"
         android:orderInCategory="2"
         android:showAsAction="always"
-        android:title="@string/actionbar_favourites"
+        android:title="@string/actionbar_favour"
         android:icon="@drawable/ic_action_menu_star" />
         
     <item
