@@ -40,13 +40,17 @@ public class TravellogActivity extends FragmentActivity implements
 
 		// Set up the dropdown list navigation in the action bar.
 		actionBar.setListNavigationCallbacks(
-		// Specify a SpinnerAdapter to populate the dropdown list.
+				// Specify a SpinnerAdapter to populate the dropdown list.
 				new ArrayAdapter<String>(getActionBarThemedContextCompat(),
 						android.R.layout.simple_list_item_1,
 						android.R.id.text1, new String[] {
-								getString(R.string.title_section1),
-								getString(R.string.title_section2),
-								getString(R.string.title_section3), }), this);
+							getString(R.string.actionbar_main),
+							getString(R.string.actionbar_map),
+							getString(R.string.actionbar_nearby),
+							getString(R.string.actionbar_favourites),
+							getString(R.string.actionbar_log) }), this);
+		
+		actionBar.setSelectedNavigationItem(4);
 	}
 
 	/**

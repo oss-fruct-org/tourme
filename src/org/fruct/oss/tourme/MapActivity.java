@@ -1,5 +1,6 @@
 package org.fruct.oss.tourme;
 
+
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.os.Bundle;
@@ -51,6 +52,8 @@ public class MapActivity extends FragmentActivity implements
 							getString(R.string.actionbar_nearby),
 							getString(R.string.actionbar_favourites),
 							getString(R.string.actionbar_log) }), this);
+		
+		actionBar.setSelectedNavigationItem(1);
 	}
 
 	/**
@@ -145,7 +148,7 @@ public class MapActivity extends FragmentActivity implements
 		
 		return true;
 	}
-
+		
 	/**
 	 * A dummy fragment representing a section of the app, but that simply
 	 * displays dummy text.
