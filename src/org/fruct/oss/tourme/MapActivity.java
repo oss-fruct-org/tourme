@@ -54,8 +54,14 @@ public class MapActivity extends FragmentActivity implements
 							getString(R.string.actionbar_log) }), this);
 		
 		actionBar.setSelectedNavigationItem(1);
+		
+		this.initMap();
 	}
 
+	private void initMap() {
+		
+	}
+	
 	/**
 	 * Backward-compatible version of {@link ActionBar#getThemedContext()} that
 	 * simply returns the {@link android.app.Activity} if
