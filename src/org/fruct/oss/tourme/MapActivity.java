@@ -1,6 +1,10 @@
 package org.fruct.oss.tourme;
 
 
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapController;
+import org.osmdroid.views.MapView;
+
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.os.Bundle;
@@ -28,7 +32,8 @@ public class MapActivity extends FragmentActivity implements
 	 * current dropdown position.
 	 */
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
-
+	private MapController mapController;
+    private MapView mapView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,7 +64,20 @@ public class MapActivity extends FragmentActivity implements
 	}
 
 	private void initMap() {
-		
+
+        MapView mapView = new MapView(this, 256); //constructor
+
+        mapView.setClickable(true);
+
+        mapView.setBuiltInZoomControls(true);
+
+        setContentView(mapView); //displaying the MapView
+
+        mapView.getController().setZoom(12); //set initial zoom-level, depends on your need
+
+        mapView.getController().setCenter(new GeoPoint(61.800322,34.320819)); //This point is in Enschede, Netherlands. You should select a point in your map or get it from user's location.
+
+        mapView.setUseDataConnection(false); //keeps the mapView from loading online tiles using network connection.
 	}
 	
 	/**
