@@ -3,6 +3,9 @@ package org.fruct.oss.tourme;
 import android.os.Environment;
 
 public class AdditionalTools {
+	
+	public static String SHARED_PREFERENCES = "TOURME_PREFERENCES";
+	public static String ONLINE_MODE = "ONLINE_MODE";
 
 	/**
 	 * Convert kilometers to miles

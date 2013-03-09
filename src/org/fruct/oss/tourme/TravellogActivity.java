@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TravellogActivity extends FragmentActivity implements
 		ActionBar.OnNavigationListener {
@@ -36,7 +38,7 @@ public class TravellogActivity extends FragmentActivity implements
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		// Show the Up button in the action bar.
-		actionBar.setDisplayHomeAsUpEnabled(true);
+		//actionBar.setDisplayHomeAsUpEnabled(true);
 
 		// Set up the dropdown list navigation in the action bar.
 		actionBar.setListNavigationCallbacks(
@@ -109,6 +111,37 @@ public class TravellogActivity extends FragmentActivity implements
 
 	@Override
 	public boolean onNavigationItemSelected(int position, long id) {
+		Intent intent = null;
+    	
+		// I know, it's kinda bicycle, but I dunno how to do better
+		switch(position) {
+			// Goto Main
+			case(0):
+				intent = new Intent (this, MainActivity.class);
+				break;
+			// Goto Map
+			case(1):
+				intent = new Intent (this, MapActivity.class);
+				break;
+			// Goto Nearby
+			case(2):
+				intent = new Intent (this, NearbyActivity.class);
+				break;
+			// Goto Favourites
+			case(3):
+				intent = new Intent (this, FavourActivity.class);
+				break;
+			// Goto Travel Log
+			case(4):
+				//intent = new Intent (this, TravellogActivity.class);
+				break;
+			default:
+				Toast.makeText(getApplicationContext(), "Test", Toast.LENGTH_LONG).show();
+				break;
+		}
+		    	
+    	if (intent != null)
+    		startActivity(intent);    
 		
 		return true;
 	}

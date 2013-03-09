@@ -124,11 +124,12 @@ public final class R {
         public static final int textfield_focused_holo_light=0x7f02006b;
     }
     public static final class id {
-        public static final int add_data=0x7f080005;
+        public static final int add_data=0x7f080006;
         public static final int container=0x7f080000;
         public static final int mapview=0x7f080001;
         public static final int menu_favourites=0x7f080004;
         public static final int menu_map=0x7f080003;
+        public static final int menu_onoff_online_mode=0x7f080005;
         public static final int menu_settings=0x7f080002;
     }
     public static final class layout {
@@ -153,6 +154,7 @@ public final class R {
         public static final int actionbar_nearby=0x7f050003;
         public static final int app_name=0x7f050000;
         public static final int menu_add_data=0x7f050007;
+        public static final int menu_onoff_online_mode=0x7f050008;
         public static final int menu_settings=0x7f050006;
     }
     public static final class style {

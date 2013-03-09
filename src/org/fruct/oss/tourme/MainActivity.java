@@ -2,27 +2,16 @@ package org.fruct.oss.tourme;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.ImageSwitcher;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewSwitcher.ViewFactory;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.OnNavigationListener {
@@ -91,6 +80,7 @@ public class MainActivity extends FragmentActivity implements
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main, menu);
+		
 		return true;
 	}
 
@@ -131,6 +121,42 @@ public class MainActivity extends FragmentActivity implements
 		return true;
 	}
 	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent = null;
+		
+		switch(item.getItemId()) {
+			case(R.id.menu_map):
+				intent = new Intent(getApplicationContext(), MapActivity.class);
+				break;
+			case(R.id.menu_favourites):
+				intent = new Intent(getApplicationContext(), FavourActivity.class);
+				break;
+			case(R.id.menu_settings):
+				//intent = new Intent(getApplicationContext(), SettingsActivity.class); // TODO
+				break;
+			case(R.id.menu_onoff_online_mode):
+				// Turn on\off online mode (save to shared preferences)
+				SharedPreferences settings = getSharedPreferences(AdditionalTools.SHARED_PREFERENCES, 0);
+				SharedPreferences.Editor editor = settings.edit();
+				
+				// Check for current state and update
+				if (settings.getBoolean("ONLINE_MODE", false) == true)		
+					editor.putBoolean(AdditionalTools.ONLINE_MODE, false);
+				else
+					editor.putBoolean(AdditionalTools.ONLINE_MODE, true);
+				
+				editor.commit();
+				break;
+			default:
+				break;
+		}
+		
+		if (intent != null)
+			startActivity(intent);
+		
+		return true;
+		
+	}
 
 
 }

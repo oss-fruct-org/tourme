@@ -9,5 +9,6 @@
     <string name="actionbar_log">Travel Log</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_add_data">Download data</string>
+    <string name="menu_onoff_online_mode">Switch online/offline mode</string>
 
 </resources>
