@@ -8,19 +8,30 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager.LayoutParams;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher.ViewFactory;
 
 public class MainActivity extends FragmentActivity implements
-		ActionBar.OnNavigationListener {
+		ActionBar.OnNavigationListener, ViewFactory, OnGestureListener {
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
 	 * current dropdown position.
 	 */
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+	
+	ImageSwitcher slideshow;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +54,31 @@ public class MainActivity extends FragmentActivity implements
 								getString(R.string.actionbar_nearby),
 								getString(R.string.actionbar_favour),
 								getString(R.string.actionbar_log) }), this);
+	
 		
+		// TODO: remove this
+		// An example to open ArticleActivity for an article
+		// Use http:// for web source or file:// for local file
+		//Intent myInt = new Intent(this, ArticleActivity.class);
+		//myInt.putExtra(ConstantsAndTools.ARTICLE_ID, "http://wikipedia.org");
+		//startActivity(myInt);
+		
+		// Slideshow		
+		slideshow = (ImageSwitcher) findViewById(R.id.ImageSwitcher01);
+		slideshow.setFactory(this);
+        slideshow.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
+        slideshow.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+        slideshow.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher));
+        
+        /*GestureDetector gestureDetector = new GestureDetector(this);
+        slideshow.setOnTouchListener(new View.OnTouchListener() {			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				if (gestureDetector.onTouchEvent)
+				return false;
+			}
+		});*/
+        
 	}
 
 	/**
@@ -136,14 +171,14 @@ public class MainActivity extends FragmentActivity implements
 				break;
 			case(R.id.menu_onoff_online_mode):
 				// Turn on\off online mode (save to shared preferences)
-				SharedPreferences settings = getSharedPreferences(AdditionalTools.SHARED_PREFERENCES, 0);
+				SharedPreferences settings = getSharedPreferences(ConstantsAndTools.SHARED_PREFERENCES, 0);
 				SharedPreferences.Editor editor = settings.edit();
 				
 				// Check for current state and update
 				if (settings.getBoolean("ONLINE_MODE", false) == true)		
-					editor.putBoolean(AdditionalTools.ONLINE_MODE, false);
+					editor.putBoolean(ConstantsAndTools.ONLINE_MODE, false);
 				else
-					editor.putBoolean(AdditionalTools.ONLINE_MODE, true);
+					editor.putBoolean(ConstantsAndTools.ONLINE_MODE, true);
 				
 				editor.commit();
 				break;
@@ -156,6 +191,57 @@ public class MainActivity extends FragmentActivity implements
 		
 		return true;
 		
+	}
+
+	@Override
+	public View makeView() {
+		// TODO Auto-generated method stub
+		ImageView iView = new ImageView(this);
+        iView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        iView.setLayoutParams(new 
+                ImageSwitcher.LayoutParams(
+                        LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
+        iView.setBackgroundColor(0xFF000000);
+        return iView;
+		//return null;
+	}
+
+	@Override
+	public boolean onDown(MotionEvent e) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+			float velocityY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onLongPress(MotionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
+			float distanceY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void onShowPress(MotionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean onSingleTapUp(MotionEvent e) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 

@@ -3,26 +3,32 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/activity_bck"
     android:orientation="vertical"
     android:weightSum="2"
     tools:context=".MainActivity"
     tools:ignore="MergeRootFrame" >
 
-    <!--
-     <WebView
-        android:id="@+id/webview_main"
-        android:layout_width="0dip"
-        android:layout_height="fill_parent"
-        android:layout_weight="1" />
     
-     <ListView
-         android:layout_width="fill_parent"
-         android:layout_height="fill_parent"
-         android:layout_weight="1" >
+     
+	<ImageSwitcher
+		android:id="@+id/ImageSwitcher01"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+	</ImageSwitcher>
+    
+     <!-- <LinearLayout
+         android:id="@+id/menu_list_layout"
+         android:orientation="vertical"
+         android:layout_weight="1"
+         android:layout_width="0dip"
+         android:layout_height="fill_parent">         
          
-     </ListView>
-    -->
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Me" />
+         
+     </LinearLayout> -->
 
      
 </LinearLayout>

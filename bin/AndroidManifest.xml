@@ -61,6 +61,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.fruct.oss.tourme.MainActivity" />
         </activity>
+        <activity
+            android:name="org.fruct.oss.tourme.ArticleActivity"
+            android:label="@string/title_activity_article" >
+        </activity>
     </application>
 
 </manifest>
