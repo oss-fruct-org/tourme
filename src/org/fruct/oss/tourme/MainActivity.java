@@ -1,5 +1,7 @@
 package org.fruct.oss.tourme;
 
+import java.lang.reflect.Array;
+
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.Context;
@@ -7,10 +9,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore.Images;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -23,7 +26,7 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
 
 public class MainActivity extends FragmentActivity implements
-		ActionBar.OnNavigationListener, ViewFactory, OnGestureListener {
+		ActionBar.OnNavigationListener, ViewFactory {
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
@@ -32,6 +35,10 @@ public class MainActivity extends FragmentActivity implements
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	
 	ImageSwitcher slideshow;
+	private int slideshowIndex = 0; // ImageSwitcher current image Id from this array:
+	// FIXME: you should always have array with drawable's Ids
+	int[] images = {R.drawable.ic_action_menu_star, R.drawable.ic_launcher, R.drawable.ic_action_menu_map}; // FIXME: add images dynamically
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +63,7 @@ public class MainActivity extends FragmentActivity implements
 								getString(R.string.actionbar_log) }), this);
 	
 		
-		// TODO: remove this
+		// TODO: just for tests, remove this
 		// An example to open ArticleActivity for an article
 		// Use http:// for web source or file:// for local file
 		//Intent myInt = new Intent(this, ArticleActivity.class);
@@ -68,18 +75,63 @@ public class MainActivity extends FragmentActivity implements
 		slideshow.setFactory(this);
         slideshow.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
         slideshow.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-        slideshow.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher));
+        slideshow.setImageDrawable(getResources().getDrawable(images[slideshowIndex]));
         
-        /*GestureDetector gestureDetector = new GestureDetector(this);
-        slideshow.setOnTouchListener(new View.OnTouchListener() {			
+        // Change image by timeout
+        slideshow.postDelayed(new Runnable() {
+            //int i = 0;
+            public void run() {
+            	if (slideshowIndex == images.length-1)
+            		slideshowIndex = 0;            	
+            	else
+            		slideshowIndex++;
+            	
+            	slideshow.setImageDrawable(getResources().getDrawable(images[slideshowIndex]));
+            	slideshow.postDelayed(this, 10000); // Slide after 10 secs
+            }
+        }, 10000); // Start first slide after 10 secs
+
+        
+        // Set onFling listener (fling\swipe from right to left and vice versa)
+        final GestureDetector gdt = new GestureDetector(new GestureListener());
+        slideshow.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				if (gestureDetector.onTouchEvent)
-				return false;
-			}
-		});*/
-        
+				gdt.onTouchEvent(event);
+				return true;
+			}			
+		});
 	}
+
+    private class GestureListener extends SimpleOnGestureListener {
+    	private static final int SWIPE_MIN_DISTANCE = 120;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    	
+    	@Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+            	// Swipe right to left
+            	slideshowIndex = slideshowIndex < 2 ? ++slideshowIndex : slideshowIndex;
+            	//slideshow.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(images[slideshowIndex], null, getPackageName())));
+            	slideshow.setImageDrawable(getResources().getDrawable(images[slideshowIndex]));
+            	return false; 
+            }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                // Swipe left to right
+            	slideshowIndex = slideshowIndex > 0 ? --slideshowIndex : slideshowIndex;
+            	slideshow.setImageDrawable(getResources().getDrawable(images[slideshowIndex]));
+            	return false;
+            }
+
+            if(e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                // Swipe from bottom to top
+            	return false;
+            }  else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                // Swipe from top to bottom
+            	return false;
+            }
+            return false;
+        }
+    }
 
 	/**
 	 * Backward-compatible version of {@link ActionBar#getThemedContext()} that
@@ -203,46 +255,6 @@ public class MainActivity extends FragmentActivity implements
                         LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
         iView.setBackgroundColor(0xFF000000);
         return iView;
-		//return null;
 	}
-
-	@Override
-	public boolean onDown(MotionEvent e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-			float velocityY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void onLongPress(MotionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
-			float distanceY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void onShowPress(MotionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean onSingleTapUp(MotionEvent e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 
 }
