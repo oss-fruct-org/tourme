@@ -1,27 +1,27 @@
 package org.fruct.oss.tourme;
 
 
+import java.util.ArrayList;
+
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.os.Bundle;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v4.app.Fragment;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MapActivity extends FragmentActivity implements
@@ -34,6 +34,8 @@ public class MapActivity extends FragmentActivity implements
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	private MapController mapController;
     private MapView mapView;
+    private ArrayList<Integer> selectedCategories;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -75,7 +77,7 @@ public class MapActivity extends FragmentActivity implements
 
         mapView.getController().setZoom(12); //set initial zoom-level, depends on your need
 
-        mapView.getController().setCenter(new GeoPoint(61.800322,34.320819)); //This point is in Enschede, Netherlands. You should select a point in your map or get it from user's location.
+        mapView.getController().setCenter(new GeoPoint(61.800322,34.320819)); //FIXME This point is in Enschede, Netherlands. You should select a point in your map or get it from user's location.
 
         mapView.setUseDataConnection(false); //keeps the mapView from loading online tiles using network connection.
 	}
@@ -121,16 +123,19 @@ public class MapActivity extends FragmentActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
+		case R.id.map_menu_filter:
+			// Show filter dialog
+			PointsCategoriesDialog dialog = new PointsCategoriesDialog();
+			dialog.show(getFragmentManager(), ConstantsAndTools.TAG);			
+			break;
+		case R.id.map_menu_nearby:
+			Intent intent = new Intent(this, NearbyActivity.class);
+			startActivity(intent);
+			break;
 		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -171,6 +176,75 @@ public class MapActivity extends FragmentActivity implements
     	}
 		
 		return true;
+	}
+	
+	/**
+     * Categories chooser
+     */
+    /*public class PointsCategoriesDialog extends DialogFragment {
+    	@Override
+    	public Dialog onCreateDialog(Bundle savedInstanceState) {
+    		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+    		builder.setTitle(R.string.map_points_categories_title)
+    		.setItems(R.array.map_points_categories, new DialogInterface.OnClickListener() {
+    			public void onClick(DialogInterface dialog, int which) {
+    				// TODO: do something
+    				// 'which' is the selected item number
+    			}
+    		});
+    		return builder.create();
+    	}
+    } */
+    
+    /**
+	 * Show privacy settings dialog
+	 */
+	public class PointsCategoriesDialog extends DialogFragment {
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			selectedCategories = new ArrayList<Integer>();  // Where we track the selected items
+		    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());		    
+			// Set the dialog title
+		    builder.setTitle(R.string.map_points_categories_title)
+		    
+		    // TODO: get selected items by default or from SharedPreferences
+		    //boolean[] selectedCategoriesByDefault;
+		    
+		    // Specify the list array, the items to be selected by default (null for none),
+		    // and the listener through which to receive callbacks when items are selected
+		           .setMultiChoiceItems(R.array.map_points_categories, null,
+		                      new DialogInterface.OnMultiChoiceClickListener() {
+		               @Override
+		               public void onClick(DialogInterface dialog, int which,
+		                       boolean isChecked) {
+		                   if (isChecked) {
+		                       // If the user checked the item, add it to the selected items
+		                	   selectedCategories.add(which);
+		                   } else if (selectedCategories.contains(which)) {
+		                       // Else, if the item is already in the array, remove it 
+		                	   selectedCategories.remove(Integer.valueOf(which));
+		                   }
+		               }
+		           })
+		           
+		           // Set the action buttons
+		           .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+		               @Override
+		               public void onClick(DialogInterface dialog, int id) {
+		                   // User clicked OK, so save the mSelectedItems results somewhere
+		                   // or return them to the component that opened the dialog
+		            	   // TODO: do something
+		               }
+		           })
+		           .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+		               @Override
+		               public void onClick(DialogInterface dialog, int id) {
+		            	   return;
+		               }
+		           });
+
+		    return builder.create();
+		}
 	}
 		
 

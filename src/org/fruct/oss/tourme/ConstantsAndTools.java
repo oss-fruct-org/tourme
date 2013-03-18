@@ -11,6 +11,9 @@ public class ConstantsAndTools {
 	// Intent extras
 	public static String ARTICLE_ID = "ARTICLE_ID";
 	
+	// TAG
+	public static String TAG = "org.fruct.oss.tourme";
+	
 	
 	/**
 	 * Convert kilometers to miles

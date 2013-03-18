@@ -2,7 +2,11 @@ package org.fruct.oss.tourme;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -261,5 +265,7 @@ public class MainActivity extends FragmentActivity implements
         iView.setBackgroundColor(0xFF000000);
         return iView;
 	}
+	
+
 
 }

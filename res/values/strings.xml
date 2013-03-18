@@ -12,5 +12,21 @@
     <string name="menu_onoff_online_mode">Switch online/offline mode</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_article">ArticleActivity</string>
+    
+    <string name="map_points_categories_title">Filter points</string>
+    <string name="map_menu_filter">Filter points</string>
+    <string name="map_menu_nearby">Nearby me</string>
+    <string-array name="map_points_categories">
+        <item>Sights</item>
+        <item>ATMs</item> 
+        <item>WCs</item>
+        <item>Hotels</item> 
+        <item>Hospitals</item>
+        <item>Police stations</item>     
+    </string-array>
+    
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    
 
 </resources>
