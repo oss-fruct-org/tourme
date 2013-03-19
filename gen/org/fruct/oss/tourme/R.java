@@ -130,17 +130,21 @@ public final class R {
     }
     public static final class id {
         public static final int ImageSwitcher01=0x7f090002;
-        public static final int add_data=0x7f090009;
+        public static final int add_data=0x7f09000d;
         public static final int articleWebView=0x7f090000;
         public static final int container=0x7f090001;
-        public static final int map_menu_filter=0x7f09000a;
-        public static final int map_menu_nearby=0x7f09000b;
+        public static final int map_menu_filter=0x7f09000e;
+        public static final int map_menu_nearby=0x7f09000f;
         public static final int mapview=0x7f090004;
-        public static final int menu_favourites=0x7f090007;
+        public static final int menu_favourites=0x7f09000b;
         public static final int menu_list_layout=0x7f090003;
-        public static final int menu_map=0x7f090006;
-        public static final int menu_onoff_online_mode=0x7f090008;
-        public static final int menu_settings=0x7f090005;
+        public static final int menu_map=0x7f09000a;
+        public static final int menu_onoff_online_mode=0x7f09000c;
+        public static final int menu_settings=0x7f090009;
+        public static final int travellog_edit_text=0x7f090006;
+        public static final int travellog_edit_title=0x7f090005;
+        public static final int travellog_switch_share_fb=0x7f090008;
+        public static final int travellog_switch_share_vk=0x7f090007;
     }
     public static final class layout {
         public static final int activity_article=0x7f030000;
@@ -166,6 +170,7 @@ public final class R {
         public static final int actionbar_nearby=0x7f050003;
         public static final int app_name=0x7f050000;
         public static final int cancel=0x7f05000f;
+        public static final int fb=0x7f050017;
         public static final int hello_world=0x7f050009;
         public static final int map_menu_filter=0x7f05000c;
         public static final int map_menu_nearby=0x7f05000d;
@@ -174,7 +179,17 @@ public final class R {
         public static final int menu_onoff_online_mode=0x7f050008;
         public static final int menu_settings=0x7f050006;
         public static final int ok=0x7f05000e;
+        public static final int sq=0x7f050018;
         public static final int title_activity_article=0x7f05000a;
+        public static final int travellog_checkin=0x7f050012;
+        public static final int travellog_detect_location=0x7f050013;
+        /**  Travel Log 
+         */
+        public static final int travellog_edit_title_placeholder=0x7f050010;
+        public static final int travellog_edit_title_text=0x7f050011;
+        public static final int travellog_info=0x7f050015;
+        public static final int travellog_share_options=0x7f050014;
+        public static final int vk=0x7f050016;
     }
     public static final class style {
         public static final int ActionBar_Solid_Tourme=0x7f07000e;

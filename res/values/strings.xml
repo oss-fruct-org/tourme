@@ -28,5 +28,17 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     
+    <!-- Travel Log -->
+    <string name="travellog_edit_title_placeholder">Title</string>
+    <string name="travellog_edit_title_text">Post text</string>
+    <string name="travellog_checkin">Check in</string>
+    <string name="travellog_detect_location">Find location</string>
+    <string name="travellog_share_options">Share options</string>
+    <string name="travellog_info">You should log in to social networks to make check-ins</string>
+    
+    <string name="vk">Vk</string>
+    <string name="fb">Fb</string>
+    <string name="sq">Foursquare</string>
+    
 
 </resources>
