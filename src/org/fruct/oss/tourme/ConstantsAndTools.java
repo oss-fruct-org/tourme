@@ -7,6 +7,7 @@ public class ConstantsAndTools {
 	// SharedPreferences
 	public static String SHARED_PREFERENCES = "TOURME_PREFERENCES";
 	public static String ONLINE_MODE = "ONLINE_MODE";
+	public static String SOCICAL_NETWORKS_CONNECTED = "SOCICAL_NETWORKS_CONNECTED";
 	
 	// Intent extras
 	public static String ARTICLE_ID = "ARTICLE_ID";

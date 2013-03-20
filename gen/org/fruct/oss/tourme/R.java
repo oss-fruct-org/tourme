@@ -59,92 +59,99 @@ public final class R {
         public static final int ic_action_map_nearby=0x7f020027;
         public static final int ic_action_menu_map=0x7f020028;
         public static final int ic_action_menu_star=0x7f020029;
-        public static final int ic_launcher=0x7f02002a;
-        public static final int list_activated_holo=0x7f02002b;
-        public static final int list_focused_holo=0x7f02002c;
-        public static final int list_focused_tourme=0x7f02002d;
-        public static final int list_longpressed_holo=0x7f02002e;
-        public static final int list_pressed_holo_light=0x7f02002f;
-        public static final int list_selector_background_transition_holo_light=0x7f020030;
-        public static final int list_selector_disabled_holo_light=0x7f020031;
-        public static final int list_selector_holo_light=0x7f020032;
-        public static final int menu_dropdown_panel_tourme=0x7f020033;
-        public static final int pressed_background_tourme=0x7f020034;
-        public static final int progress_bg_holo_light=0x7f020035;
-        public static final int progress_bg_tourme=0x7f020036;
-        public static final int progress_horizontal_holo_light=0x7f020037;
-        public static final int progress_horizontal_tourme=0x7f020038;
-        public static final int progress_indeterminate_horizontal_holo_light=0x7f020039;
-        public static final int progress_primary_holo=0x7f02003a;
-        public static final int progress_primary_tourme=0x7f02003b;
-        public static final int progress_secondary_holo=0x7f02003c;
-        public static final int progress_secondary_tourme=0x7f02003d;
-        public static final int progressbar_indeterminate_holo1=0x7f02003e;
-        public static final int progressbar_indeterminate_holo2=0x7f02003f;
-        public static final int progressbar_indeterminate_holo3=0x7f020040;
-        public static final int progressbar_indeterminate_holo4=0x7f020041;
-        public static final int progressbar_indeterminate_holo5=0x7f020042;
-        public static final int progressbar_indeterminate_holo6=0x7f020043;
-        public static final int progressbar_indeterminate_holo7=0x7f020044;
-        public static final int progressbar_indeterminate_holo8=0x7f020045;
-        public static final int scrubber_control_disabled_holo=0x7f020046;
-        public static final int scrubber_control_focused_holo=0x7f020047;
-        public static final int scrubber_control_normal_holo=0x7f020048;
-        public static final int scrubber_control_pressed_holo=0x7f020049;
-        public static final int scrubber_control_selector_holo_light=0x7f02004a;
-        public static final int scrubber_primary_holo=0x7f02004b;
-        public static final int scrubber_progress_horizontal_holo_light=0x7f02004c;
-        public static final int scrubber_secondary_holo=0x7f02004d;
-        public static final int scrubber_track_holo_light=0x7f02004e;
-        public static final int selectable_background_tourme=0x7f02004f;
-        public static final int spinner_ab_default_tourme=0x7f020050;
-        public static final int spinner_ab_disabled_tourme=0x7f020051;
-        public static final int spinner_ab_focused_tourme=0x7f020052;
-        public static final int spinner_ab_pressed_tourme=0x7f020053;
-        public static final int spinner_background_ab_tourme=0x7f020054;
-        public static final int spinner_background_holo_light=0x7f020055;
-        public static final int spinner_default_holo_light=0x7f020056;
-        public static final int spinner_disabled_holo_light=0x7f020057;
-        public static final int spinner_focused_holo_light=0x7f020058;
-        public static final int spinner_pressed_holo_light=0x7f020059;
-        public static final int switch_bg_disabled_holo_light=0x7f02005a;
-        public static final int switch_bg_focused_holo_light=0x7f02005b;
-        public static final int switch_bg_holo_light=0x7f02005c;
-        public static final int switch_inner_holo_light=0x7f02005d;
-        public static final int switch_thumb_activated_holo_light=0x7f02005e;
-        public static final int switch_thumb_disabled_holo_light=0x7f02005f;
-        public static final int switch_thumb_holo_light=0x7f020060;
-        public static final int switch_thumb_pressed_holo_light=0x7f020061;
-        public static final int switch_track_holo_light=0x7f020062;
-        public static final int tab_indicator_ab_tourme=0x7f020063;
-        public static final int tab_selected_focused_tourme=0x7f020064;
-        public static final int tab_selected_pressed_tourme=0x7f020065;
-        public static final int tab_selected_tourme=0x7f020066;
-        public static final int tab_unselected_focused_tourme=0x7f020067;
-        public static final int tab_unselected_pressed_tourme=0x7f020068;
-        public static final int textfield_activated_holo_light=0x7f020069;
-        public static final int textfield_default_holo_light=0x7f02006a;
-        public static final int textfield_disabled_focused_holo_light=0x7f02006b;
-        public static final int textfield_disabled_holo_light=0x7f02006c;
-        public static final int textfield_focused_holo_light=0x7f02006d;
+        public static final int ic_action_send=0x7f02002a;
+        public static final int ic_action_travellog_add_entry=0x7f02002b;
+        public static final int ic_launcher=0x7f02002c;
+        public static final int list_activated_holo=0x7f02002d;
+        public static final int list_focused_holo=0x7f02002e;
+        public static final int list_focused_tourme=0x7f02002f;
+        public static final int list_longpressed_holo=0x7f020030;
+        public static final int list_pressed_holo_light=0x7f020031;
+        public static final int list_selector_background_transition_holo_light=0x7f020032;
+        public static final int list_selector_disabled_holo_light=0x7f020033;
+        public static final int list_selector_holo_light=0x7f020034;
+        public static final int menu_dropdown_panel_tourme=0x7f020035;
+        public static final int pressed_background_tourme=0x7f020036;
+        public static final int progress_bg_holo_light=0x7f020037;
+        public static final int progress_bg_tourme=0x7f020038;
+        public static final int progress_horizontal_holo_light=0x7f020039;
+        public static final int progress_horizontal_tourme=0x7f02003a;
+        public static final int progress_indeterminate_horizontal_holo_light=0x7f02003b;
+        public static final int progress_primary_holo=0x7f02003c;
+        public static final int progress_primary_tourme=0x7f02003d;
+        public static final int progress_secondary_holo=0x7f02003e;
+        public static final int progress_secondary_tourme=0x7f02003f;
+        public static final int progressbar_indeterminate_holo1=0x7f020040;
+        public static final int progressbar_indeterminate_holo2=0x7f020041;
+        public static final int progressbar_indeterminate_holo3=0x7f020042;
+        public static final int progressbar_indeterminate_holo4=0x7f020043;
+        public static final int progressbar_indeterminate_holo5=0x7f020044;
+        public static final int progressbar_indeterminate_holo6=0x7f020045;
+        public static final int progressbar_indeterminate_holo7=0x7f020046;
+        public static final int progressbar_indeterminate_holo8=0x7f020047;
+        public static final int scrubber_control_disabled_holo=0x7f020048;
+        public static final int scrubber_control_focused_holo=0x7f020049;
+        public static final int scrubber_control_normal_holo=0x7f02004a;
+        public static final int scrubber_control_pressed_holo=0x7f02004b;
+        public static final int scrubber_control_selector_holo_light=0x7f02004c;
+        public static final int scrubber_primary_holo=0x7f02004d;
+        public static final int scrubber_progress_horizontal_holo_light=0x7f02004e;
+        public static final int scrubber_secondary_holo=0x7f02004f;
+        public static final int scrubber_track_holo_light=0x7f020050;
+        public static final int selectable_background_tourme=0x7f020051;
+        public static final int spinner_ab_default_tourme=0x7f020052;
+        public static final int spinner_ab_disabled_tourme=0x7f020053;
+        public static final int spinner_ab_focused_tourme=0x7f020054;
+        public static final int spinner_ab_pressed_tourme=0x7f020055;
+        public static final int spinner_background_ab_tourme=0x7f020056;
+        public static final int spinner_background_holo_light=0x7f020057;
+        public static final int spinner_default_holo_light=0x7f020058;
+        public static final int spinner_disabled_holo_light=0x7f020059;
+        public static final int spinner_focused_holo_light=0x7f02005a;
+        public static final int spinner_pressed_holo_light=0x7f02005b;
+        public static final int switch_bg_disabled_holo_light=0x7f02005c;
+        public static final int switch_bg_focused_holo_light=0x7f02005d;
+        public static final int switch_bg_holo_light=0x7f02005e;
+        public static final int switch_inner_holo_light=0x7f02005f;
+        public static final int switch_thumb_activated_holo_light=0x7f020060;
+        public static final int switch_thumb_disabled_holo_light=0x7f020061;
+        public static final int switch_thumb_holo_light=0x7f020062;
+        public static final int switch_thumb_pressed_holo_light=0x7f020063;
+        public static final int switch_track_holo_light=0x7f020064;
+        public static final int tab_indicator_ab_tourme=0x7f020065;
+        public static final int tab_selected_focused_tourme=0x7f020066;
+        public static final int tab_selected_pressed_tourme=0x7f020067;
+        public static final int tab_selected_tourme=0x7f020068;
+        public static final int tab_unselected_focused_tourme=0x7f020069;
+        public static final int tab_unselected_pressed_tourme=0x7f02006a;
+        public static final int textfield_activated_holo_light=0x7f02006b;
+        public static final int textfield_default_holo_light=0x7f02006c;
+        public static final int textfield_disabled_focused_holo_light=0x7f02006d;
+        public static final int textfield_disabled_holo_light=0x7f02006e;
+        public static final int textfield_focused_holo_light=0x7f02006f;
     }
     public static final class id {
         public static final int ImageSwitcher01=0x7f090002;
-        public static final int add_data=0x7f09000d;
+        public static final int add_data=0x7f090010;
         public static final int articleWebView=0x7f090000;
         public static final int container=0x7f090001;
-        public static final int map_menu_filter=0x7f09000e;
-        public static final int map_menu_nearby=0x7f09000f;
+        public static final int map_menu_filter=0x7f090011;
+        public static final int map_menu_nearby=0x7f090012;
         public static final int mapview=0x7f090004;
-        public static final int menu_favourites=0x7f09000b;
+        public static final int menu_favourites=0x7f09000e;
         public static final int menu_list_layout=0x7f090003;
-        public static final int menu_map=0x7f09000a;
-        public static final int menu_onoff_online_mode=0x7f09000c;
-        public static final int menu_settings=0x7f090009;
+        public static final int menu_map=0x7f09000d;
+        public static final int menu_onoff_online_mode=0x7f09000f;
+        public static final int menu_settings=0x7f09000c;
+        public static final int socical_networks_warn=0x7f09000b;
+        public static final int travellog_add_entry=0x7f090013;
+        public static final int travellog_detect_location_btn=0x7f090007;
+        public static final int travellog_detect_location_txt=0x7f090008;
         public static final int travellog_edit_text=0x7f090006;
         public static final int travellog_edit_title=0x7f090005;
-        public static final int travellog_switch_share_fb=0x7f090008;
-        public static final int travellog_switch_share_vk=0x7f090007;
+        public static final int travellog_post_send=0x7f090014;
+        public static final int travellog_switch_share_fb=0x7f09000a;
+        public static final int travellog_switch_share_vk=0x7f090009;
     }
     public static final class layout {
         public static final int activity_article=0x7f030000;
@@ -153,6 +160,7 @@ public final class R {
         public static final int activity_map=0x7f030003;
         public static final int activity_nearby=0x7f030004;
         public static final int activity_travellog=0x7f030005;
+        public static final int activity_travellog_new_post=0x7f030006;
     }
     public static final class menu {
         public static final int activity_article=0x7f080000;
@@ -161,6 +169,7 @@ public final class R {
         public static final int activity_map=0x7f080003;
         public static final int activity_nearby=0x7f080004;
         public static final int activity_travellog=0x7f080005;
+        public static final int activity_travellog_new_post=0x7f080006;
     }
     public static final class string {
         public static final int actionbar_favour=0x7f050004;
@@ -170,7 +179,7 @@ public final class R {
         public static final int actionbar_nearby=0x7f050003;
         public static final int app_name=0x7f050000;
         public static final int cancel=0x7f05000f;
-        public static final int fb=0x7f050017;
+        public static final int fb=0x7f050019;
         public static final int hello_world=0x7f050009;
         public static final int map_menu_filter=0x7f05000c;
         public static final int map_menu_nearby=0x7f05000d;
@@ -179,8 +188,10 @@ public final class R {
         public static final int menu_onoff_online_mode=0x7f050008;
         public static final int menu_settings=0x7f050006;
         public static final int ok=0x7f05000e;
-        public static final int sq=0x7f050018;
+        public static final int sq=0x7f05001a;
         public static final int title_activity_article=0x7f05000a;
+        public static final int title_activity_travel_log_new_entry=0x7f05001b;
+        public static final int travellog_add_entry=0x7f050016;
         public static final int travellog_checkin=0x7f050012;
         public static final int travellog_detect_location=0x7f050013;
         /**  Travel Log 
@@ -188,23 +199,15 @@ public final class R {
         public static final int travellog_edit_title_placeholder=0x7f050010;
         public static final int travellog_edit_title_text=0x7f050011;
         public static final int travellog_info=0x7f050015;
+        public static final int travellog_post_send=0x7f050017;
         public static final int travellog_share_options=0x7f050014;
-        public static final int vk=0x7f050016;
+        public static final int vk=0x7f050018;
     }
     public static final class style {
-        public static final int ActionBar_Solid_Tourme=0x7f07000e;
-        public static final int ActionBar_Transparent_Tourme=0x7f07000f;
-        public static final int ActionBarTabStyle_Tourme=0x7f070012;
+        public static final int ActionBar_Solid_Tourme=0x7f07000d;
+        public static final int ActionBar_Transparent_Tourme=0x7f07000e;
+        public static final int ActionBarTabStyle_Tourme=0x7f070011;
         /** 
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    
-
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        
-
         Base application theme for API 11+. This theme completely replaces
         AppBaseTheme from res/values/styles.xml on API 11+ devices.
     
@@ -217,28 +220,24 @@ public final class R {
  API 14 theme customizations can go here. 
          */
         public static final int AppBaseTheme=0x7f070000;
-        /**  Application theme. 
- All customizations that are NOT specific to a particular API-level can go here. 
-         */
-        public static final int AppTheme=0x7f070001;
-        public static final int AutoCompleteTextViewTourMe=0x7f070003;
-        public static final int ButtonTourMe=0x7f070006;
-        public static final int CheckBoxTourMe=0x7f070004;
-        public static final int DropDownListView_Tourme=0x7f070011;
-        public static final int DropDownNav_Tourme=0x7f070013;
-        public static final int EditTextTourMe=0x7f070002;
-        public static final int ImageButtonTourMe=0x7f070007;
-        public static final int PopupMenu_Tourme=0x7f070010;
-        public static final int ProgressBar_Tourme=0x7f070014;
-        public static final int ProgressBarTourMe=0x7f07000b;
-        public static final int RadioButtonTourMe=0x7f070005;
-        public static final int SeekBarTourMe=0x7f07000c;
-        public static final int SpinnerDropDownItemTourMe=0x7f07000a;
-        public static final int SpinnerTourMe=0x7f070008;
-        public static final int SpinnerTourMe_DropDown=0x7f070009;
-        public static final int Theme_Tourme=0x7f07000d;
+        public static final int AutoCompleteTextViewTourMe=0x7f070002;
+        public static final int ButtonTourMe=0x7f070005;
+        public static final int CheckBoxTourMe=0x7f070003;
+        public static final int DropDownListView_Tourme=0x7f070010;
+        public static final int DropDownNav_Tourme=0x7f070012;
+        public static final int EditTextTourMe=0x7f070001;
+        public static final int ImageButtonTourMe=0x7f070006;
+        public static final int PopupMenu_Tourme=0x7f07000f;
+        public static final int ProgressBar_Tourme=0x7f070013;
+        public static final int ProgressBarTourMe=0x7f07000a;
+        public static final int RadioButtonTourMe=0x7f070004;
+        public static final int SeekBarTourMe=0x7f07000b;
+        public static final int SpinnerDropDownItemTourMe=0x7f070009;
+        public static final int SpinnerTourMe=0x7f070007;
+        public static final int SpinnerTourMe_DropDown=0x7f070008;
+        public static final int Theme_Tourme=0x7f07000c;
         /**  this style is only referenced in a Light.DarkActionBar based theme 
          */
-        public static final int Tourme_Widget=0x7f070015;
+        public static final int Tourme_Widget=0x7f070014;
     }
 }

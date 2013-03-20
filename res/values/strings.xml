@@ -12,22 +12,22 @@
     <string name="menu_onoff_online_mode">Switch online/offline mode</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_article">ArticleActivity</string>
-    
     <string name="map_points_categories_title">Filter points</string>
     <string name="map_menu_filter">Filter points</string>
     <string name="map_menu_nearby">Nearby me</string>
+
     <string-array name="map_points_categories">
         <item>Sights</item>
-        <item>ATMs</item> 
+        <item>ATMs</item>
         <item>WCs</item>
-        <item>Hotels</item> 
+        <item>Hotels</item>
         <item>Hospitals</item>
-        <item>Police stations</item>     
+        <item>Police stations</item>
     </string-array>
-    
+
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
-    
+
     <!-- Travel Log -->
     <string name="travellog_edit_title_placeholder">Title</string>
     <string name="travellog_edit_title_text">Post text</string>
@@ -35,10 +35,11 @@
     <string name="travellog_detect_location">Find location</string>
     <string name="travellog_share_options">Share options</string>
     <string name="travellog_info">You should log in to social networks to make check-ins</string>
-    
+    <string name="travellog_add_entry">You should log in to social networks to make check-ins</string>
+    <string name="travellog_post_send">Send</string>
     <string name="vk">Vk</string>
     <string name="fb">Fb</string>
     <string name="sq">Foursquare</string>
-    
+    <string name="title_activity_travel_log_new_entry">TravelLogNewEntry</string>
 
 </resources>

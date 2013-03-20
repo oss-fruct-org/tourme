@@ -54,9 +54,9 @@
                 android:value="org.fruct.oss.tourme.MainActivity" />
         </activity>
         <activity
-            android:name="org.fruct.oss.tourme.TravellogActivity"
+            android:name="org.fruct.oss.tourme.TravellogNewPostActivity"
             android:label="@string/actionbar_log"
-            android:parentActivityName="org.fruct.oss.tourme.MainActivity" >
+             >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.fruct.oss.tourme.MainActivity" />
@@ -65,6 +65,14 @@
             android:name="org.fruct.oss.tourme.ArticleActivity"
             android:label="@string/title_activity_article" >
         </activity>
+        <activity
+            android:name="org.fruct.oss.tourme.TravellogActivity"
+            android:label="@string/actionbar_log" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.fruct.oss.tourme.MainActivity" />
+        </activity>
+       
     </application>
 
 </manifest>
