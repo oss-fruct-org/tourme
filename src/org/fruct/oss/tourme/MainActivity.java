@@ -2,11 +2,7 @@ package org.fruct.oss.tourme;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -19,11 +15,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
 
@@ -37,9 +33,12 @@ public class MainActivity extends FragmentActivity implements
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	
 	ImageSwitcher slideshow;
+	TextView caption;
+	Runnable slideshowRunnable;
 	private int slideshowIndex = 0; // ImageSwitcher current image Id from this array:
 	// FIXME: you should always have array with drawable's Ids
-	int[] images = {R.drawable.ic_action_menu_star, R.drawable.ic_launcher, R.drawable.ic_action_menu_map}; // FIXME: add images dynamically
+	int[] images = {R.drawable.one, R.drawable.two, R.drawable.three}; // FIXME: add images dynamically
+	String[] images_caption = {"Marble carrier", "Kizhi island", "Some cool stuff"}; // FIXME: add texts dynamically. MUST be exact size like 'images' array
 	
 
 	@Override
@@ -78,9 +77,11 @@ public class MainActivity extends FragmentActivity implements
         slideshow.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
         slideshow.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
         slideshow.setImageDrawable(getResources().getDrawable(images[slideshowIndex]));
+        caption = (TextView) findViewById(R.id.image_caption);
+        caption.setText(images_caption[slideshowIndex]);
         
         // Change image by timeout
-        slideshow.postDelayed(new Runnable() {
+        slideshowRunnable = new Runnable() {
             //int i = 0;
             public void run() {
             	if (slideshowIndex == images.length-1)
@@ -89,9 +90,12 @@ public class MainActivity extends FragmentActivity implements
             		slideshowIndex++;
             	
             	slideshow.setImageDrawable(getResources().getDrawable(images[slideshowIndex]));
+            	caption.setText(images_caption[slideshowIndex]);
             	slideshow.postDelayed(this, 10000); // Slide after 10 secs
             }
-        }, 10000); // Start first slide after 10 secs
+        };
+        
+        slideshow.postDelayed(slideshowRunnable, 10000); // Start first slide after 10 secs
 
         
         // Set onFling listener (fling\swipe from right to left and vice versa)
@@ -111,16 +115,18 @@ public class MainActivity extends FragmentActivity implements
     	
     	@Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+    		if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
             	// Swipe right to left
             	slideshowIndex = slideshowIndex < 2 ? ++slideshowIndex : slideshowIndex;
             	//slideshow.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(images[slideshowIndex], null, getPackageName())));
             	slideshow.setImageDrawable(getResources().getDrawable(images[slideshowIndex]));
+            	caption.setText(images_caption[slideshowIndex]);
             	return false; 
             }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                 // Swipe left to right
             	slideshowIndex = slideshowIndex > 0 ? --slideshowIndex : slideshowIndex;
             	slideshow.setImageDrawable(getResources().getDrawable(images[slideshowIndex]));
+            	caption.setText(images_caption[slideshowIndex]);
             	return false;
             }
 
@@ -264,6 +270,21 @@ public class MainActivity extends FragmentActivity implements
                         LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
         iView.setBackgroundColor(0xFF000000);
         return iView;
+	}
+	
+	public void openTravelpedia(View view) {
+		Intent intent = new Intent(this, TravellogActivity.class);
+	}
+	
+	public void openNearby(View view) {
+		Intent intent = new Intent(this, NearbyActivity.class);
+		startActivity(intent);
+	}
+	public void openPracticalInfo(View view) {
+		//Intent intent = new Intent(this, TravellogActivity.class);
+	}
+	public void openPhrasebook(View view) {
+		//Intent intent = new Intent(this, TravellogActivity.class);
 	}
 	
 

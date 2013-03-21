@@ -128,5 +128,13 @@
         <item name="android:popupMenuStyle">@style/PopupMenu.Tourme</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Tourme</item>
     </style>
+    
+	<style name="StrokedText">
+		<item name="android:textColor">#ffffffff</item>
+		<item name="android:shadowColor">#000000</item>
+		<item name="android:shadowDx">1</item>
+		<item name="android:shadowDy">1</item>
+		<item name="android:shadowRadius">1</item>
+	</style>
 
 </resources>
