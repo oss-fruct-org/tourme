@@ -117,14 +117,14 @@ public class MainActivity extends FragmentActivity implements
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
     		if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
             	// Swipe right to left
-            	slideshowIndex = slideshowIndex < 2 ? ++slideshowIndex : slideshowIndex;
+            	slideshowIndex = slideshowIndex < images.length-1 ? ++slideshowIndex : 0;
             	//slideshow.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(images[slideshowIndex], null, getPackageName())));
             	slideshow.setImageDrawable(getResources().getDrawable(images[slideshowIndex]));
             	caption.setText(images_caption[slideshowIndex]);
             	return false; 
             }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                 // Swipe left to right
-            	slideshowIndex = slideshowIndex > 0 ? --slideshowIndex : slideshowIndex;
+            	slideshowIndex = slideshowIndex > 0 ? --slideshowIndex : 0;
             	slideshow.setImageDrawable(getResources().getDrawable(images[slideshowIndex]));
             	caption.setText(images_caption[slideshowIndex]);
             	return false;
