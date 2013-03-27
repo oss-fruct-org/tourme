@@ -71,6 +71,8 @@ public class MainActivity extends FragmentActivity implements
 		//myInt.putExtra(ConstantsAndTools.ARTICLE_ID, "http://wikipedia.org");
 		//startActivity(myInt);
 		
+		
+		
 		// Slideshow		
 		slideshow = (ImageSwitcher) findViewById(R.id.ImageSwitcher01);
 		slideshow.setFactory(this);
@@ -235,6 +237,10 @@ public class MainActivity extends FragmentActivity implements
 				break;
 			case(R.id.menu_settings):
 				//intent = new Intent(getApplicationContext(), SettingsActivity.class); // TODO
+				break;
+			case (R.id.add_data):
+				Intent myInt = new Intent(this, MapChooserActivity.class);
+				startActivity(myInt);
 				break;
 			case(R.id.menu_onoff_online_mode):
 				// Turn on\off online mode (save to shared preferences)

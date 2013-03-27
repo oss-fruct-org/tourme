@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.fruct.oss.tourme"
-    android:installLocation="preferExternal"
+   
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -55,8 +55,7 @@
         </activity>
         <activity
             android:name="org.fruct.oss.tourme.TravellogNewPostActivity"
-            android:label="@string/actionbar_log"
-             >
+            android:label="@string/actionbar_log" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.fruct.oss.tourme.MainActivity" />
@@ -72,7 +71,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.fruct.oss.tourme.MainActivity" />
         </activity>
-       
+        <activity
+            android:name="org.fruct.oss.tourme.MapChooserActivity"
+            android:label="@string/title_activity_map_chooser" >
+        </activity>
     </application>
 
 </manifest>

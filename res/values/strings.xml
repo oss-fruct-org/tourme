@@ -41,9 +41,10 @@
     <string name="fb">Fb</string>
     <string name="sq">Foursquare</string>
     <string name="title_activity_travel_log_new_entry">TravelLogNewEntry</string>
-
     <string name="travelpedia">Travelpedia</string>
     <string name="practical_info">Practical info</string>
     <string name="phrasebook">Phasebook</string>
+    <string name="title_activity_map_chooser">Choose a region to go</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
