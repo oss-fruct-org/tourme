@@ -26,6 +26,8 @@ import android.widget.ViewSwitcher.ViewFactory;
 public class MainActivity extends FragmentActivity implements
 		ActionBar.OnNavigationListener, ViewFactory {
 
+	public static Context context = null;
+	
 	/**
 	 * The serialization (saved instance state) Bundle key representing the
 	 * current dropdown position.
@@ -45,6 +47,7 @@ public class MainActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		context = getApplicationContext();
 
 		// Set up the action bar to show a dropdown list.
 		final ActionBar actionBar = getActionBar();
