@@ -16,12 +16,15 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -39,36 +42,46 @@ private MapController mapController;
     
 @Override
 protected void onCreate(Bundle savedInstanceState) {
-super.onCreate(savedInstanceState);
-setContentView(R.layout.activity_map);
-
-// Set up the action bar to show a dropdown list.
-final ActionBar actionBar = getActionBar();
-actionBar.setDisplayShowTitleEnabled(false);
-actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-// Show the Up button in the action bar.
-//actionBar.setDisplayHomeAsUpEnabled(true);
-
-// Set up the dropdown list navigation in the action bar.
-actionBar.setListNavigationCallbacks(
-// Specify a SpinnerAdapter to populate the dropdown list.
-new ArrayAdapter<String>(getActionBarThemedContextCompat(),
-android.R.layout.simple_list_item_1,
-android.R.id.text1, new String[] {
-getString(R.string.actionbar_main),
-getString(R.string.actionbar_map),
-getString(R.string.actionbar_nearby),
-getString(R.string.actionbar_favour),
-getString(R.string.actionbar_log) }), this);
-
-actionBar.setSelectedNavigationItem(1);
-
-this.initMap();
+	super.onCreate(savedInstanceState);
+	setContentView(R.layout.activity_map);
+	
+	// Set up the action bar to show a dropdown list.
+	final ActionBar actionBar = getActionBar();
+	actionBar.setDisplayShowTitleEnabled(false);
+	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+	// Show the Up button in the action bar.
+	//actionBar.setDisplayHomeAsUpEnabled(true);
+	
+	// Set up the dropdown list navigation in the action bar.
+	actionBar.setListNavigationCallbacks(
+	// Specify a SpinnerAdapter to populate the dropdown list.
+	new ArrayAdapter<String>(getActionBarThemedContextCompat(),
+	android.R.layout.simple_list_item_1,
+	android.R.id.text1, new String[] {
+	getString(R.string.actionbar_main),
+	getString(R.string.actionbar_map),
+	getString(R.string.actionbar_nearby),
+	getString(R.string.actionbar_favour),
+	getString(R.string.actionbar_log) }), this);
+	
+	actionBar.setSelectedNavigationItem(1);
+	
+	this.initMap();
 }
-
+private WebView myWebView;
 private void initMap() {
-
-        MapView mapView = new MapView(this, 256); //constructor
+	String url = Environment.getExternalStorageDirectory() + "/osmdroid/Mapnik"; 
+	print(url);
+	myWebView = (WebView) findViewById(R.id.mapview);
+	myWebView.getSettings().setJavaScriptEnabled(true);
+	myWebView.loadUrl("file:///android_asset/map.html");
+	
+	myWebView.addJavascriptInterface(this, "Android");
+	//url = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+	print(url);
+	myWebView.loadUrl("javascript:setUrl("+url+")");
+	
+        /*MapView mapView = new MapView(this, 256); //constructor
 
         mapView.setClickable(true);
 
@@ -83,9 +96,11 @@ private void initMap() {
         if (getSharedPreferences(ConstantsAndTools.SHARED_PREFERENCES, 0).getBoolean(ConstantsAndTools.ONLINE_MODE, false))
         	mapView.setUseDataConnection(true); //keeps the mapView from loading online tiles using network connection.
         else
-        	mapView.setUseDataConnection(false);
+        	mapView.setUseDataConnection(false);*/
 }
-
+public void print(String str){
+	System.out.println(str);
+}
 /**
 * Backward-compatible version of {@link ActionBar#getThemedContext()} that
 * simply returns the {@link android.app.Activity} if
@@ -239,6 +254,10 @@ public void onClick(DialogInterface dialog, int id) {
 // User clicked OK, so save the mSelectedItems results somewhere
 // or return them to the component that opened the dialog
 // TODO: do something
+	//System.out.print("asdasda");
+	//myWebView.loadUrl("javascript:setZoom(1)");
+	String[] testArray = getResources().getStringArray(R.array.map_points_categories);
+	System.out.print(testArray);
 }
 })
 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

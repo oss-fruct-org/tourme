@@ -1,0 +1,50 @@
+
+<html>
+<head>
+	<title>Leaflet mobile example</title>
+
+	<link rel="stylesheet" href="css/leaflet.css" />
+
+	<script src="js/leaflet.js"></script>
+
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		html, body, #map {
+			height: 100%;
+		}
+	</style>
+</head>
+<body onload="initMap()">
+	<div id="map"></div>
+
+	<script>
+
+		TourMe = {};
+
+		function setUrl(url){
+			Android.print(url);
+			TourMe.url = url;
+		}
+		function initMap(){
+			TourMe.map = L.map('map').setView([61.800322,34.320819], 5);
+			url = "file:///mnt/sdcard/osmdroid/Mapnik/{z}/{x}/{y}.png"
+			Android.print(url);
+			L.tileLayer(url, {
+				maxZoom: 18,
+				attribution: 'Map data © OpenStreetMap contributors'
+			}).addTo(TourMe.map);
+			map.on('click', function(){Android.print('asdasd');});
+			
+		}
+		function print(){
+			alrt("str");
+		}
+		function setZoom(num){
+			TourMe.map.setZoom(num);
+		}
+	</script>
+</body>
+</html>
