@@ -75,7 +75,7 @@ private void initMap() {
 	myWebView = (WebView) findViewById(R.id.mapview);
 	myWebView.getSettings().setJavaScriptEnabled(true);
 	myWebView.loadUrl("file:///android_asset/map.html");
-	
+	String a;
 	myWebView.addJavascriptInterface(this, "Android");
 	//url = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 	print(url);
