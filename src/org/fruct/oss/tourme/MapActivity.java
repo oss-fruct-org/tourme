@@ -182,9 +182,10 @@ public class MapActivity extends FragmentActivity implements
 			Toast.makeText(cont,  "Jusst a test", Toast.LENGTH_SHORT).show();
 			String Urlik = "http://api.wikilocation.org/articles?lat="+
 					61.78333 + "&lng=" + 34.33333 + "&limit=20&radius=3000&locale=ru&format=json";
-			DownloadFile dwn = new DownloadFile();
+			FindWikiArticle dwn = new FindWikiArticle();
 			dwn.execute(Urlik);
 			
+			// FIXME
 			//Intent intent = new Intent(this, NearbyActivity.class);
 			//startActivity(intent);
 			break;
@@ -321,7 +322,7 @@ public class MapActivity extends FragmentActivity implements
 		}
 	}
 
-	class DownloadFile extends AsyncTask<String, Integer, String> {
+	class FindWikiArticle extends AsyncTask<String, Integer, String> {
 		
 		HttpResponse response;
 		String jsonString = null;
