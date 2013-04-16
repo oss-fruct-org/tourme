@@ -18,6 +18,7 @@ import android.widget.Toast;
 public class ArticleActivity extends Activity {
 
 	private String articleId = null;
+	private String articleTitle = null;
 	private WebView webView;
 	
 	@Override
@@ -27,8 +28,10 @@ public class ArticleActivity extends Activity {
 		
 		// Get article Id\name\URL from intent
 		Intent intent = getIntent();
-		articleId = intent.getStringExtra("ARTICLE_ID");
+		articleId = intent.getStringExtra(ConstantsAndTools.ARTICLE_ID);
+		articleTitle = intent.getStringExtra(ConstantsAndTools.ARTICLE_TITLE);
 		Log.i(ConstantsAndTools.ARTICLE_ID, articleId); // FIXME: if no Id passed?
+		setTitle(articleTitle);
 		
 		// And load it to the webView
 		setupWebView(articleId);
@@ -58,7 +61,7 @@ public class ArticleActivity extends Activity {
         webView.loadUrl(URL);
         
         // Connect java and js by interface
-        webView.addJavascriptInterface(new JavaScriptInterface(this), "android");
+        //webView.addJavascriptInterface(new JavaScriptInterface(this), "android");
 	}
 	
 	 /* 
@@ -75,15 +78,25 @@ public class ArticleActivity extends Activity {
             // Start another activity if URL is not for our domain
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
-            return true;
+            return true;            
         }        
+        
+        @Override
+        public void onPageFinished(WebView view, String url) {
+        	String webViewTitle = view.getTitle();
+        	if (webViewTitle != null) {
+        		int lastDashIndex = webViewTitle.lastIndexOf("—");
+        		webViewTitle = webViewTitle.substring(0, lastDashIndex);
+        		ArticleActivity.this.setTitle(webViewTitle);
+        	}
+        }
     }
     
     /* 
      * Javascript interaction interface     * 
      * To use it, in JS write "android.functionname()"
      */
-    @SuppressWarnings("unused")
+    /*@SuppressWarnings("unused")
     private class JavaScriptInterface {
     	Context context;
     	
@@ -96,7 +109,7 @@ public class ArticleActivity extends Activity {
 	    public void sendToast(String message) {
 	    	Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 	    } 
-	  }
+	  }*/
     
     /*
      * Back button operates browser's history

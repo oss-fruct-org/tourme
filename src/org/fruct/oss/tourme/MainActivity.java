@@ -65,16 +65,6 @@ public class MainActivity extends FragmentActivity implements
 								getString(R.string.actionbar_nearby),
 								getString(R.string.actionbar_favour),
 								getString(R.string.actionbar_log) }), this);
-	
-		
-		// TODO: just for tests, remove this
-		// An example to open ArticleActivity for an article
-		// Use http:// for web source or file:// for local file
-		//Intent myInt = new Intent(this, ArticleActivity.class);
-		//myInt.putExtra(ConstantsAndTools.ARTICLE_ID, "http://wikipedia.org");
-		//startActivity(myInt);
-		
-		
 		
 		// Slideshow		
 		slideshow = (ImageSwitcher) findViewById(R.id.ImageSwitcher01);
@@ -101,7 +91,6 @@ public class MainActivity extends FragmentActivity implements
         };
         
         slideshow.postDelayed(slideshowRunnable, 10000); // Start first slide after 10 secs
-
         
         // Set onFling listener (fling\swipe from right to left and vice versa)
         final GestureDetector gdt = new GestureDetector(new GestureListener());

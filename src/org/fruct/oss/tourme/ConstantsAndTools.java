@@ -11,6 +11,7 @@ public class ConstantsAndTools {
 	
 	// Intent extras
 	public static String ARTICLE_ID = "ARTICLE_ID";
+	public static String ARTICLE_TITLE = "ARTICLE_TITLE";
 	
 	// TAG
 	public static String TAG = "org.fruct.oss.tourme";
