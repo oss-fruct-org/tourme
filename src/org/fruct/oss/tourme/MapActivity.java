@@ -1,10 +1,8 @@
 package org.fruct.oss.tourme;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -54,6 +52,8 @@ public class MapActivity extends FragmentActivity implements
 	private ArrayList<Integer> selectedCategories;
 	private Context cont;
 
+	private WebView myWebView;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,6 +61,8 @@ public class MapActivity extends FragmentActivity implements
 		
 		cont = this;
 
+		this.initMap();
+		
 		// Set up the action bar to show a dropdown list.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(false);
@@ -82,12 +84,16 @@ public class MapActivity extends FragmentActivity implements
 
 		actionBar.setSelectedNavigationItem(1);
 
-		this.initMap();
 		
 		
 	}
+	
+	public void addMarker(String group, String lat, String lon, String description) {
+		// FIXME: group? What group? What will happen when group isn't exist?
+		myWebView.loadUrl("javascript:addMarker('"+ group + "', " + lat + ", " + lon + ", '" + description +"');"); // TODO:  what if aposotrophe in name?
+		Log.e("js", "javascript:addMarker("+ group + ", " + lat + ", " + lon + ", '" + description +"');");
+	}
 
-	private WebView myWebView;
 
 	private void initMap() {
 		String url = Environment.getExternalStorageDirectory()
@@ -124,6 +130,8 @@ public class MapActivity extends FragmentActivity implements
 		 * online tiles using network connection. else
 		 * mapView.setUseDataConnection(false);
 		 */
+		
+		
 	}
 
 	public void print(String str) {
@@ -175,8 +183,29 @@ public class MapActivity extends FragmentActivity implements
 			return true;
 		case R.id.map_menu_filter:
 			// Show filter dialog
-			PointsCategoriesDialog dialog = new PointsCategoriesDialog();
-			dialog.show(getFragmentManager(), ConstantsAndTools.TAG);
+			//PointsCategoriesDialog dialog = new PointsCategoriesDialog();
+			//dialog.show(getFragmentManager(), ConstantsAndTools.TAG);
+			
+			YandexPoints getAndShowPoints = new YandexPoints("банкоматы петрозаводск", 20) {
+				@Override
+				public void onPostExecute(String result) {
+					ArrayList<PointInfo> points = this.openAndParse();
+					
+					for (int i = 0; i < points.size(); i++) {
+						try {
+							PointInfo curPoint = points.get(i);
+							addMarker("sight-2", curPoint.lat, curPoint.lon, curPoint.name); // TODO: what of no name, but point must be on map?
+							Log.e("Marker", curPoint.name);
+						} catch (Exception e) {
+							Log.e("Error showing point", "!!");
+						}
+					}
+				}
+			};
+			
+			getAndShowPoints.execute();
+			
+			
 			break;
 		case R.id.map_menu_nearby:
 			Toast.makeText(cont,  "Jusst a test", Toast.LENGTH_SHORT).show();
@@ -413,5 +442,4 @@ public class MapActivity extends FragmentActivity implements
 
 		}
 	}
-
 }

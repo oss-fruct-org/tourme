@@ -24,7 +24,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class YandexPoints extends AsyncTask<String, Void, String> {
-	
+	// TODO: сделать несколько запросов сразу
 	public static Context cont = MainActivity.context;
 
 	private String url = null;
@@ -164,9 +164,8 @@ public class YandexPoints extends AsyncTask<String, Void, String> {
 				coord = coordinates.split(" ");
 				point.lat = coord[1];
 				point.lon = coord[0];
-				Log.e("i", "" + coord[1]);
+				//Log.e("i", "" + coord[1]);
 				points.add(point);
-				//add(point);
 			}
 		} catch (JSONException e) {
 			Log.e("file", "parse error");
