@@ -180,14 +180,14 @@ public class MapActivity extends FragmentActivity implements
 			break;
 		case R.id.map_menu_nearby:
 			Toast.makeText(cont,  "Jusst a test", Toast.LENGTH_SHORT).show();
-			String Urlik = "http://api.wikilocation.org/articles?lat="+
-					61.78333 + "&lng=" + 34.33333 + "&limit=20&radius=3000&locale=ru&format=json";
-			FindWikiArticle dwn = new FindWikiArticle();
-			dwn.execute(Urlik);
+			//String Urlik = "http://api.wikilocation.org/articles?lat="+
+			//		61.78333 + "&lng=" + 34.33333 + "&limit=2&radius=3000&locale=ru&format=json";
+			//FindWikiArticle dwn = new FindWikiArticle();
+			//dwn.execute(Urlik);
 			
 			// FIXME
-			//Intent intent = new Intent(this, NearbyActivity.class);
-			//startActivity(intent);
+			Intent intent = new Intent(this, NearbyActivity.class);
+			startActivity(intent);
 			break;
 		}
 

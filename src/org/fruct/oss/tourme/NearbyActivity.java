@@ -1,25 +1,23 @@
 package org.fruct.oss.tourme;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.os.Bundle;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class NearbyActivity extends FragmentActivity implements
+public class NearbyActivity extends ListActivity implements
 		ActionBar.OnNavigationListener {
 
 	/**
@@ -53,6 +51,33 @@ public class NearbyActivity extends FragmentActivity implements
 							getString(R.string.actionbar_log) }), this);
 		
 		actionBar.setSelectedNavigationItem(2);
+		
+		// Add items to ListView
+		final ArrayList<String> listItems = new ArrayList<String>();
+		final ArrayAdapter<String> adapter;
+		adapter = new ArrayAdapter<String>(this,
+	            android.R.layout.simple_list_item_1,
+	            listItems);
+		setListAdapter(adapter);
+	
+		// Find and add points
+		YandexPoints points = new YandexPoints("банкоматы петрозаводск", 10) { // FIXME TODO
+			@Override
+			public void onPostExecute(String result) {
+				ArrayList<PointInfo> points = this.openAndParse();
+				
+				for (int i = 0; i < points.size(); i++) {
+					try {
+						listItems.add(points.get(i).name + points.get(i).lat + points.get(i).lon);
+					} catch (Exception e) {}
+				}
+				
+				adapter.notifyDataSetChanged();
+			}
+		};
+		
+		points.execute();
+		
 	}
 
 	/**
