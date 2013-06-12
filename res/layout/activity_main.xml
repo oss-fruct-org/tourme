@@ -20,11 +20,24 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="fill_parent"
 	        android:layout_weight="1" >
+	        
+	        <android.support.v4.view.ViewPager
+		        android:id="@+id/pager"
+		        android:layout_width="fill_parent"
+		        android:layout_height="0dp"/>
+	        
+		    <com.viewpagerindicator.CirclePageIndicator
+		        android:id="@+id/indicator"
+		        android:padding="10dip"
+		        android:layout_height="wrap_content"
+		        android:layout_width="fill_parent"/>
 	    
-			<ImageSwitcher
+			<!-- <ImageSwitcher
 				android:id="@+id/ImageSwitcher01"
 				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"/>	
+				android:layout_height="fill_parent"/>	 -->
+				
+				
 			
 			<TextView
 			    android:id="@+id/currency"

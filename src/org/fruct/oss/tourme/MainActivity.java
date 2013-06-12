@@ -1,5 +1,9 @@
 package org.fruct.oss.tourme;
 
+import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.PageIndicator;
+import com.viewpagerindicator.TitlePageIndicator;
+
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.Context;
@@ -10,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -40,14 +45,14 @@ public class MainActivity extends FragmentActivity implements
 	 */
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	
-	ImageSwitcher slideshow;
+	/*ImageSwitcher slideshow;
 	TextView caption;
 	Runnable slideshowRunnable;
 	private int slideshowIndex = 0; // ImageSwitcher current image Id from this array:
 	// FIXME: you should always have array with drawable's Ids
 	int[] images = {R.drawable.one, R.drawable.two, R.drawable.three}; // FIXME: add images dynamically
 	String[] images_caption = {"Marble carrier", "Kizhi island", "Some cool stuff"}; // FIXME: add texts dynamically. MUST be exact size like 'images' array
-	
+	*/
 	private ListView drawer;
 	ActionBarDrawerToggle drawerToggle;
 
@@ -84,28 +89,28 @@ public class MainActivity extends FragmentActivity implements
 			}
 		});
 		
+		/*TestFragmentAdapter mAdapter;
+	    ViewPager mPager;
+	    PageIndicator mIndicator;
 		
+		mAdapter = new TestFragmentAdapter(getSupportFragmentManager());
 
+        mPager = (ViewPager)findViewById(R.id.pager);
+        mPager.setAdapter(mAdapter);
+
+        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
+        mIndicator.setViewPager(mPager);
 		
-		// Set up the action bar to show a dropdown list.
-/*		final ActionBar actionBar = getActionBar();
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-
-		// Set up the dropdown list navigation in the action bar.
-		actionBar.setListNavigationCallbacks(
-		// Specify a у SpinnerAdapter to populate the dropdown list.
-				new ArrayAdapter<String>(getActionBarThemedContextCompat(),
-						android.R.layout.simple_list_item_1,
-						android.R.id.text1, new String[] {
-								getString(R.string.actionbar_main),
-								getString(R.string.actionbar_map),
-								getString(R.string.actionbar_nearby),
-								getString(R.string.actionbar_favour),
-								getString(R.string.actionbar_log) }), this);*/
+		//Set the pager with an adapter
+		 ViewPager pager = (ViewPager)findViewById(R.id.titles);
+		 pager.setAdapter(new TestAdapter(getSupportFragmentManager()));
+		
+		 //Bind the title indicator to the adapter
+		 TitlePageIndicator titleIndicator = (TitlePageIndicator)findViewById(R.id.titles);
+		 titleIndicator.setViewPager(pager);*/
 		
 		// Slideshow		
-		slideshow = (ImageSwitcher) findViewById(R.id.ImageSwitcher01);
+		/*slideshow = (ImageSwitcher) findViewById(R.id.ImageSwitcher01);
 		slideshow.setFactory(this);
         slideshow.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
         slideshow.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
@@ -138,7 +143,7 @@ public class MainActivity extends FragmentActivity implements
 				gdt.onTouchEvent(event);
 				return true;
 			}			
-		});
+		});*/
 	}
 	
 	/**
@@ -204,7 +209,7 @@ public class MainActivity extends FragmentActivity implements
     
     
 
-    private class GestureListener extends SimpleOnGestureListener {
+    /*private class GestureListener extends SimpleOnGestureListener {
     	private static final int SWIPE_MIN_DISTANCE = 120;
         private static final int SWIPE_THRESHOLD_VELOCITY = 200;
     	
@@ -226,7 +231,7 @@ public class MainActivity extends FragmentActivity implements
             }
 
             // Swiping top-bottom
-            /*if(e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+            if(e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
                 // Swipe from bottom to top
             	// Hide buttons
             	ViewGroup buttons = (ViewGroup) getLayoutInflater().inflate(R.id.menu_list_layout, null);
@@ -238,10 +243,10 @@ public class MainActivity extends FragmentActivity implements
             	ViewGroup buttons = (ViewGroup) getLayoutInflater().inflate(R.id.menu_list_layout, null);
             	buttons.setVisibility(View.GONE);
             	return false;
-            }*/
+            }
             return false;
         }
-    }
+    }*/
 
 	/**
 	 * Backward-compatible version of {@link ActionBar#getThemedContext()} that
