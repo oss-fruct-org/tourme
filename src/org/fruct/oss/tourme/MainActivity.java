@@ -5,10 +5,14 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager.LayoutParams;
+import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
@@ -16,9 +20,11 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
@@ -42,15 +48,47 @@ public class MainActivity extends FragmentActivity implements
 	int[] images = {R.drawable.one, R.drawable.two, R.drawable.three}; // FIXME: add images dynamically
 	String[] images_caption = {"Marble carrier", "Kizhi island", "Some cool stuff"}; // FIXME: add texts dynamically. MUST be exact size like 'images' array
 	
+	private ListView drawer;
+	ActionBarDrawerToggle drawerToggle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		context = getApplicationContext();
+		context = getApplicationContext();		
+		
+		DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		drawerToggle = new ActionBarDrawerToggle (this,	drawerLayout, R.drawable.ic_drawer,
+				R.string.drawer_open, R.string.drawer_close) {
+			// Do nothing with title
+		};
+		
+		drawerLayout.setDrawerListener(drawerToggle);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+		
+		// Fill in the drawer by string array
+		drawer = (ListView) findViewById(R.id.left_drawer);
+		String[] drawerItems = getResources().getStringArray(R.array.drawer_items);
+		drawer.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item,
+				drawerItems));
+		// TODO: make 3 last elements look different
+		drawer.setOnItemClickListener(new ListView.OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				Intent intent = MainActivity.drawerItemSwitch(position); // TODO
+				if (intent != null) 
+					startActivity(intent);	
+			}
+		});
+		
+		
+
+		
 		// Set up the action bar to show a dropdown list.
-		final ActionBar actionBar = getActionBar();
+/*		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowTitleEnabled(false);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
@@ -64,7 +102,7 @@ public class MainActivity extends FragmentActivity implements
 								getString(R.string.actionbar_map),
 								getString(R.string.actionbar_nearby),
 								getString(R.string.actionbar_favour),
-								getString(R.string.actionbar_log) }), this);
+								getString(R.string.actionbar_log) }), this);*/
 		
 		// Slideshow		
 		slideshow = (ImageSwitcher) findViewById(R.id.ImageSwitcher01);
@@ -102,6 +140,69 @@ public class MainActivity extends FragmentActivity implements
 			}			
 		});
 	}
+	
+	/**
+	 * @author alexander
+	 * @param id - number in drawer (clicked)
+	 * @return intent to start activity
+	 * 
+	 */
+	public static Intent drawerItemSwitch(int id) {
+		Intent intent = null;
+    	
+		// I know, it's kinda bicycle, but I dunno how to do better
+		switch(id) {
+			// Goto Main
+			case(0):
+				intent = new Intent(context, MainActivity.class);
+				break;
+			case(1):
+				Toast.makeText(context, "I told you to FIX that!..", Toast.LENGTH_SHORT).show(); // TODO
+				break;
+			case(2):
+				intent = new Intent(context, NearbyActivity.class);
+				break;
+			case(3):
+				intent = new Intent(context, MapActivity.class);
+				break;
+			case(4):
+				Toast.makeText(context, "Opening practical info...", Toast.LENGTH_SHORT).show(); // TODO
+				break;
+			case(5):
+				intent = new Intent(context, FavourActivity.class);
+				break;
+			case(6):
+				intent = new Intent(context, TravellogActivity.class);
+				break;
+			case(7):
+				Toast.makeText(context, "Switching to on[off]line mode...", Toast.LENGTH_SHORT).show(); // TODO
+				break;
+			case(8):
+				Toast.makeText(context, "Going to plan new trip...", Toast.LENGTH_SHORT).show(); // TODO
+				break;
+			case(9):
+				Toast.makeText(context, "Opening Settings...", Toast.LENGTH_SHORT).show(); // TODO:
+			default:
+				break;
+		}
+		
+		return intent;
+	}
+	
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+    
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+    
+    
 
     private class GestureListener extends SimpleOnGestureListener {
     	private static final int SWIPE_MIN_DISTANCE = 120;
@@ -219,6 +320,13 @@ public class MainActivity extends FragmentActivity implements
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent = null;
+		
+		if (drawerToggle.onOptionsItemSelected(item)) {
+	          return true;
+	        }
+	        // Handle your other action bar items...
+
+	   //return super.onOptionsItemSelected(item);
 		
 		switch(item.getItemId()) {
 			case(R.id.menu_map):

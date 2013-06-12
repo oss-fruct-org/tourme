@@ -31,15 +31,15 @@
         </activity>
         <activity
             android:name="org.fruct.oss.tourme.MapActivity"
-            android:label="@string/actionbar_map"
-            android:parentActivityName="org.fruct.oss.tourme.MainActivity" >
+            android:label="@string/map">
+            <!-- android:parentActivityName="org.fruct.oss.tourme.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.fruct.oss.tourme.MainActivity" />
+                android:value="org.fruct.oss.tourme.MainActivity" /> -->
         </activity>
         <activity
             android:name="org.fruct.oss.tourme.NearbyActivity"
-            android:label="@string/actionbar_nearby"
+            android:label="@string/nearby"
             android:parentActivityName="org.fruct.oss.tourme.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -47,7 +47,7 @@
         </activity>
         <activity
             android:name="org.fruct.oss.tourme.FavourActivity"
-            android:label="@string/actionbar_favour"
+            android:label="@string/favourites"
             android:parentActivityName="org.fruct.oss.tourme.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -55,7 +55,7 @@
         </activity>
         <activity
             android:name="org.fruct.oss.tourme.TravellogNewPostActivity"
-            android:label="@string/actionbar_log" >
+            android:label="@string/travellog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.fruct.oss.tourme.MainActivity" />
@@ -66,7 +66,7 @@
         </activity>
         <activity
             android:name="org.fruct.oss.tourme.TravellogActivity"
-            android:label="@string/actionbar_log" >
+            android:label="@string/travellog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.fruct.oss.tourme.MainActivity" />

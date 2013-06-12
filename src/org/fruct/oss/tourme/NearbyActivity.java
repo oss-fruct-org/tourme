@@ -39,7 +39,7 @@ public class NearbyActivity extends ListActivity implements
 		//actionBar.setDisplayHomeAsUpEnabled(true);
 
 		// Set up the dropdown list navigation in the action bar.
-		actionBar.setListNavigationCallbacks(
+		/*actionBar.setListNavigationCallbacks(
 				// Specify a SpinnerAdapter to populate the dropdown list.
 				new ArrayAdapter<String>(getActionBarThemedContextCompat(),
 						android.R.layout.simple_list_item_1,
@@ -50,7 +50,7 @@ public class NearbyActivity extends ListActivity implements
 							getString(R.string.actionbar_favour),
 							getString(R.string.actionbar_log) }), this);
 		
-		actionBar.setSelectedNavigationItem(2);
+		actionBar.setSelectedNavigationItem(2);*/
 		
 		// Add items to ListView
 		final ArrayList<String> listItems = new ArrayList<String>();

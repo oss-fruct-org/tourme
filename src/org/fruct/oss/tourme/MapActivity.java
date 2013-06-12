@@ -14,8 +14,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.osmdroid.views.MapController;
-import org.osmdroid.views.MapView;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -26,18 +24,26 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
+//import org.osmdroid.views.MapController;
+//import org.osmdroid.views.MapView;
 
 public class MapActivity extends FragmentActivity implements
 		ActionBar.OnNavigationListener {
@@ -47,12 +53,15 @@ public class MapActivity extends FragmentActivity implements
 	 * current dropdown position.
 	 */
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
-	private MapController mapController;
-	private MapView mapView;
+	//private MapController mapController;
+	//private MapView mapView;
 	private ArrayList<Integer> selectedCategories;
 	private Context cont;
 
 	private WebView myWebView;
+	
+	private ListView drawer;
+	ActionBarDrawerToggle drawerToggle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,31 +71,49 @@ public class MapActivity extends FragmentActivity implements
 		cont = this;
 
 		this.initMap();
-		
-		// Set up the action bar to show a dropdown list.
-		final ActionBar actionBar = getActionBar();
-		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		// Show the Up button in the action bar.
-		// actionBar.setDisplayHomeAsUpEnabled(true);
 
-		// Set up the dropdown list navigation in the action bar.
-		actionBar.setListNavigationCallbacks(
-		// Specify a SpinnerAdapter to populate the dropdown list.
-				new ArrayAdapter<String>(getActionBarThemedContextCompat(),
-						android.R.layout.simple_list_item_1,
-						android.R.id.text1, new String[] {
-								getString(R.string.actionbar_main),
-								getString(R.string.actionbar_map),
-								getString(R.string.actionbar_nearby),
-								getString(R.string.actionbar_favour),
-								getString(R.string.actionbar_log) }), this);
-
-		actionBar.setSelectedNavigationItem(1);
-
+		DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		drawerToggle = new ActionBarDrawerToggle (this,	drawerLayout, R.drawable.ic_drawer,
+				R.string.drawer_open, R.string.drawer_close) {
+			// Do nothing with title
+		};
 		
+		drawerLayout.setDrawerListener(drawerToggle);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
 		
+		// Fill in the drawer by string array
+		drawer = (ListView) findViewById(R.id.left_drawer);
+		String[] drawerItems = getResources().getStringArray(R.array.drawer_items);
+		drawer.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item,
+				drawerItems));
+		// TODO: make 3 last elements look different
+		drawer.setOnItemClickListener(new ListView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				Intent intent = MainActivity.drawerItemSwitch(position); // TODO
+				if (intent != null) 
+					startActivity(intent);	
+			}
+		});
+	
 	}
+	
+	@Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
 	
 	public void addMarker(String group, String lat, String lon, String description) {
 		// FIXME: group? What group? What will happen when group isn't exist?
@@ -95,6 +122,7 @@ public class MapActivity extends FragmentActivity implements
 	}
 
 
+	@SuppressLint("JavascriptInterface")
 	private void initMap() {
 		String url = Environment.getExternalStorageDirectory()
 				+ "/osmdroid/Mapnik";
@@ -103,7 +131,7 @@ public class MapActivity extends FragmentActivity implements
 		myWebView.getSettings().setJavaScriptEnabled(true);
 		myWebView.loadUrl("file:///android_asset/map.html");
 
-		myWebView.addJavascriptInterface(this, "Android");
+		myWebView.addJavascriptInterface(this, "Android"); // TODO FIXME
 		// url = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 		print(url);
 		myWebView.loadUrl("javascript:setUrl(" + url + ")");
@@ -177,49 +205,57 @@ public class MapActivity extends FragmentActivity implements
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		// Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (drawerToggle.onOptionsItemSelected(item)) {
+          return true;
+        }
+        // Handle your other action bar items...
+
+		
 		switch (item.getItemId()) {
-		case android.R.id.home:
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
-		case R.id.map_menu_filter:
-			// Show filter dialog
-			//PointsCategoriesDialog dialog = new PointsCategoriesDialog();
-			//dialog.show(getFragmentManager(), ConstantsAndTools.TAG);
-			
-			YandexPoints getAndShowPoints = new YandexPoints("банкоматы петрозаводск", 20) {
-				@Override
-				public void onPostExecute(String result) {
-					ArrayList<PointInfo> points = this.openAndParse();
-					
-					for (int i = 0; i < points.size(); i++) {
-						try {
-							PointInfo curPoint = points.get(i);
-							addMarker("sight-2", curPoint.lat, curPoint.lon, curPoint.name); // TODO: what of no name, but point must be on map?
-							Log.e("Marker", curPoint.name);
-						} catch (Exception e) {
-							Log.e("Error showing point", "!!");
+			case android.R.id.home:
+				//NavUtils.navigateUpFromSameTask(this);
+				return true;
+			case R.id.map_menu_filter:
+				// Show filter dialog
+				//PointsCategoriesDialog dialog = new PointsCategoriesDialog();
+				//dialog.show(getFragmentManager(), ConstantsAndTools.TAG);
+				
+				YandexPoints getAndShowPoints = new YandexPoints("банкоматы петрозаводск", 20) {
+					@Override
+					public void onPostExecute(String result) {
+						ArrayList<PointInfo> points = this.openAndParse();
+						
+						for (int i = 0; i < points.size(); i++) {
+							try {
+								PointInfo curPoint = points.get(i);
+								addMarker("sight-2", curPoint.lat, curPoint.lon, curPoint.name); // TODO: what of no name, but point must be on map?
+								Log.e("Marker", curPoint.name);
+							} catch (Exception e) {
+								Log.e("Error showing point", "!!");
+							}
 						}
 					}
-				}
-			};
-			
-			getAndShowPoints.execute();
-			
-			
-			break;
-		case R.id.map_menu_nearby:
-			Toast.makeText(cont,  "Jusst a test", Toast.LENGTH_SHORT).show();
-			//String Urlik = "http://api.wikilocation.org/articles?lat="+
-			//		61.78333 + "&lng=" + 34.33333 + "&limit=2&radius=3000&locale=ru&format=json";
-			//FindWikiArticle dwn = new FindWikiArticle();
-			//dwn.execute(Urlik);
-			
-			// FIXME
-			Intent intent = new Intent(this, NearbyActivity.class);
-			startActivity(intent);
-			break;
+				};
+				
+				getAndShowPoints.execute();			
+				
+				break;
+			case R.id.map_menu_nearby:
+				Toast.makeText(cont,  "Jusst a test", Toast.LENGTH_SHORT).show();
+				//String Urlik = "http://api.wikilocation.org/articles?lat="+
+				//		61.78333 + "&lng=" + 34.33333 + "&limit=2&radius=3000&locale=ru&format=json";
+				//FindWikiArticle dwn = new FindWikiArticle();
+				//dwn.execute(Urlik);
+				
+				// FIXME
+				Intent intent = new Intent(this, NearbyActivity.class);
+				startActivity(intent);
+				break;
 		}
 
+		
 		return super.onOptionsItemSelected(item);
 	}
 

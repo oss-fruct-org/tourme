@@ -4,14 +4,14 @@
         android:id="@+id/menu_map"
         android:orderInCategory="1"
         android:showAsAction="always"
-        android:title="@string/actionbar_map"
+        android:title="@string/map"
         android:icon="@drawable/ic_action_menu_map" />
     
     <item
         android:id="@+id/menu_favourites"
         android:orderInCategory="2"
         android:showAsAction="always"
-        android:title="@string/actionbar_favour"
+        android:title="@string/favourites"
         android:icon="@drawable/ic_action_menu_star" />
         
     <item
