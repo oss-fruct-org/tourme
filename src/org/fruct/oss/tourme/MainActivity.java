@@ -8,20 +8,22 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
+import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Gallery;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -39,6 +41,7 @@ public class MainActivity extends FragmentActivity implements
 	 */
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	
+	ViewPager viewPager = null;
 /*	// FIXME: you should always have array with drawable's Ids
 	int[] images = {R.drawable.one, R.drawable.two, R.drawable.three}; // FIXME: add images dynamically
 	String[] images_caption = {"Marble carrier", "Kizhi island", "Some cool stuff"}; // FIXME: add texts dynamically. MUST be exact size like 'images' array
@@ -66,24 +69,54 @@ public class MainActivity extends FragmentActivity implements
 		// Fill in the drawer by string array
 		drawer = (ListView) findViewById(R.id.left_drawer);
 		String[] drawerItems = getResources().getStringArray(R.array.drawer_items);
-		drawer.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item,
-				drawerItems));
+		drawer.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawerItems));
 		// TODO: make 3 last elements look different
 		drawer.setOnItemClickListener(new ListView.OnItemClickListener() {
-
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position,
-					long id) {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
 				Intent intent = MainActivity.drawerItemSwitch(position);
-				if (intent != null) 
-					startActivity(intent);	
+				if (intent != null)
+					startActivity(intent);
 			}
 		});
 
-	    ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-	    ImageAdapter adapter = new ImageAdapter(this);
-	    viewPager.setAdapter(adapter);
+		viewPager = (ViewPager) findViewById(R.id.viewPager);
+		ImageAdapter adapter = new ImageAdapter(this);
+		viewPager.setAdapter(adapter);
 		
+		final int delayTime = 5000;
+		final Handler h = new Handler();
+		
+		// Loop sliding
+		final Runnable r = new Runnable() {
+			@Override
+			public void run() {
+				int current = viewPager.getCurrentItem();
+				
+				// Slide to first at the end
+				if (current == viewPager.getAdapter().getCount()-1)
+					current = -1;
+				
+				viewPager.setCurrentItem(current + 1);
+				h.postDelayed(this, delayTime);
+		}};
+
+		// Stop sliding when touching and continue after
+		viewPager.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				h.removeCallbacks(r);
+				// If event is end, wait at current page for 2 dealyTime intervals
+				if (event.getAction() == MotionEvent.ACTION_UP) {
+					h.postDelayed(r, delayTime*2);
+				}
+				return false;
+			}
+		});
+		
+		// Run sliding after delayTime
+		h.postDelayed(r, delayTime);
 	}
 	
 	/**
@@ -99,7 +132,7 @@ public class MainActivity extends FragmentActivity implements
 		ImageAdapter(Context context) {
 			this.context = context;
 		}
-
+		
 		@Override
 		public int getCount() {
 			return GalImages.length;
@@ -245,10 +278,10 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
 		// Restore the previously serialized current dropdown position.
-		if (savedInstanceState.containsKey(STATE_SELECTED_NAVIGATION_ITEM)) {
+		/*if (savedInstanceState.containsKey(STATE_SELECTED_NAVIGATION_ITEM)) {
 			getActionBar().setSelectedNavigationItem(
 					savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
-		}
+		}*/
 	}
 
 	@Override
