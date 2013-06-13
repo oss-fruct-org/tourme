@@ -11,41 +11,26 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.LayoutParams;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
-import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageSwitcher;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
+import android.util.Log;
+
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.OnNavigationListener, ViewFactory {
 
 	public static Context context = null;
 	
-	/**
-	 * The serialization (saved instance state) Bundle key representing the
-	 * current dropdown position.
-	 */
-	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
-	
 	ViewPager viewPager = null;
-/*	// FIXME: you should always have array with drawable's Ids
-	int[] images = {R.drawable.one, R.drawable.two, R.drawable.three}; // FIXME: add images dynamically
-	String[] images_caption = {"Marble carrier", "Kizhi island", "Some cool stuff"}; // FIXME: add texts dynamically. MUST be exact size like 'images' array
-	*/
 
 	private ListView drawer;
 	ActionBarDrawerToggle drawerToggle;
@@ -70,7 +55,7 @@ public class MainActivity extends FragmentActivity implements
 		drawer = (ListView) findViewById(R.id.left_drawer);
 		String[] drawerItems = getResources().getStringArray(R.array.drawer_items);
 		drawer.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawerItems));
-		// TODO: make 3 last elements look different
+		// TODO: add 3 more elems (settings etc) and make them look different
 		drawer.setOnItemClickListener(new ListView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -188,47 +173,7 @@ public class MainActivity extends FragmentActivity implements
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
-    
-    
 
-    /*private class GestureListener extends SimpleOnGestureListener {
-    	private static final int SWIPE_MIN_DISTANCE = 120;
-        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-    	
-    	@Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-    		if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-            	// Swipe right to left
-            	slideshowIndex = slideshowIndex < images.length-1 ? ++slideshowIndex : 0;
-            	//slideshow.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(images[slideshowIndex], null, getPackageName())));
-            	slideshow.setImageDrawable(getResources().getDrawable(images[slideshowIndex]));
-            	caption.setText(images_caption[slideshowIndex]);
-            	return false; 
-            }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                // Swipe left to right
-            	slideshowIndex = slideshowIndex > 0 ? --slideshowIndex : 0;
-            	slideshow.setImageDrawable(getResources().getDrawable(images[slideshowIndex]));
-            	caption.setText(images_caption[slideshowIndex]);
-            	return false;
-            }
-
-            // Swiping top-bottom
-            if(e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                // Swipe from bottom to top
-            	// Hide buttons
-            	ViewGroup buttons = (ViewGroup) getLayoutInflater().inflate(R.id.menu_list_layout, null);
-            	buttons.setVisibility(View.VISIBLE);            	
-            	return false;
-            }  else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                // Swipe from top to bottom
-            	// Show buttons
-            	ViewGroup buttons = (ViewGroup) getLayoutInflater().inflate(R.id.menu_list_layout, null);
-            	buttons.setVisibility(View.GONE);
-            	return false;
-            }
-            return false;
-        }
-    }*/
 
 	/**
 	 * Backward-compatible version of {@link ActionBar#getThemedContext()} that
@@ -246,18 +191,14 @@ public class MainActivity extends FragmentActivity implements
 
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
-		// Restore the previously serialized current dropdown position.
-		/*if (savedInstanceState.containsKey(STATE_SELECTED_NAVIGATION_ITEM)) {
-			getActionBar().setSelectedNavigationItem(
-					savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM));
-		}*/
+
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		// Serialize the current dropdown position.
-		outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar()
-				.getSelectedNavigationIndex());
+		//outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar()
+		//		.getSelectedNavigationIndex());
 	}
 
 	@Override
@@ -267,49 +208,6 @@ public class MainActivity extends FragmentActivity implements
 		
 		return true;
 	}
-/*	
-	public class SlidesFragmentAdapter extends FragmentPagerAdapter
-			implements IconPagerAdapter {
-
-		private int[] images = new int[] { R.drawable.ic_launcher,
-				R.drawable.ab_transparent_tourme, R.drawable.activity_bck
-		};
-
-		protected final int[] ICONS = new int[] { R.drawable.ab_bottom_solid_tourme,
-				R.drawable.ab_bottom_solid_tourme, R.drawable.ab_bottom_solid_tourme};
-
-		private int mCount = images.length;
-
-		public SlidesFragmentAdapter(FragmentManager fm) { // TODO
-			super(fm);
-		}
-
-		@Override
-		public Fragment getItem(int position) { // TODO
-			
-			return new SlideFragment(images[position]);
-		}
-
-		@Override
-		public int getCount() {
-			return mCount;
-		}
-
-		@Override
-		public int getIconResId(int index) {
-			return ICONS[index % ICONS.length];
-		}
-
-		public void setCount(int count) {
-			if (count > 0 && count <= 10) {
-				mCount = count;
-				notifyDataSetChanged();
-			}
-		}
-	}*/
-	
-
-	
 
 	@Override
 	public boolean onNavigationItemSelected(int position, long id) {
@@ -355,8 +253,6 @@ public class MainActivity extends FragmentActivity implements
 	          return true;
 	        }
 	        // Handle your other action bar items...
-
-	   //return super.onOptionsItemSelected(item);
 		
 		switch(item.getItemId()) {
 			case(R.id.menu_map):
@@ -398,29 +294,21 @@ public class MainActivity extends FragmentActivity implements
 
 	@Override
 	public View makeView() {
-		// TODO Auto-generated method stub
-		ImageView iView = new ImageView(this);
-        iView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        iView.setLayoutParams(new 
-                ImageSwitcher.LayoutParams(
-                        LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
-        iView.setBackgroundColor(0xFF000000);
-        return iView;
+		return null;
 	}
 	
 	public void openTravelpedia(View view) {
-		Intent intent = new Intent(this, TravellogActivity.class);
+		drawerItemSwitch(1);
 	}
 	
 	public void openNearby(View view) {
-		Intent intent = new Intent(this, NearbyActivity.class);
-		startActivity(intent);
+		drawerItemSwitch(2);
 	}
 	public void openPracticalInfo(View view) {
-		//Intent intent = new Intent(this, TravellogActivity.class);
+		drawerItemSwitch(4);
 	}
 	public void openPhrasebook(View view) {
-		//Intent intent = new Intent(this, TravellogActivity.class);
+		Toast.makeText(context, "Nothing implemented yet", Toast.LENGTH_SHORT).show();
 	}
 	
 
