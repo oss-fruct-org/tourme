@@ -81,6 +81,15 @@ public class MainActivity extends FragmentActivity implements
 			}
 		});
 
+		this.initGallery();
+
+	}
+	
+	/** 
+	 * Initialize the gallery
+	 * @author alexander
+	 */
+	private void initGallery () {
 		viewPager = (ViewPager) findViewById(R.id.viewPager);
 		ImageAdapter adapter = new ImageAdapter(this);
 		viewPager.setAdapter(adapter);
@@ -116,47 +125,7 @@ public class MainActivity extends FragmentActivity implements
 		});
 		
 		// Run sliding after delayTime
-		h.postDelayed(r, delayTime);
-	}
-	
-	/**
-	 * Image adapter for gallery at main screen
-	 * @author alexander
-	 * TODO: autorotate
-	 */
-	public class ImageAdapter extends PagerAdapter {
-		Context context;
-		private int[] GalImages = new int[] { R.drawable.one, R.drawable.two,
-				R.drawable.three };
-
-		ImageAdapter(Context context) {
-			this.context = context;
-		}
-		
-		@Override
-		public int getCount() {
-			return GalImages.length;
-		}
-
-		@Override
-		public boolean isViewFromObject(View view, Object object) {
-			return view == ((ImageView) object);
-		}
-
-		@Override
-		public Object instantiateItem(ViewGroup container, int position) {
-			ImageView imageView = new ImageView(context);
-			imageView.setPadding(0, 0, 0, 0);
-			imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-			imageView.setImageResource(GalImages[position]);
-			((ViewPager) container).addView(imageView, 0);
-			return imageView;
-		}
-
-		@Override
-		public void destroyItem(ViewGroup container, int position, Object object) {
-			((ViewPager) container).removeView((ImageView) object);
-		}
+		h.postDelayed(r, delayTime);		
 	}
 	
 	/**
