@@ -61,7 +61,7 @@ public class NearbyActivity extends ListActivity implements
 		setListAdapter(adapter);
 	
 		// Find and add points
-		YandexPoints points = new YandexPoints("банкоматы петрозаводск", 10) { // FIXME TODO
+		YandexPoints points = new YandexPoints("банкоматы", 10) { // FIXME TODO
 			@Override
 			public void onPostExecute(String result) {
 				ArrayList<PointInfo> points = this.openAndParse();
