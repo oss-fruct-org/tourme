@@ -1,9 +1,5 @@
 package org.fruct.oss.tourme;
 
-import com.viewpagerindicator.CirclePageIndicator;
-import com.viewpagerindicator.PageIndicator;
-import com.viewpagerindicator.TitlePageIndicator;
-
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.Context;
@@ -14,23 +10,21 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.LayoutParams;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AnimationUtils;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.Gallery;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
 
@@ -45,14 +39,11 @@ public class MainActivity extends FragmentActivity implements
 	 */
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 	
-	/*ImageSwitcher slideshow;
-	TextView caption;
-	Runnable slideshowRunnable;
-	private int slideshowIndex = 0; // ImageSwitcher current image Id from this array:
-	// FIXME: you should always have array with drawable's Ids
+/*	// FIXME: you should always have array with drawable's Ids
 	int[] images = {R.drawable.one, R.drawable.two, R.drawable.three}; // FIXME: add images dynamically
 	String[] images_caption = {"Marble carrier", "Kizhi island", "Some cool stuff"}; // FIXME: add texts dynamically. MUST be exact size like 'images' array
 	*/
+
 	private ListView drawer;
 	ActionBarDrawerToggle drawerToggle;
 
@@ -83,67 +74,56 @@ public class MainActivity extends FragmentActivity implements
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
-				Intent intent = MainActivity.drawerItemSwitch(position); // TODO
+				Intent intent = MainActivity.drawerItemSwitch(position);
 				if (intent != null) 
 					startActivity(intent);	
 			}
 		});
-		
-		/*TestFragmentAdapter mAdapter;
-	    ViewPager mPager;
-	    PageIndicator mIndicator;
-		
-		mAdapter = new TestFragmentAdapter(getSupportFragmentManager());
 
-        mPager = (ViewPager)findViewById(R.id.pager);
-        mPager.setAdapter(mAdapter);
+	    ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+	    ImageAdapter adapter = new ImageAdapter(this);
+	    viewPager.setAdapter(adapter);
+		
+	}
+	
+	/**
+	 * Image adapter for gallery at main screen
+	 * @author alexander
+	 * TODO: autorotate
+	 */
+	public class ImageAdapter extends PagerAdapter {
+		Context context;
+		private int[] GalImages = new int[] { R.drawable.one, R.drawable.two,
+				R.drawable.three };
 
-        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
-        mIndicator.setViewPager(mPager);
-		
-		//Set the pager with an adapter
-		 ViewPager pager = (ViewPager)findViewById(R.id.titles);
-		 pager.setAdapter(new TestAdapter(getSupportFragmentManager()));
-		
-		 //Bind the title indicator to the adapter
-		 TitlePageIndicator titleIndicator = (TitlePageIndicator)findViewById(R.id.titles);
-		 titleIndicator.setViewPager(pager);*/
-		
-		// Slideshow		
-		/*slideshow = (ImageSwitcher) findViewById(R.id.ImageSwitcher01);
-		slideshow.setFactory(this);
-        slideshow.setInAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
-        slideshow.setOutAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
-        slideshow.setImageDrawable(getResources().getDrawable(images[slideshowIndex]));
-        caption = (TextView) findViewById(R.id.image_caption);
-        caption.setText(images_caption[slideshowIndex]);
-        
-        // Change image by timeout
-        slideshowRunnable = new Runnable() {
-            //int i = 0;
-            public void run() {
-            	if (slideshowIndex == images.length-1)
-            		slideshowIndex = 0;            	
-            	else
-            		slideshowIndex++;
-            	
-            	slideshow.setImageDrawable(getResources().getDrawable(images[slideshowIndex]));
-            	caption.setText(images_caption[slideshowIndex]);
-            	slideshow.postDelayed(this, 10000); // Slide after 10 secs
-            }
-        };
-        
-        slideshow.postDelayed(slideshowRunnable, 10000); // Start first slide after 10 secs
-        
-        // Set onFling listener (fling\swipe from right to left and vice versa)
-        final GestureDetector gdt = new GestureDetector(new GestureListener());
-        slideshow.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				gdt.onTouchEvent(event);
-				return true;
-			}			
-		});*/
+		ImageAdapter(Context context) {
+			this.context = context;
+		}
+
+		@Override
+		public int getCount() {
+			return GalImages.length;
+		}
+
+		@Override
+		public boolean isViewFromObject(View view, Object object) {
+			return view == ((ImageView) object);
+		}
+
+		@Override
+		public Object instantiateItem(ViewGroup container, int position) {
+			ImageView imageView = new ImageView(context);
+			imageView.setPadding(0, 0, 0, 0);
+			imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+			imageView.setImageResource(GalImages[position]);
+			((ViewPager) container).addView(imageView, 0);
+			return imageView;
+		}
+
+		@Override
+		public void destroyItem(ViewGroup container, int position, Object object) {
+			((ViewPager) container).removeView((ImageView) object);
+		}
 	}
 	
 	/**
@@ -285,6 +265,49 @@ public class MainActivity extends FragmentActivity implements
 		
 		return true;
 	}
+/*	
+	public class SlidesFragmentAdapter extends FragmentPagerAdapter
+			implements IconPagerAdapter {
+
+		private int[] images = new int[] { R.drawable.ic_launcher,
+				R.drawable.ab_transparent_tourme, R.drawable.activity_bck
+		};
+
+		protected final int[] ICONS = new int[] { R.drawable.ab_bottom_solid_tourme,
+				R.drawable.ab_bottom_solid_tourme, R.drawable.ab_bottom_solid_tourme};
+
+		private int mCount = images.length;
+
+		public SlidesFragmentAdapter(FragmentManager fm) { // TODO
+			super(fm);
+		}
+
+		@Override
+		public Fragment getItem(int position) { // TODO
+			
+			return new SlideFragment(images[position]);
+		}
+
+		@Override
+		public int getCount() {
+			return mCount;
+		}
+
+		@Override
+		public int getIconResId(int index) {
+			return ICONS[index % ICONS.length];
+		}
+
+		public void setCount(int count) {
+			if (count > 0 && count <= 10) {
+				mCount = count;
+				notifyDataSetChanged();
+			}
+		}
+	}*/
+	
+
+	
 
 	@Override
 	public boolean onNavigationItemSelected(int position, long id) {
