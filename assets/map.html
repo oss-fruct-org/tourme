@@ -48,12 +48,12 @@
 			url = "file:///mnt/sdcard/osmdroid/Mapnik/{z}/{x}/{y}.png"
 			//Android.print(url);
 
-			var offline = L.tileLayer(url, {
+			offlineLayer = L.tileLayer(url, {
 				maxZoom: 18,
 				attribution: 'Map data © OpenStreetMap contributors'
 			});
 
-			var online = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			onlineLayer = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 				maxZoom: 18,
 				attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
 			});
@@ -61,7 +61,7 @@
 			TourMe.map = L.map('map',{
 				center: [61.800322,34.320819],
 				zoom: 15,
-				layers: [offline],
+				layers: [onlineLayer],
 				fadeAnimation: false,
 				zoomAnimation: false,
 				markerZoomAnimation: false
@@ -83,39 +83,50 @@
 				//TourMe.map.invalidateSize(false);
 			});
 
-			var baseLayers = {
+			/*var baseLayers = {
 				"online": online,
 				"offline": offline
-			};
+			};*/
 
 
-			L.control.layers(baseLayers).addTo(TourMe.map);
+			//L.control.layers(baseLayers).addTo(TourMe.map);
 
-addTestMarkers();
+			addTestMarkers();
 		}
-function addTestMarkers(){
-		//test
-	var i = 0;
-	for (;i<5;i++){
-		addMarker("arch",61.800322,34.320819+i*0.002,"arch");
-	}
-	i = 0;
-	for (;i<5;i++){
-		addMarker("palm-tree-export",61.800322+0.001,34.320819+i*0.002,"palm");
-	}
-	i = 0;
-	for (;i<5;i++){
-		addMarker("tower",61.800322+0.002,34.320819+i*0.002,"tower");
-	}
-		i = 0;
-	for (;i<5;i++){
-		addMarker("information",61.800322+0.003,34.320819+i*0.002,"information");
-	}
-		i = 0;
-	for (;i<5;i++){
-		addMarker("bustour",61.800322+0.004,34.320819+i*0.002,"bustour");
-	}
-}
+		
+		function setOnlineLayer(){
+			TourMe.map.removeLayer(offlineLayer);
+			TourMe.map.removeLayer(onlineLayer);
+			TourMe.map.addLayer(onlineLayer);
+		}
+		function setOfflineLayer(){
+			TourMe.map.removeLayer(offlineLayer);
+			TourMe.map.removeLayer(onlineLayer);
+			TourMe.map.addLayer(offlineLayer);
+		}
+		function addTestMarkers(){
+				//test
+			var i = 0;
+			for (;i<5;i++){
+				addMarker("arch",61.800322,34.320819+i*0.002,"arch");
+			}
+			i = 0;
+			for (;i<5;i++){
+				addMarker("palm-tree-export",61.800322+0.001,34.320819+i*0.002,"palm");
+			}
+			i = 0;
+			for (;i<5;i++){
+				addMarker("tower",61.800322+0.002,34.320819+i*0.002,"tower");
+			}
+				i = 0;
+			for (;i<5;i++){
+				addMarker("information",61.800322+0.003,34.320819+i*0.002,"information");
+			}
+				i = 0;
+			for (;i<5;i++){
+				addMarker("bustour",61.800322+0.004,34.320819+i*0.002,"bustour");
+			}
+		}
 		function addMarker(group, lat, lng, description){
 			var url = "js/images/markers/"+group+".png";
 			var markerIcon = L.icon({
