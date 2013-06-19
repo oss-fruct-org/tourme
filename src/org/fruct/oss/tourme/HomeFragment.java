@@ -10,10 +10,14 @@ import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class HomeFragment extends Fragment {
 
@@ -88,7 +92,25 @@ public class HomeFragment extends Fragment {
 		b3.setOnClickListener(l);
 	}
 	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.setHasOptionsMenu(true);
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.activity_home, menu);		
+	}
+	
+
+	/**
+	 * Walk around: executes an action for TextView onClick event
+	 * @param v View emited onClick event (TextViews)
+	 */
 	private void buttonSwitchListener(View v) {
+		
 		FragmentManager fm = null;
 		Fragment f = null;
 		FragmentTransaction ft = null;
@@ -99,7 +121,6 @@ public class HomeFragment extends Fragment {
 				break;
 			case(R.id.openNearby):
 				f = new NearbyFragment();
-				// TODO
 				break;
 			case(R.id.openPracticalInfo):
 				// TODO
@@ -116,8 +137,35 @@ public class HomeFragment extends Fragment {
 			ft.addToBackStack(null);
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 			ft.commit();
+		}		
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		FragmentManager fm = null;
+		Fragment f = null;
+		FragmentTransaction ft = null;
+		
+		switch(item.getItemId()) {
+			case(R.id.menu_map):
+				f = new MapFragment();
+				break;
+			case (R.id.menu_favourites):
+				f = new FavouritesFragment();
+				break;
+			default:
+				break;
+		}
+
+		if (f != null) {
+			fm = getFragmentManager();
+			ft = fm.beginTransaction();
+			ft.replace(R.id.fragment_container, f);
+			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			ft.commit();
 		}
 		
+		return super.onOptionsItemSelected(item);		
 	}
 	
 

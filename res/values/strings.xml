@@ -18,7 +18,8 @@
     <string name="actionbar_log">Travel Log</string> -->
     
     <string name="menu_add_data">Download data</string>
-    <string name="menu_onoff_online_mode">Switch online/offline mode</string>
+    <string name="menu_onoff_online_mode">DEL Switch online/offline mode</string>
+    <string name="map_menu_onoff">Online/offline</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_article">ArticleActivity</string>
     <string name="map_points_categories_title">Filter points</string>

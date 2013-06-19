@@ -185,12 +185,6 @@ public class MainActivity extends FragmentActivity implements
 		FragmentTransaction ft = null;
 		
 		switch(item.getItemId()) {
-			case(R.id.menu_map):
-				f = new MapFragment();
-				break;
-			case(R.id.menu_favourites):
-				f = new FavouritesFragment();
-				break;
 			case(R.id.menu_settings):
 				Toast.makeText(context, "No settings implemented yet", Toast.LENGTH_SHORT).show(); // TODO
 				break;

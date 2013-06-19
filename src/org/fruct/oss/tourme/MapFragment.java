@@ -7,6 +7,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
@@ -14,6 +16,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
@@ -33,6 +38,13 @@ public class MapFragment extends Fragment {
 		View view = inflater.inflate(R.layout.activity_map, container, false);
 
 		return view;
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// Set menu (intrested in Actionbar menu items)
+		this.setHasOptionsMenu(true);
 	}
 	
 
@@ -69,6 +81,11 @@ public class MapFragment extends Fragment {
 		myWebView.loadUrl(urlToLoad);		
 	}
 	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.activity_map, menu);
+	}
 	
 	/**
 	 * Bind this javascript interface to make
@@ -195,6 +212,43 @@ public class MapFragment extends Fragment {
 
 			return builder.create();
 		}
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		FragmentManager fm = getFragmentManager();
+		Fragment f = null;
+		FragmentTransaction ft = null;
+		PointsCategoriesDialog dia = null;
+		
+		switch(item.getItemId()) {
+			case(R.id.map_menu_filter):
+				dia = new PointsCategoriesDialog();				
+				break;
+			case (R.id.map_menu_nearby):
+				f = new NearbyFragment();
+				break;
+			case (R.id.map_menu_onoff):
+				break;
+			default:
+				break;
+		}
+
+		if (f != null) {
+			ft = fm.beginTransaction();
+			ft.replace(R.id.fragment_container, f);
+			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			ft.commit();
+			return true;
+		}
+		
+		if (dia != null) {
+			dia.show(fm, ConstantsAndTools.TAG);
+			return true;
+		}
+		
+		return super.onOptionsItemSelected(item);		
 	}
 	
 	
