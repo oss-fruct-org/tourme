@@ -543,12 +543,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_favour=0x7f030001;
         public static final int activity_fragment_container=0x7f030002;
         public static final int activity_home=0x7f030003;
-        public static final int activity_map=0x7f030004;
-        public static final int activity_mapchooser=0x7f030005;
-        public static final int activity_nearby=0x7f030006;
-        public static final int activity_travellog=0x7f030007;
-        public static final int activity_travellog_new_post=0x7f030008;
-        public static final int drawer_list_item=0x7f030009;
+        public static final int activity_main=0x7f030004;
+        public static final int activity_map=0x7f030005;
+        public static final int activity_mapchooser=0x7f030006;
+        public static final int activity_nearby=0x7f030007;
+        public static final int activity_travellog=0x7f030008;
+        public static final int activity_travellog_new_post=0x7f030009;
+        public static final int drawer_list_item=0x7f03000a;
     }
     public static final class menu {
         public static final int activity_article=0x7f0c0000;
