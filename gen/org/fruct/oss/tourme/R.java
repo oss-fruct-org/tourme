@@ -487,39 +487,42 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int vpi__tab_unselected_pressed_holo=0x7f02007f;
     }
     public static final class id {
-        public static final int action_settings=0x7f040020;
-        public static final int add_data=0x7f04001b;
+        public static final int action_settings=0x7f040023;
+        public static final int add_data=0x7f04001e;
         public static final int articleWebView=0x7f040005;
         public static final int bottom=0x7f040003;
         public static final int container=0x7f040006;
+        public static final int currency=0x7f04000b;
         public static final int drawer_layout=0x7f040007;
-        public static final int image_caption=0x7f040009;
-        public static final int left_drawer=0x7f04000b;
-        public static final int map_menu_filter=0x7f04001c;
-        public static final int map_menu_nearby=0x7f04001d;
-        public static final int mapchooser=0x7f04000d;
-        public static final int mapview=0x7f04000c;
-        public static final int menu_favourites=0x7f040019;
-        public static final int menu_list_layout=0x7f04000a;
-        public static final int menu_map=0x7f040018;
-        public static final int menu_onoff_online_mode=0x7f04001a;
-        public static final int menu_settings=0x7f040017;
+        public static final int fragment_container=0x7f040008;
+        public static final int image_caption=0x7f04000d;
+        public static final int left_drawer=0x7f040009;
+        public static final int map_menu_filter=0x7f04001f;
+        public static final int map_menu_nearby=0x7f040020;
+        public static final int mapchooser=0x7f040010;
+        public static final int mapview=0x7f04000f;
+        public static final int menu_favourites=0x7f04001c;
+        public static final int menu_list_layout=0x7f04000e;
+        public static final int menu_map=0x7f04001b;
+        public static final int menu_onoff_online_mode=0x7f04001d;
+        public static final int menu_settings=0x7f04001a;
         public static final int none=0x7f040000;
-        public static final int region_image=0x7f04000e;
-        public static final int region_list=0x7f04000f;
-        public static final int socical_networks_warn=0x7f040016;
+        public static final int region_image=0x7f040011;
+        public static final int region_list=0x7f040012;
+        public static final int socical_networks_warn=0x7f040019;
         public static final int top=0x7f040004;
-        public static final int travellog_add_entry=0x7f04001e;
-        public static final int travellog_detect_location_btn=0x7f040012;
-        public static final int travellog_detect_location_txt=0x7f040013;
-        public static final int travellog_edit_text=0x7f040011;
-        public static final int travellog_edit_title=0x7f040010;
-        public static final int travellog_post_send=0x7f04001f;
-        public static final int travellog_switch_share_fb=0x7f040015;
-        public static final int travellog_switch_share_vk=0x7f040014;
+        public static final int travellog_add_entry=0x7f040021;
+        public static final int travellog_detect_location_btn=0x7f040015;
+        public static final int travellog_detect_location_txt=0x7f040016;
+        public static final int travellog_edit_text=0x7f040014;
+        public static final int travellog_edit_title=0x7f040013;
+        public static final int travellog_post_send=0x7f040022;
+        public static final int travellog_switch_share_fb=0x7f040018;
+        public static final int travellog_switch_share_vk=0x7f040017;
         public static final int triangle=0x7f040001;
         public static final int underline=0x7f040002;
-        public static final int viewPager=0x7f040008;
+        public static final int viewPager=0x7f04000a;
+        public static final int weather=0x7f04000c;
     }
     public static final class integer {
         public static final int default_circle_indicator_orientation=0x7f070000;
@@ -531,13 +534,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class layout {
         public static final int activity_article=0x7f030000;
         public static final int activity_favour=0x7f030001;
-        public static final int activity_main=0x7f030002;
-        public static final int activity_map=0x7f030003;
-        public static final int activity_mapchooser=0x7f030004;
-        public static final int activity_nearby=0x7f030005;
-        public static final int activity_travellog=0x7f030006;
-        public static final int activity_travellog_new_post=0x7f030007;
-        public static final int drawer_list_item=0x7f030008;
+        public static final int activity_fragment_container=0x7f030002;
+        public static final int activity_home=0x7f030003;
+        public static final int activity_map=0x7f030004;
+        public static final int activity_mapchooser=0x7f030005;
+        public static final int activity_nearby=0x7f030006;
+        public static final int activity_travellog=0x7f030007;
+        public static final int activity_travellog_new_post=0x7f030008;
+        public static final int drawer_list_item=0x7f030009;
     }
     public static final class menu {
         public static final int activity_article=0x7f0c0000;

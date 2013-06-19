@@ -2,27 +2,27 @@ package org.fruct.oss.tourme;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
-import android.util.Log;
 
 
 public class MainActivity extends FragmentActivity implements
@@ -30,18 +30,38 @@ public class MainActivity extends FragmentActivity implements
 
 	public static Context context = null;
 	
-	ViewPager viewPager = null;
-
 	private ListView drawer;
 	ActionBarDrawerToggle drawerToggle;
+	DrawerLayout drawerLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		context = getApplicationContext();		
+		setContentView(R.layout.activity_fragment_container);
+		context = getApplicationContext();
 		
-		DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (findViewById(R.id.fragment_container) != null) {
+
+            // However, if we're being restored from a previous state,
+            // then we don't need to do anything and should return or else
+            // we could end up with overlapping fragments.
+            if (savedInstanceState != null) {
+                return;
+            }
+
+            // Create an instance of ExampleFragment
+            HomeFragment firstFragment = new HomeFragment();
+
+            // In case this activity was started with special instructions from an Intent,
+            // pass the Intent's extras to the fragment as arguments
+            //firstFragment.setArguments(getIntent().getExtras());
+
+            // Add the fragment to the 'fragment_container' FrameLayout
+            getFragmentManager().beginTransaction()
+                    .add(R.id.fragment_container, firstFragment).commit();
+        }
+		
+		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawerToggle = new ActionBarDrawerToggle (this,	drawerLayout, R.drawable.ic_drawer,
 				R.string.drawer_open, R.string.drawer_close) {
 			// Do nothing with title
@@ -51,6 +71,8 @@ public class MainActivity extends FragmentActivity implements
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 		
+		// TODO: open drawer at app first open
+		
 		// Fill in the drawer by string array
 		drawer = (ListView) findViewById(R.id.left_drawer);
 		String[] drawerItems = getResources().getStringArray(R.array.drawer_items);
@@ -58,60 +80,15 @@ public class MainActivity extends FragmentActivity implements
 		// TODO: add 3 more elems (settings etc) and make them look different
 		drawer.setOnItemClickListener(new ListView.OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Intent intent = MainActivity.drawerItemSwitch(position);
-				if (intent != null)
-					startActivity(intent);
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				drawerItemSwitch(position);
+				//Intent intent = MainActivity.drawerItemSwitch(position);
+				//if (intent != null)
+				//	startActivity(intent);
 			}
 		});
-
-		this.initGallery();
-
 	}
 	
-	/** 
-	 * Initialize the gallery
-	 * @author alexander
-	 */
-	private void initGallery () {
-		viewPager = (ViewPager) findViewById(R.id.viewPager);
-		ImageAdapter adapter = new ImageAdapter(this);
-		viewPager.setAdapter(adapter);
-		
-		final int delayTime = 5000;
-		final Handler h = new Handler();
-		
-		// Loop sliding
-		final Runnable r = new Runnable() {
-			@Override
-			public void run() {
-				int current = viewPager.getCurrentItem();
-				
-				// Slide to first at the end
-				if (current == viewPager.getAdapter().getCount()-1)
-					current = -1;
-				
-				viewPager.setCurrentItem(current + 1);
-				h.postDelayed(this, delayTime);
-		}};
-
-		// Stop sliding when touching and continue after
-		viewPager.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				h.removeCallbacks(r);
-				// If event is end, wait at current page for 2 dealyTime intervals
-				if (event.getAction() == MotionEvent.ACTION_UP) {
-					h.postDelayed(r, delayTime*2);
-				}
-				return false;
-			}
-		});
-		
-		// Run sliding after delayTime
-		h.postDelayed(r, delayTime);		
-	}
 	
 	/**
 	 * @author alexander
@@ -119,14 +96,19 @@ public class MainActivity extends FragmentActivity implements
 	 * @return intent to start activity
 	 * 
 	 */
-	public static Intent drawerItemSwitch(int id) {
+	public void drawerItemSwitch(int id) {
 		Intent intent = null;
-    	
+		FragmentManager fm = null;
+		Fragment f = null;
+		FragmentTransaction ft = null;
+		
 		// I know, it's kinda bicycle, but I dunno how to do better
 		switch(id) {
 			// Goto Main
 			case(0):
-				intent = new Intent(context, MainActivity.class);
+				f = new HomeFragment();
+				Log.e("Fragment", "home");
+				//intent = new Intent(context, MainActivity.class);
 				break;
 			case(1):
 				Toast.makeText(context, "I told you to FIX that!..", Toast.LENGTH_SHORT).show(); // TODO
@@ -135,7 +117,8 @@ public class MainActivity extends FragmentActivity implements
 				intent = new Intent(context, NearbyActivity.class);
 				break;
 			case(3):
-				intent = new Intent(context, MapActivity.class);
+				Log.e("Fragment", "map");
+				f = new MapFragment();							
 				break;
 			case(4):
 				Toast.makeText(context, "Opening practical info...", Toast.LENGTH_SHORT).show(); // TODO
@@ -158,7 +141,12 @@ public class MainActivity extends FragmentActivity implements
 				break;
 		}
 		
-		return intent;
+		fm = getFragmentManager();
+		ft = fm.beginTransaction().replace(R.id.fragment_container, f);
+		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+		ft.commit();
+		drawerLayout.closeDrawers();
+		
 	}
 	
     @Override
@@ -221,7 +209,7 @@ public class MainActivity extends FragmentActivity implements
 				break;
 			// Goto Map
 			case(1):
-				intent = new Intent (this, MapActivity.class);
+				//intent = new Intent (this, MapActivity.class);
 				break;
 			// Goto Nearby
 			case(2):
@@ -256,7 +244,7 @@ public class MainActivity extends FragmentActivity implements
 		
 		switch(item.getItemId()) {
 			case(R.id.menu_map):
-				intent = new Intent(getApplicationContext(), MapActivity.class);
+				//intent = new Intent(getApplicationContext(), MapActivity.class);
 				break;
 			case(R.id.menu_favourites):
 				intent = new Intent(getApplicationContext(), FavourActivity.class);

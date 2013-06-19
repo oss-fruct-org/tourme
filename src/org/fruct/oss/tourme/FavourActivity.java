@@ -121,7 +121,7 @@ public class FavourActivity extends FragmentActivity implements
 				break;
 			// Goto Map
 			case(1):
-				intent = new Intent (this, MapActivity.class);
+				//intent = new Intent (this, MapActivity.class);
 				break;
 			// Goto Nearby
 			case(2):
