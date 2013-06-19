@@ -1,21 +1,25 @@
 package org.fruct.oss.tourme;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class HomeFragment extends Fragment {
 
 	public static Context context = null;	
 	ViewPager viewPager = null;
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -27,6 +31,7 @@ public class HomeFragment extends Fragment {
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
+		
 		// Init the gallery		
 		viewPager = (ViewPager) view.findViewById(R.id.viewPager);
 		ImageAdapter adapter = new ImageAdapter(getActivity());
@@ -64,23 +69,56 @@ public class HomeFragment extends Fragment {
 		
 		// Run sliding after delayTime
 		h.postDelayed(r, delayTime);	
+		
+		// Set onClick listeners
+		View.OnClickListener l = new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				buttonSwitchListener(v);
+			}
+		};
+		
+		TextView b = (TextView) view.findViewById(R.id.openTravelpedia);
+		TextView b1 = (TextView) view.findViewById(R.id.openNearby);
+		TextView b2 = (TextView) view.findViewById(R.id.openPracticalInfo);
+		TextView b3 = (TextView) view.findViewById(R.id.openPhrasebook);
+		b.setOnClickListener(l);
+		b1.setOnClickListener(l);
+		b2.setOnClickListener(l);
+		b3.setOnClickListener(l);
 	}
 	
-	
-	public void openTravelpedia(View view) {
-		//drawerItemSwitch(1);
+	private void buttonSwitchListener(View v) {
+		FragmentManager fm = null;
+		Fragment f = null;
+		FragmentTransaction ft = null;
+		
+		switch(v.getId()) {
+			case(R.id.openTravelpedia):
+				// TODO
+				break;
+			case(R.id.openNearby):
+				f = new NearbyFragment();
+				// TODO
+				break;
+			case(R.id.openPracticalInfo):
+				// TODO
+				break;
+			case(R.id.openPhrasebook):
+				// TODO
+				break;
+		}
+		
+		if (f != null) {
+			fm = getFragmentManager();
+			ft = fm.beginTransaction();
+			ft.replace(R.id.fragment_container, f);
+			ft.addToBackStack(null);
+			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			ft.commit();
+		}
+		
 	}
-	
-	public void openNearby(View view) {
-		//drawerItemSwitch(2);
-	}
-	public void openPracticalInfo(View view) {
-		//drawerItemSwitch(4);
-	}
-	public void openPhrasebook(View view) {
-		//Toast.makeText(context, "Nothing implemented yet", Toast.LENGTH_SHORT).show();
-	}
-	
 	
 
 	@Override

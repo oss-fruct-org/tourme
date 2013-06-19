@@ -8,6 +8,7 @@ public class ConstantsAndTools {
 	public static String SHARED_PREFERENCES = "TOURME_PREFERENCES";
 	public static String ONLINE_MODE = "ONLINE_MODE";
 	public static String SOCICAL_NETWORKS_CONNECTED = "SOCICAL_NETWORKS_CONNECTED";
+	public static String IS_FIRST_LAUNCH = "IS_FIRST_LAUNCH";
 	
 	// Intent extras
 	public static String ARTICLE_ID = "ARTICLE_ID";

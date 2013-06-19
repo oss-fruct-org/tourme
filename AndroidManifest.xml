@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
+<!--         <activity
             android:name="org.fruct.oss.tourme.MapActivity"
             android:label="@string/map"
             android:launchMode="singleTask">
@@ -43,7 +43,7 @@
             android:name="org.fruct.oss.tourme.FavourActivity"
             android:label="@string/favourites"
             android:launchMode="singleTask">
-        </activity>
+        </activity> -->
         <activity
             android:name="org.fruct.oss.tourme.TravellogNewPostActivity"
             android:label="@string/travellog" >
@@ -56,11 +56,11 @@
             android:name="org.fruct.oss.tourme.ArticleActivity"
             android:label="@string/title_activity_article" >
         </activity>
-        <activity
+<!--         <activity
             android:name="org.fruct.oss.tourme.TravellogActivity"
             android:label="@string/travellog"
             android:launchMode="singleTask" >
-        </activity>
+        </activity> -->
         <activity
             android:name="org.fruct.oss.tourme.MapChooserActivity"
             android:label="@string/title_activity_map_chooser" >

@@ -17,15 +17,13 @@
             android:layout_weight="1"
             android:background="@drawable/card_background"
             android:padding="10dip" >
-
 			
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
             
-                 <TextView
+            <TextView
                 android:id="@+id/currency"
                 style="@style/StrokedText"
                 android:layout_width="wrap_content"
@@ -72,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/card_background"
                 android:clickable="true"
-                android:onClick="openTravelpedia"
+                android:id="@+id/openTravelpedia"
                 android:padding="10dip"
                 android:text="@string/travelpedia"
                 android:textSize="22sp" />
@@ -83,7 +81,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/card_background"
                 android:clickable="true"
-                android:onClick="openNearby"
+                android:id="@+id/openNearby"
                 android:padding="10dip"
                 android:text="@string/nearby"
                 android:textSize="22sp" />
@@ -93,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/card_background"
-                android:onClick="openPracticalInfo"
+                android:id="@+id/openPracticalInfo"
                 android:clickable="true"
                 android:padding="10dip"
                 android:text="@string/practical_info"
@@ -104,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/card_background"
-                android:onClick="openPhrasebook"
+                android:id="@+id/openPhrasebook"
                 android:clickable="true"
                 android:padding="10dip"
                 android:text="@string/phrasebook"
