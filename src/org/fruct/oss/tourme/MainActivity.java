@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -89,9 +90,13 @@ public class MainActivity extends FragmentActivity implements
 		if (firstLaunch) {
 			drawerLayout.openDrawer(Gravity.LEFT);
 			ed = sh.edit();
-			ed.putBoolean(ConstantsAndTools.IS_FIRST_LAUNCH, false);
+			//ed.putBoolean(ConstantsAndTools.IS_FIRST_LAUNCH, false); // TODO
 			ed.commit();
-		}			
+			
+			// At first launch, show welcome screen\prepare mode
+			Intent i = new Intent (this, PrepareActivity.class);
+			startActivity(i);
+		}
 	}
 
 	

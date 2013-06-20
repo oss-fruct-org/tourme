@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.fruct.oss.tourme"
-   
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -26,10 +25,12 @@
             android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--         <activity
+        <!--
+             <activity
             android:name="org.fruct.oss.tourme.MapActivity"
             android:label="@string/map"
             android:launchMode="singleTask">
@@ -43,27 +44,34 @@
             android:name="org.fruct.oss.tourme.FavourActivity"
             android:label="@string/favourites"
             android:launchMode="singleTask">
-        </activity> -->
+        </activity>
+        -->
         <activity
             android:name="org.fruct.oss.tourme.TravellogNewPostActivity"
             android:label="@string/travellog" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.fruct.oss.tourme.MainActivity"
-                android:parentActivityName="org.fruct.oss.tourme.TravellogActivity" />
+                android:parentActivityName="org.fruct.oss.tourme.TravellogActivity"
+                android:value="org.fruct.oss.tourme.MainActivity" />
         </activity>
         <activity
             android:name="org.fruct.oss.tourme.ArticleActivity"
             android:label="@string/title_activity_article" >
         </activity>
-<!--         <activity
+        <!--
+             <activity
             android:name="org.fruct.oss.tourme.TravellogActivity"
             android:label="@string/travellog"
             android:launchMode="singleTask" >
-        </activity> -->
+        </activity>
+        -->
         <activity
             android:name="org.fruct.oss.tourme.MapChooserActivity"
             android:label="@string/title_activity_map_chooser" >
+        </activity>
+        <activity
+            android:name="org.fruct.oss.tourme.PrepareActivity"
+            android:label="@string/title_activity_prepare" >
         </activity>
     </application>
 

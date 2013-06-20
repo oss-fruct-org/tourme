@@ -1,5 +1,8 @@
 package org.fruct.oss.tourme;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Environment;
 
 public class ConstantsAndTools {
@@ -57,16 +60,16 @@ public class ConstantsAndTools {
 	 * Check for network availability
 	 * @return true if network connection is available else false
 	 */
-	/*public boolean isOnline() {
+	public static boolean isOnline(Context context) {
 	    ConnectivityManager cm =
-	        (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
 	    
 	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
 	        return true;
 	    }
 	    return false;
-	}*/
+	}
 
 
 	/** 

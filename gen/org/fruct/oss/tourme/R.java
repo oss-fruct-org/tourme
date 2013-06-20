@@ -9,9 +9,11 @@ package org.fruct.oss.tourme;
 
 public final class R {
     public static final class array {
-        /**          <item>Online mode</item>
+        /** 
+             <item>Online mode</item>
         <item>Plan new trip</item>
-        <item>Settings</item> 
+        <item>Settings</item>
+        
          */
         public static final int drawer_items=0x7f0b0000;
         public static final int map_points_categories=0x7f0b0001;
@@ -489,43 +491,48 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int vpi__tab_unselected_pressed_holo=0x7f020081;
     }
     public static final class id {
-        public static final int action_settings=0x7f040028;
-        public static final int add_data=0x7f040022;
+        public static final int action_settings=0x7f04002d;
+        public static final int add_data=0x7f040027;
         public static final int articleWebView=0x7f040005;
         public static final int bottom=0x7f040003;
         public static final int container=0x7f040006;
         public static final int currency=0x7f04000b;
         public static final int drawer_layout=0x7f040007;
         public static final int fragment_container=0x7f040008;
+        public static final int fragment_container_prepare=0x7f040017;
         public static final int image_caption=0x7f04000d;
         public static final int left_drawer=0x7f040009;
-        public static final int map_menu_filter=0x7f040023;
-        public static final int map_menu_nearby=0x7f040024;
-        public static final int map_menu_onoff=0x7f040025;
+        public static final int map_menu_filter=0x7f040028;
+        public static final int map_menu_nearby=0x7f040029;
+        public static final int map_menu_onoff=0x7f04002a;
         public static final int mapchooser=0x7f040014;
         public static final int mapview=0x7f040013;
-        public static final int menu_favourites=0x7f040020;
+        public static final int menu_favourites=0x7f040025;
         public static final int menu_list_layout=0x7f04000e;
-        public static final int menu_map=0x7f04001f;
-        public static final int menu_onoff_online_mode=0x7f040021;
-        public static final int menu_settings=0x7f04001e;
+        public static final int menu_map=0x7f040024;
+        public static final int menu_onoff_online_mode=0x7f040026;
+        public static final int menu_settings=0x7f040023;
         public static final int none=0x7f040000;
         public static final int openNearby=0x7f040010;
         public static final int openPhrasebook=0x7f040012;
         public static final int openPracticalInfo=0x7f040011;
         public static final int openTravelpedia=0x7f04000f;
+        public static final int prepare_1_logo=0x7f04001f;
+        public static final int prepare_1_network=0x7f040021;
+        public static final int prepare_1_next=0x7f040022;
+        public static final int prepare_1_welcome_text=0x7f040020;
         public static final int region_image=0x7f040015;
         public static final int region_list=0x7f040016;
-        public static final int socical_networks_warn=0x7f04001d;
+        public static final int socical_networks_warn=0x7f04001e;
         public static final int top=0x7f040004;
-        public static final int travellog_add_entry=0x7f040026;
-        public static final int travellog_detect_location_btn=0x7f040019;
-        public static final int travellog_detect_location_txt=0x7f04001a;
-        public static final int travellog_edit_text=0x7f040018;
-        public static final int travellog_edit_title=0x7f040017;
-        public static final int travellog_post_send=0x7f040027;
-        public static final int travellog_switch_share_fb=0x7f04001c;
-        public static final int travellog_switch_share_vk=0x7f04001b;
+        public static final int travellog_add_entry=0x7f04002b;
+        public static final int travellog_detect_location_btn=0x7f04001a;
+        public static final int travellog_detect_location_txt=0x7f04001b;
+        public static final int travellog_edit_text=0x7f040019;
+        public static final int travellog_edit_title=0x7f040018;
+        public static final int travellog_post_send=0x7f04002c;
+        public static final int travellog_switch_share_fb=0x7f04001d;
+        public static final int travellog_switch_share_vk=0x7f04001c;
         public static final int triangle=0x7f040001;
         public static final int underline=0x7f040002;
         public static final int viewPager=0x7f04000a;
@@ -547,9 +554,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_map=0x7f030005;
         public static final int activity_mapchooser=0x7f030006;
         public static final int activity_nearby=0x7f030007;
-        public static final int activity_travellog=0x7f030008;
-        public static final int activity_travellog_new_post=0x7f030009;
-        public static final int drawer_list_item=0x7f03000a;
+        public static final int activity_prepare=0x7f030008;
+        public static final int activity_travellog=0x7f030009;
+        public static final int activity_travellog_new_post=0x7f03000a;
+        public static final int drawer_list_item=0x7f03000b;
+        public static final int fragment_prepare_1=0x7f03000c;
     }
     public static final class menu {
         public static final int activity_article=0x7f0c0000;
@@ -561,10 +570,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_travellog=0x7f0c0006;
         public static final int activity_travellog_new_post=0x7f0c0007;
         public static final int map_chooser=0x7f0c0008;
+        public static final int prepare=0x7f0c0009;
     }
     public static final class string {
         public static final int action_settings=0x7f0a0023;
         public static final int app_name=0x7f0a0000;
+        public static final int available=0x7f0a0027;
         public static final int cancel=0x7f0a0012;
         public static final int drawer_close=0x7f0a0010;
         public static final int drawer_open=0x7f0a000f;
@@ -577,23 +588,31 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int map_menu_nearby=0x7f0a000e;
         public static final int map_menu_onoff=0x7f0a0009;
         public static final int map_points_categories_title=0x7f0a000c;
-        /**      
+        /** 
     <string name="actionbar_main">Home</string>
     <string name="actionbar_map">Map</string>    
     <string name="actionbar_nearby">Nearby</string>    
     <string name="actionbar_favour">Favourites</string>
-    <string name="actionbar_log">Travel Log</string> 
+    <string name="actionbar_log">Travel Log</string>
+    
          */
         public static final int menu_add_data=0x7f0a0007;
         public static final int menu_onoff_online_mode=0x7f0a0008;
         public static final int menu_settings=0x7f0a0006;
         public static final int nearby=0x7f0a0003;
+        public static final int no_network=0x7f0a0029;
         public static final int ok=0x7f0a0011;
         public static final int phrasebook=0x7f0a0021;
         public static final int practical_info=0x7f0a0020;
+        public static final int prepare_1_network=0x7f0a0026;
+        /**  String for Welcome\prepare screen 
+         */
+        public static final int prepare_1_welcome_text=0x7f0a0025;
+        public static final int prepare_button_next=0x7f0a002a;
         public static final int sq=0x7f0a001d;
         public static final int title_activity_article=0x7f0a000b;
         public static final int title_activity_map_chooser=0x7f0a0022;
+        public static final int title_activity_prepare=0x7f0a0024;
         public static final int title_activity_travel_log_new_entry=0x7f0a001e;
         public static final int travellog=0x7f0a0005;
         public static final int travellog_add_entry=0x7f0a0019;
@@ -607,6 +626,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int travellog_post_send=0x7f0a001a;
         public static final int travellog_share_options=0x7f0a0017;
         public static final int travelpedia=0x7f0a001f;
+        public static final int unavailable=0x7f0a0028;
         public static final int vk=0x7f0a001b;
     }
     public static final class style {
