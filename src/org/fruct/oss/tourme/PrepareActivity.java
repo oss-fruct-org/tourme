@@ -1,6 +1,8 @@
 package org.fruct.oss.tourme;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -32,16 +34,24 @@ public class PrepareActivity extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				Fragment f = null;
+				FragmentManager fm = null;
+				FragmentTransaction ft = null;
+				
 				switch(v.getId()) {
 				case(R.id.prepare_1_next):
-					f = new PrepareOneFragment();
+					f = new PrepareTwoFragment();
+					Log.e("Prepare", "1 next clicked");
+					break;
+				case(R.id.prepare_2_next):
+					Log.e("Prepare", "2 next clicked");
+					//f = new PrepareThreeFragment();
 					break;
 				default:
 					break;
 				}
 				
 				if (f != null)
-					getFragmentManager().beginTransaction().add(R.id.fragment_container_prepare, f).commit();
+					getFragmentManager().beginTransaction().replace(R.id.fragment_container_prepare, f).commit();
 			}
 		};
 	}
@@ -54,7 +64,7 @@ public class PrepareActivity extends FragmentActivity {
 	
 	
 	/**
-	 * First screen of Welcome\prepare
+	 * Second screen of Welcome\prepare
 	 * @author alexander
 	 *
 	 */
@@ -78,7 +88,7 @@ public class PrepareActivity extends FragmentActivity {
 			if (hasNetwork) {
 				networkState.setText(
 						getResources().getString(R.string.prepare_1_network) + " " +
-						getResources().getString(R.string.available));
+								getResources().getString(R.string.available));
 				
 				btnNext.setEnabled(true);
 				btnNext.setOnClickListener(nextButtonListener);
@@ -86,13 +96,39 @@ public class PrepareActivity extends FragmentActivity {
 				// TODO: test
 				networkState.setText(
 						getResources().getString(R.string.prepare_1_network) + " " +
-						getResources().getString(R.string.unavailable) + "\n" +
-						getResources().getString(R.string.no_network));				
+								getResources().getString(R.string.unavailable) + "\n" +
+								getResources().getString(R.string.no_network));				
 				
 				btnNext.setEnabled(false);
 			}			
 			
 		}
+	}
+	
+	
+	/**
+	 * Second screen of Welcome\prepare
+	 * @author alexander
+	 *
+	 */
+	public static class PrepareTwoFragment extends Fragment {
+		
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			
+			View view = inflater.inflate(R.layout.fragment_prepare_2, container, false);
+			return view;
+		}
+		
+		@Override
+		public void onViewCreated(View view, Bundle savedInstanceState) {
+			// TODO: minimum 1 region must be presented to show button
+			Button btnNext = (Button) view.findViewById(R.id.prepare_2_next);
+			btnNext.setEnabled(true);
+			btnNext.setOnClickListener(nextButtonListener);			
+		}
+		
+		// TODO: a method to count approx. size of archives to download NEEDED?
 	}
 
 }

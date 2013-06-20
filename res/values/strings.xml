@@ -82,5 +82,9 @@
 	<string name="unavailable">unavailable</string>
 	<string name="no_network">Oops! There is no network available. Please, enable your TODO and try again</string>
 	<string name="prepare_button_next">Next</string>
+	
+	<string name="prepare_2_text">TODO Here, you have to select regions you want to download. Tap on the map to choose a region. To unselect, press the point one time.
+	    You can change the selection size with the seek bar in the bottom. If you are ready, press Next button</string>
+	<string name="prepare_2_radius">Selection size:</string>
 
 </resources>
