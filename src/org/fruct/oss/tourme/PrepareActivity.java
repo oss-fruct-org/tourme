@@ -51,6 +51,9 @@ public class PrepareActivity extends FragmentActivity {
 				case(R.id.prepare_2_next):
 					f = new PrepareThreeFragment();
 					break;
+				case(R.id.prepare_3_next):
+					finish(); // TODO
+					break;
 				default:
 					break;
 				}
@@ -98,7 +101,6 @@ public class PrepareActivity extends FragmentActivity {
 				btnNext.setEnabled(true);
 				btnNext.setOnClickListener(nextButtonListener);
 			} else {
-				// TODO: test
 				networkState.setText(
 						getResources().getString(R.string.prepare_1_network) + " " +
 								getResources().getString(R.string.unavailable) + "\n\n" +
@@ -177,6 +179,10 @@ public class PrepareActivity extends FragmentActivity {
 			Button btnNext = (Button) view.findViewById(R.id.prepare_3_next);
 			btnNext.setEnabled(true);
 			btnNext.setOnClickListener(nextButtonListener);
+			
+			//TODO: show TextView after downloading
+			TextView txtFinished = (TextView) view.findViewById(R.id.prepare_3_finished);
+			txtFinished.setVisibility(View.VISIBLE);
 		}
 	}
 

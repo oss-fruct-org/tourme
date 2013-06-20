@@ -15,7 +15,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:text="@string/prepare_3_text" />
-
+		    
 	    <ProgressBar
 	        android:layout_marginTop="20dp"
 	        android:layout_marginLeft="10dp"
@@ -24,13 +24,14 @@
 	        style="?android:attr/progressBarStyleHorizontal"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content" />
-	    
+		   
    	    <TextView
-   	        android:layout_marginTop="10dp"
    	        android:id="@+id/prepare_3_finished"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/prepare_3_finished" />
+   	        android:layout_width="wrap_content"
+   	        android:layout_height="wrap_content"
+   	        android:layout_marginTop="10dp"
+   	        android:text="@string/prepare_3_finished"
+   	        android:visibility="invisible" />
 	    
     </LinearLayout>
     
