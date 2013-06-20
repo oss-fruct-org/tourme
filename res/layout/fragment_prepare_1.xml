@@ -10,19 +10,21 @@
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+		android:background="@drawable/stripe" >
 	    
-	    <ImageView 
+	    <!-- <ImageView 
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:src="@drawable/ic_launcher"
-	        android:layout_marginRight="10dp" />
+	        android:layout_marginRight="10dp" /> -->
 	    
 	    <TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/app_name"
-	        android:textSize="35sp" />
+	        android:textSize="32sp"
+	        android:textColor="#FFFFFF"/>
 	    
     </LinearLayout>
     

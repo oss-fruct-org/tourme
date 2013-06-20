@@ -4,7 +4,6 @@
     android:layout_height="match_parent">
     
     <LinearLayout
-        android:id="@+id/prepare_1_logo"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center_horizontal"
@@ -20,7 +19,7 @@
 	    <WebView
 	        android:id="@+id/prepare_2_webview"
 	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
+	        android:layout_height="180dp"
 	        android:layout_marginTop="10dp"/>
 	    
 	    <LinearLayout

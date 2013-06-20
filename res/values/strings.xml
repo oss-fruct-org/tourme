@@ -71,13 +71,13 @@
     <string name="phrasebook">Phasebook</string>
     <string name="title_activity_map_chooser">Choose a region to go</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_prepare">PrepareActivity</string>
+    <string name="title_activity_prepare">Trip planner</string>
     
     <!-- String for Welcome\prepare screen -->
     <string name="prepare_1_welcome_text">TODO Welcome! TourMe is an application that helps you during your trip. To use it, you have to download
         additional content (such as maps or practical info). Our aim is to provide absolutely offline experience so you no need to have and
         internet connection over the trip. Now you are to pass a few steps to prepare to your first trip</string>
-	<string name="prepare_1_network">Your network connection is:</string>
+	<string name="prepare_1_network">Your network connection is</string>
 	<string name="available">OK</string>
 	<string name="unavailable">unavailable</string>
 	<string name="no_network">Oops! There is no network available. Please, enable your TODO and try again</string>
@@ -86,5 +86,9 @@
 	<string name="prepare_2_text">TODO Here, you have to select regions you want to download. Tap on the map to choose a region. To unselect, press the point one time.
 	    You can change the selection size with the seek bar in the bottom. If you are ready, press Next button</string>
 	<string name="prepare_2_radius">Selection size:</string>
+	
+	<string name="prepare_3_text">TODO Wait till we download and unpack the items...</string>
+	<string name="prepare_3_finished">TODO Download finished. Have a nice trip!</string>
+	<string name="prepare_button_done">Done</string>
 
 </resources>

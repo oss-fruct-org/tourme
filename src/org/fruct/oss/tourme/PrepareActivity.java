@@ -3,14 +3,19 @@ package org.fruct.oss.tourme;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class PrepareActivity extends FragmentActivity {
@@ -23,9 +28,11 @@ public class PrepareActivity extends FragmentActivity {
 		setContentView(R.layout.activity_prepare);
 		getActionBar().hide();
 		
-		if (findViewById(R.id.fragment_container_prepare) != null) {
+		if (savedInstanceState == null) {
 			PrepareOneFragment f = new PrepareOneFragment();
-			getFragmentManager().beginTransaction().add(R.id.fragment_container_prepare, f).commit();
+			getFragmentManager().beginTransaction().replace(R.id.fragment_container_prepare, f, "TESTTAG").commit();
+		} else {
+			
 		}
 		
 		// OnClickListener for 'Next' button in each fragment
@@ -40,11 +47,9 @@ public class PrepareActivity extends FragmentActivity {
 				switch(v.getId()) {
 				case(R.id.prepare_1_next):
 					f = new PrepareTwoFragment();
-					Log.e("Prepare", "1 next clicked");
 					break;
 				case(R.id.prepare_2_next):
-					Log.e("Prepare", "2 next clicked");
-					//f = new PrepareThreeFragment();
+					f = new PrepareThreeFragment();
 					break;
 				default:
 					break;
@@ -92,11 +97,11 @@ public class PrepareActivity extends FragmentActivity {
 				
 				btnNext.setEnabled(true);
 				btnNext.setOnClickListener(nextButtonListener);
-			} else {				
+			} else {
 				// TODO: test
 				networkState.setText(
 						getResources().getString(R.string.prepare_1_network) + " " +
-								getResources().getString(R.string.unavailable) + "\n" +
+								getResources().getString(R.string.unavailable) + "\n\n" +
 								getResources().getString(R.string.no_network));				
 				
 				btnNext.setEnabled(false);
@@ -122,13 +127,57 @@ public class PrepareActivity extends FragmentActivity {
 		
 		@Override
 		public void onViewCreated(View view, Bundle savedInstanceState) {
+			
+			// TODO: prepare mode selection
+			WebView webView = (WebView) view.findViewById(R.id.prepare_2_webview);
+			webView.getSettings().setJavaScriptEnabled(true);
+			webView.loadUrl("file:///android_asset/map.html");
+			webView.loadUrl("javascript:setOnlineLayer();"); // Online mode ONLY (preparing mode, no cache)
+			
+			// Set up the webView size (depends on screen height)
+			WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+			Display display = wm.getDefaultDisplay();
+			Point size = new Point();
+			display.getSize(size);
+			int height = size.y;
+			
+			LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) webView.getLayoutParams();
+			params.height = Math.round(height/2); // 0.5 from the screen size
+			webView.setLayoutParams(params);
+			
+			// TODO: add JS-interface (see MapFragment.java)
+			
 			// TODO: minimum 1 region must be presented to show button
 			Button btnNext = (Button) view.findViewById(R.id.prepare_2_next);
 			btnNext.setEnabled(true);
-			btnNext.setOnClickListener(nextButtonListener);			
+			btnNext.setOnClickListener(nextButtonListener);
 		}
 		
 		// TODO: a method to count approx. size of archives to download NEEDED?
+	}
+	
+	/**
+	 * Third screen of Welcome\prepare
+	 * @author alexander
+	 *
+	 */
+	public static class PrepareThreeFragment extends Fragment {
+		
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			
+			View view = inflater.inflate(R.layout.fragment_prepare_3, container, false);
+			return view;
+		}
+		
+		@Override
+		public void onViewCreated(View view, Bundle savedInstanceState) {
+			
+			// TODO: show (activate) Done button after downloading
+			Button btnNext = (Button) view.findViewById(R.id.prepare_3_next);
+			btnNext.setEnabled(true);
+			btnNext.setOnClickListener(nextButtonListener);
+		}
 	}
 
 }
