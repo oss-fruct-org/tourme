@@ -142,8 +142,10 @@ public class PrepareActivity extends FragmentActivity {
 		@Override
 		public void onViewCreated(View view, Bundle savedInstanceState) {
 			
+			// TODO: provide button to delete all markers
+			
 			// TODO: prepare mode selection
-			WebView webView = (WebView) view.findViewById(R.id.prepare_2_webview);
+			final WebView webView = (WebView) view.findViewById(R.id.prepare_2_webview);
 			webView.getSettings().setJavaScriptEnabled(true);
 			webView.loadUrl("file:///android_asset/map.html");
 			webView.loadUrl("javascript:setOnlineLayer();"); // Online mode ONLY (preparing mode, no cache)
@@ -155,7 +157,10 @@ public class PrepareActivity extends FragmentActivity {
 				@Override
 				public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 					// 'Progress' varies from 0 to value in layout
-					// TODO: change the radius of selection
+					// We need to provide radius from 10km to 300 km
+					if (progress < 20)
+						progress = 20;
+					webView.loadUrl("javascript:setRadius(" + progress + ");");
 				}
 
 				@Override

@@ -28,6 +28,13 @@
 
 		TourMe = {};
 
+		// TODO
+		RADIUS = 20000 //metres
+
+		function setRadius(r) {
+			RADIUS = r*1000;
+		}
+
 		function setUrl(url){
 			Android.print(url);
 			TourMe.url = url;
@@ -75,7 +82,7 @@
 
 			TourMe.map.on('click', function(options){
 				var marker = L.marker(options.latlng)/**/;
-				var circle = L.circle(options.latlng, 1000, {
+				var circle = L.circle(options.latlng, RADIUS, {
 					stroke: false,
 				});
 				TourMe.addMarkersLayer.addLayer(marker);
