@@ -66,6 +66,24 @@ public class MapFragment extends Fragment {
 		// url = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 		Log.v("Map tiles URL: ", url);
 		myWebView.loadUrl("javascript:setUrl(" + url + ")");
+		
+		
+		// TODO: delete
+		// Show articles from Wiki on map
+		WikilocationPoints w = new WikilocationPoints(61.78f, 34.33f, 200, 3000, "ru") {
+			@Override
+			public void onPostExecute(String result){
+				ArrayList<PointInfo> points = this.openAndParse();
+				
+				for (int i = 0; i < points.size(); i ++) {
+					PointInfo p = points.get(i);
+					addMarker("pyramid", p.latitude, p.longitude, p.title);
+				}
+			}
+		};
+		
+		w.execute();
+		
 	}
 	
 	
@@ -250,91 +268,7 @@ public class MapFragment extends Fragment {
 		
 		return super.onOptionsItemSelected(item);		
 	}
-	
-	
-	/* YandexPoints getAndShowPoints = new
-	 * YandexPoints("банкоматы петрозаводск", 20) {
-	 * 
-	 * @Override public void onPostExecute(String result) { ArrayList<PointInfo>
-	 * points = this.openAndParse();
-	 * 
-	 * for (int i = 0; i < points.size(); i++) { try { PointInfo curPoint =
-	 * points.get(i); addMarker("sight-2", curPoint.lat, curPoint.lon,
-	 * curPoint.name); // TODO: what of no name, but point must be on map?
-	 * Log.e("Marker", curPoint.name); } catch (Exception e) {
-	 * Log.e("Error showing point", "!!"); } } } };
-	 * 
-	 * getAndShowPoints.execute();
-	 * 
-	 * break; case R.id.map_menu_nearby: Toast.makeText(cont, "Jusst a test",
-	 * Toast.LENGTH_SHORT).show(); //String Urlik =
-	 * "http://api.wikilocation.org/articles?lat="+ // 61.78333 + "&lng=" +
-	 * 34.33333 + "&limit=2&radius=3000&locale=ru&format=json";
-	 * //FindWikiArticle dwn = new FindWikiArticle(); //dwn.execute(Urlik);
-	 * 
-	 * // FIXME Intent intent = new Intent(this, NearbyActivity.class);
-	 * startActivity(intent); break; }
-	 * 
-	 * 
-	 * return super.onOptionsItemSelected(item); }
-	 */
 
-	/*// TODO FIXME SCREW ECLIPSE
-	 * class FindWikiArticle extends AsyncTask<String, Integer, String> {
-	 * 
-	 * HttpResponse response; String jsonString = null;
-	 * 
-	 * @Override protected String doInBackground(String... sUrl) { try { String
-	 * url = sUrl[0];
-	 * 
-	 * StringBuilder builder = new StringBuilder(); HttpClient client = new
-	 * DefaultHttpClient(); HttpGet httpGet = new HttpGet(url); HttpResponse
-	 * response = client.execute(httpGet); StatusLine statusLine =
-	 * response.getStatusLine(); int statusCode = statusLine.getStatusCode(); if
-	 * (statusCode == 200) { HttpEntity entity = response.getEntity();
-	 * InputStream content = entity.getContent(); BufferedReader reader = new
-	 * BufferedReader( new InputStreamReader(content)); String line; while
-	 * ((line = reader.readLine()) != null) { builder.append(line); } jsonString
-	 * = builder.toString(); } else { Log.e("Err", "Failed to download file"); }
-	 * 
-	 * } catch (Exception e) { Log.e("ERROR downloading file", e.getMessage());
-	 * // Show Toast message on UI thread
-	 * 
-	 * runOnUiThread(new Runnable() { public void run() { Toast.makeText(cont,
-	 * "Klingon: Fyah REerf NEtwfk Err", Toast.LENGTH_SHORT).show(); } });
-	 * 
-	 * }
-	 * 
-	 * return null; }
-	 * 
-	 * @Override protected void onCancelled() { Log.i("DWNLD", "cancelled"); }
-	 * 
-	 * @Override protected void onPreExecute() { super.onPreExecute();
-	 * Log.i("DWNLD", "preExec"); }
-	 * 
-	 * @Override protected void onProgressUpdate(Integer... progress) {
-	 * super.onProgressUpdate(progress); Log.i("DWNLD", "ProgressUpd"); // TODO
-	 * Set progress }
-	 * 
-	 * @Override protected void onPostExecute(String str) {
-	 * super.onPostExecute("OK");
-	 * 
-	 * JSONObject json;
-	 * 
-	 * String articleUrl = null; String articleTitle = null; try { json = new
-	 * JSONObject(jsonString); JSONArray elems = json.getJSONArray("articles");
-	 * JSONObject link = elems.getJSONObject(0);
-	 * 
-	 * articleUrl = link.get("mobileurl").toString(); articleTitle =
-	 * link.get("title").toString(); Log.e("url", articleUrl); Log.e("title",
-	 * articleTitle); } catch (JSONException e) { }
-	 * 
-	 * if (articleUrl != null) { // Open ArticleActivity for an article Intent
-	 * myInt = new Intent(cont, ArticleActivity.class);
-	 * myInt.putExtra(ConstantsAndTools.ARTICLE_ID, articleUrl);
-	 * myInt.putExtra(ConstantsAndTools.ARTICLE_TITLE, articleTitle);
-	 * startActivity(myInt); }
-	 * 
-	 * } }
-	 */
+	
+	
 }

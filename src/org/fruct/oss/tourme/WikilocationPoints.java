@@ -48,19 +48,6 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
 		b.appendQueryParameter("locale", locale);
 		b.appendQueryParameter("format", "json");
 		this.url = b.build().toString();
-		
-		Log.e("Tag", url); // TODO: remove	
-	}
-	
-	// Small class for points info
-	public class PointInfo {
-		public String type;
-		public String title;
-		public String url;
-		public String mobileurl;
-		public String distance;
-		public String latitude;
-		public String longitude;
 	}
 	
 	// Download and save in cache JSON file

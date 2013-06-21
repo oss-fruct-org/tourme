@@ -29,31 +29,33 @@ public class NearbyFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-/*		// Find and add points
-		YandexPoints points = new YandexPoints("банкоматы петрозаводск", 100) { // FIXME TODO
+        
+		// Find and add points
+		YandexPoints ya = new YandexPoints("банкоматы петрозаводск", 100) { // FIXME TODO
 			@Override
 			public void onPostExecute(String result) {
 				ArrayList<PointInfo> points = this.openAndParse();
-								
-				adapter.notifyDataSetChanged();
+				adapter = new NearbyAdapter(points, getActivity());
+				setListAdapter(adapter);
 			}
 		};		
 		
-		points.execute();*/
+		ya.execute();
 		
 		WikilocationPoints w = new WikilocationPoints(61.78f, 34.33f, 200, 3000, "ru") {
 			@Override
 			public void onPostExecute(String result){
 				ArrayList<PointInfo> points = this.openAndParse();
 				
-				adapter = new NearbyAdapter(points, getActivity());
-				setListAdapter(adapter);
-				adapter.notifyDataSetChanged();								
+				for (int i = 0; i < points.size(); i ++) {			
+					adapter.add(points.get(i));
+				}
+				
+				adapter.notifyDataSetChanged();
 			}
 		};
-		w.execute();
 		
+		w.execute();
 	}
 
 
@@ -64,12 +66,12 @@ public class NearbyFragment extends ListFragment {
 	
 	
 	// TODO: Extract to separate java-file
-	public class NearbyAdapter extends ArrayAdapter<WikilocationPoints.PointInfo> {
+	public class NearbyAdapter extends ArrayAdapter<PointInfo> {
 		 
-		private List<WikilocationPoints.PointInfo> pointsList;
+		private List<PointInfo> pointsList;
 		private Context context;
 		 
-		public NearbyAdapter(List<WikilocationPoints.PointInfo> pointsList, Context ctx) {
+		public NearbyAdapter(List<PointInfo> pointsList, Context ctx) {
 		    super(ctx, R.layout.nearby_list_item, pointsList);
 		    this.pointsList = pointsList;
 		    this.context = ctx;
@@ -86,12 +88,21 @@ public class NearbyFragment extends ListFragment {
 		    // TODO: icons? favourites? click event?
 		    TextView tv = (TextView) convertView.findViewById(R.id.nearby_list_item_title);
 		    TextView distView = (TextView) convertView.findViewById(R.id.nearby_list_item_descr);
-		    WikilocationPoints.PointInfo p = pointsList.get(position);
-		 
-		        tv.setText(p.title);
-		        distView.setText("" + p.distance);
+		    
+		    PointInfo p = pointsList.get(position);		 
+		    
+		    tv.setText(p.title);
 
-		        return convertView;
+		    // Don't show 'null' in the field of distance
+		    if (p.distance == null) {
+		    	distView.setVisibility(View.INVISIBLE);		    	
+		    } else {
+		    	distView.setText("" + p.distance);
+		    	distView.setVisibility(View.VISIBLE);	
+		    }
+		    	
+
+	        return convertView;
 		}
 	}
 

@@ -51,14 +51,6 @@ public class YandexPoints extends AsyncTask<String, Void, String> {
 		return null; // Have a nice debug!
 	}
 	
-	// Small class for points info
-		public class PointInfo {
-			public String name;
-			public String lon;
-			public String lat;
-			public String info;
-		}
-	
 	// Download and save in cache JSON file
 	@Override
 	protected String doInBackground(String... urls) {
@@ -156,13 +148,13 @@ public class YandexPoints extends AsyncTask<String, Void, String> {
 			for (int i = 0; i < len; i++) {
 				temp = elementsArray.getJSONObject(i);
 				PointInfo point = new PointInfo();
-				point.name = temp.getJSONObject("GeoObject").getString(
+				point.title = temp.getJSONObject("GeoObject").getString(
 						"name");
 				coordinates = temp.getJSONObject("GeoObject")
 						.getJSONObject("Point").getString("pos");
 				coord = coordinates.split(" ");
-				point.lat = coord[1];
-				point.lon = coord[0];
+				point.latitude = coord[1];
+				point.longitude = coord[0];
 				//Log.e("i", "" + coord[1]);
 				points.add(point);
 			}

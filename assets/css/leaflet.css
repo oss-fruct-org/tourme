@@ -386,8 +386,8 @@
 .leaflet-popup-content-wrapper {
 	padding: 1px;
 	text-align: left;
-	-webkit-border-radius: 20px;
-	        border-radius: 20px;
+	-webkit-border-radius: 5px;
+	        border-radius: 5px;
 	}
 .leaflet-popup-content {
 	margin: 14px 20px;
