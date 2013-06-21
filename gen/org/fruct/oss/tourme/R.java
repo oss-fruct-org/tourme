@@ -492,8 +492,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int vpi__tab_unselected_pressed_holo=0x7f020082;
     }
     public static final class id {
-        public static final int action_settings=0x7f040032;
-        public static final int add_data=0x7f04002c;
+        public static final int action_settings=0x7f040034;
+        public static final int add_data=0x7f04002e;
         public static final int articleWebView=0x7f040005;
         public static final int bottom=0x7f040003;
         public static final int container=0x7f040006;
@@ -502,16 +502,18 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int fragment_container_prepare=0x7f040015;
         public static final int image_caption=0x7f04000b;
         public static final int left_drawer=0x7f040009;
-        public static final int map_menu_filter=0x7f04002d;
-        public static final int map_menu_nearby=0x7f04002e;
-        public static final int map_menu_onoff=0x7f04002f;
+        public static final int map_menu_filter=0x7f04002f;
+        public static final int map_menu_nearby=0x7f040030;
+        public static final int map_menu_onoff=0x7f040031;
         public static final int mapchooser=0x7f040012;
         public static final int mapview=0x7f040011;
-        public static final int menu_favourites=0x7f04002a;
+        public static final int menu_favourites=0x7f04002c;
         public static final int menu_list_layout=0x7f04000c;
-        public static final int menu_map=0x7f040029;
-        public static final int menu_onoff_online_mode=0x7f04002b;
-        public static final int menu_settings=0x7f040028;
+        public static final int menu_map=0x7f04002b;
+        public static final int menu_onoff_online_mode=0x7f04002d;
+        public static final int menu_settings=0x7f04002a;
+        public static final int nearby_list_item_descr=0x7f040029;
+        public static final int nearby_list_item_title=0x7f040028;
         public static final int none=0x7f040000;
         public static final int openNearby=0x7f04000e;
         public static final int openPhrasebook=0x7f040010;
@@ -532,12 +534,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int region_list=0x7f040014;
         public static final int socical_networks_warn=0x7f04001c;
         public static final int top=0x7f040004;
-        public static final int travellog_add_entry=0x7f040030;
+        public static final int travellog_add_entry=0x7f040032;
         public static final int travellog_detect_location_btn=0x7f040018;
         public static final int travellog_detect_location_txt=0x7f040019;
         public static final int travellog_edit_text=0x7f040017;
         public static final int travellog_edit_title=0x7f040016;
-        public static final int travellog_post_send=0x7f040031;
+        public static final int travellog_post_send=0x7f040033;
         public static final int travellog_switch_share_fb=0x7f04001b;
         public static final int travellog_switch_share_vk=0x7f04001a;
         public static final int triangle=0x7f040001;
@@ -567,6 +569,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int fragment_prepare_1=0x7f03000c;
         public static final int fragment_prepare_2=0x7f03000d;
         public static final int fragment_prepare_3=0x7f03000e;
+        public static final int nearby_list_item=0x7f03000f;
     }
     public static final class menu {
         public static final int activity_article=0x7f0c0000;

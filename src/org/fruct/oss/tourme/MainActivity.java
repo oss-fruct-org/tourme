@@ -85,6 +85,7 @@ public class MainActivity extends FragmentActivity implements
 		
 		sh = getSharedPreferences(ConstantsAndTools.SHARED_PREFERENCES, 0);
 		
+		
 		// Good practice to show drawer at first launch
 		Boolean firstLaunch = sh.getBoolean(ConstantsAndTools.IS_FIRST_LAUNCH, true);
 		if (firstLaunch) {

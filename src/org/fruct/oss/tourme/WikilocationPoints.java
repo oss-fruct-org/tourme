@@ -8,10 +8,8 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,55 +18,64 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class YandexPoints extends AsyncTask<String, Void, String> {
-	// TODO: сделать несколько запросов сразу
+/**
+ * Get array with Wikipedia articles about N points for coordinates
+ * in radius for locale * 
+ * @author alexander
+ *
+ */
+public class WikilocationPoints extends AsyncTask<String, Void, String> {
+	
 	public static Context cont = MainActivity.context;
 
 	private String url = null;
 
-	//private List<PointInfo> points[]; // List of downloaded points
-
-	public YandexPoints(String query, int resultsCount) {
-		// Prepare url and execute downloading and parsing methods
-		try {
-			query = URLEncoder.encode(query, "utf-8");
-		} catch (UnsupportedEncodingException e) {
-			Log.e("YandexPoints err:", e.toString());
-		}
+	public WikilocationPoints(float latitude, float longitude, int resultsCount,
+			int radius, String locale) {
 		
-		this.url = "http://psearch-maps.yandex.ru/1.x/" + "?text=" + query
-				+ "&format=json&results=" + resultsCount
-				+ "&key=AFuBw04BAAAAMTvVXAIAPh1FQcViqX_YMyHSr38laE_"
-				+ "zr6YAAAAAAAAAAACv_CRUIU-VJsqPpO-ArbvLPAIs4Q==";
-	}
-	
-	// return downloaded points
-	public List<PointInfo>[] getPoints() {
-		//return this.points;
-		return null; // Have a nice debug!
+		// TODO: locations find
+		// TODO: more parameters to serve: especially type, title
+		
+		Uri.Builder b = Uri.parse("http://api.wikilocation.org/articles").buildUpon();
+		b.appendQueryParameter("lat", String.valueOf(latitude));
+		b.appendQueryParameter("lng", String.valueOf(longitude));
+		b.appendQueryParameter("limit", String.valueOf(resultsCount));
+		b.appendQueryParameter("radius", String.valueOf(radius));
+		b.appendQueryParameter("locale", locale);
+		b.appendQueryParameter("format", "json");
+		this.url = b.build().toString();
+		
+		Log.e("Tag", url); // TODO: remove	
 	}
 	
 	// Small class for points info
-		public class PointInfo {
-			public String name;
-			public String lon;
-			public String lat;
-			public String info;
-		}
+	public class PointInfo {
+		public String type;
+		public String title;
+		public String url;
+		public String mobileurl;
+		public String distance;
+		public String latitude;
+		public String longitude;
+	}
 	
 	// Download and save in cache JSON file
 	@Override
 	protected String doInBackground(String... urls) {
 		try {
-			//URL url = new URL(urls[0]);
 			URL url = new URL(this.url);
 
 			URLConnection connection = url.openConnection();
 			connection.connect();
 
+			// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+			// TODO: IS IT NECESSARY TO STORE THIS IN DISK AND NOT IN RAM?
+			// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+			
 			// Get cache dir (try to use external memory, if n/a, use
 			// internal)
 			File cacheDir = cont.getExternalCacheDir();
@@ -78,7 +85,7 @@ public class YandexPoints extends AsyncTask<String, Void, String> {
 				cacheDir = cont.getCacheDir();
 			}
 
-			File cacheFile = new File(cacheDir, "ya.json");
+			File cacheFile = new File(cacheDir, "wl.json");
 
 			// Download the file
 			InputStream input = new BufferedInputStream(url.openStream());
@@ -106,8 +113,7 @@ public class YandexPoints extends AsyncTask<String, Void, String> {
 	// Parse JSON file
 	@Override
 	public void onPostExecute(String result) {
-		List<PointInfo> pointz = this.openAndParse(); // TODO: Delete?
-		// Make tricks with UI
+		// Make here tricks with UI (after class extending)
 	}
 	
 	protected ArrayList<PointInfo> openAndParse() {
@@ -127,47 +133,48 @@ public class YandexPoints extends AsyncTask<String, Void, String> {
 		StringBuilder builder = new StringBuilder();
 		// File reading
 		try {
-			File cacheFile = new File(cacheDir, "ya.json");
+			File cacheFile = new File(cacheDir, "wl.json");
 			reader = new BufferedReader(new FileReader(cacheFile)); // TODO: close the reader?
 			for (String line = null; (line = reader.readLine()) != null;) {
 				builder.append(line).append("\n");
 			}
+			reader.close();
 		} catch (Exception e) {
 			Log.e("file", "can't open or read file");
 		}
 		String myJsonString = builder.toString();
-
+		
 		// JSON parsing
 		JSONObject object;
 		try {
 			object = new JSONObject(myJsonString);
-			JSONObject GeoObjectCollection = object.getJSONObject(
-					"response").getJSONObject("GeoObjectCollection");
-			JSONArray elementsArray = GeoObjectCollection
-					.getJSONArray("featureMember");
+			//JSONObject articles = object.getJSONObject("articles");
+			JSONArray elementsArray = object.getJSONArray("articles");
 
 			int len = elementsArray.length();
 			JSONObject temp = null;
-			String[] coord;
-			String coordinates = null;
-			
 
+			// TODO: try catch here
+			
 			// Get all points info and write to PointInfo list
 			for (int i = 0; i < len; i++) {
 				temp = elementsArray.getJSONObject(i);
-				PointInfo point = new PointInfo();
-				point.name = temp.getJSONObject("GeoObject").getString(
-						"name");
-				coordinates = temp.getJSONObject("GeoObject")
-						.getJSONObject("Point").getString("pos");
-				coord = coordinates.split(" ");
-				point.lat = coord[1];
-				point.lon = coord[0];
-				//Log.e("i", "" + coord[1]);
-				points.add(point);
+				
+				//if (!temp.getString("type").equals("")) { // TODO: filter the sh*t; "" - not work!
+					PointInfo point = new PointInfo();
+					point.type = temp.getString("type");
+					point.title = temp.getString("title");
+					point.url = temp.getString("url");
+					point.mobileurl= temp.getString("mobileurl");
+					point.distance = temp.getString("distance");
+					point.latitude = temp.getString("lat");
+					point.longitude = temp.getString("lng");
+				
+					points.add(point);
+				//}
 			}
 		} catch (JSONException e) {
-			Log.e("file", "parse error");
+			Log.e("file", "parse error"+e.toString());
 		}
 		
 		return points;
