@@ -5,13 +5,16 @@ import java.util.List;
 
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class NearbyFragment extends ListFragment {
@@ -24,6 +27,7 @@ public class NearbyFragment extends ListFragment {
 	}*/
 	
 	NearbyAdapter adapter;
+	ArrayList<PointInfo> points;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,7 @@ public class NearbyFragment extends ListFragment {
 
         
 		// Find and add points
-		YandexPoints ya = new YandexPoints("банкоматы петрозаводск", 100) { // FIXME TODO
+		/*YandexPoints ya = new YandexPoints("банкоматы петрозаводск", 100) { // FIXME TODO
 			@Override
 			public void onPostExecute(String result) {
 				ArrayList<PointInfo> points = this.openAndParse();
@@ -40,22 +44,40 @@ public class NearbyFragment extends ListFragment {
 			}
 		};		
 		
-		ya.execute();
+		ya.execute();*/
 		
 		WikilocationPoints w = new WikilocationPoints(61.78f, 34.33f, 200, 3000, "ru") {
 			@Override
 			public void onPostExecute(String result){
-				ArrayList<PointInfo> points = this.openAndParse();
+				points = this.openAndParse();
 				
-				for (int i = 0; i < points.size(); i ++) {			
+				/*for (int i = 0; i < points.size(); i ++) {
 					adapter.add(points.get(i));
 				}
+				adapter.notifyDataSetChanged();*/
 				
-				adapter.notifyDataSetChanged();
+				adapter = new NearbyAdapter(points, getActivity());
+				setListAdapter(adapter);	
+				
+				ListView lv = (ListView) getListView();
+				lv.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view, int position,	long id) {
+						PointInfo p = points.get(position);
+						Intent i = new Intent(getActivity(), ArticleActivity.class);
+						i.putExtra(ConstantsAndTools.ARTICLE_ID, p.mobileurl);
+						i.putExtra(ConstantsAndTools.ARTICLE_TITLE, p.title);
+						startActivity(i);
+					}			
+				});
+				
 			}
 		};
 		
 		w.execute();
+		
+		
 	}
 
 

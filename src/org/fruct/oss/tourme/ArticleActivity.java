@@ -20,19 +20,19 @@ public class ArticleActivity extends Activity {
 	private String articleId = null;
 	private String articleTitle = null;
 	private WebView webView;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_article);
-		
+
 		// Get article Id\name\URL from intent
 		Intent intent = getIntent();
 		articleId = intent.getStringExtra(ConstantsAndTools.ARTICLE_ID);
 		articleTitle = intent.getStringExtra(ConstantsAndTools.ARTICLE_TITLE);
 		Log.i(ConstantsAndTools.ARTICLE_ID, articleId); // FIXME: if no Id passed?
 		setTitle(articleTitle);
-		
+
 		// And load it to the webView
 		setupWebView(articleId);
 	}
@@ -43,7 +43,7 @@ public class ArticleActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_article, menu);
 		return true;
 	}
-	
+
 	/*
 	 * Set up webView instance
 	 */
@@ -63,7 +63,7 @@ public class ArticleActivity extends Activity {
         // Connect java and js by interface
         //webView.addJavascriptInterface(new JavaScriptInterface(this), "android");
 	}
-	
+
 	 /* 
      * Web client for opening external links (domain != wikipedia.org TODO) in external browser,
      * not in webView (preserves for Internet surfing via our webView)

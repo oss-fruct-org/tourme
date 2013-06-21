@@ -70,7 +70,7 @@ public class MapFragment extends Fragment {
 		
 		// TODO: delete
 		// Show articles from Wiki on map
-		WikilocationPoints w = new WikilocationPoints(61.78f, 34.33f, 200, 3000, "ru") {
+		WikilocationPoints w = new WikilocationPoints(61.78f, 34.33f, 2000, 30000, "ru") {
 			@Override
 			public void onPostExecute(String result){
 				ArrayList<PointInfo> points = this.openAndParse();
