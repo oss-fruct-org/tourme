@@ -199,6 +199,7 @@ public class MainActivity extends FragmentActivity implements
 			case(R.id.menu_onoff_online_mode):
 				// Turn on\off online mode (save to shared preferences)
 				// Check for current state and update
+				ed = sh.edit();
 				if (sh.getBoolean("ONLINE_MODE", false) == true)		
 					ed.putBoolean(ConstantsAndTools.ONLINE_MODE, false);
 				else

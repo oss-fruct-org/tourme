@@ -3,10 +3,10 @@ package org.fruct.oss.tourme;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -45,6 +45,13 @@ public class PrepareActivity extends FragmentActivity {
 				Fragment f = null;
 				
 				switch(v.getId()) {
+				case(R.id.prepare_1_reject):
+					// If user rejects downloading offline data, proceed to MainActivity with online mode
+					SharedPreferences sh = getSharedPreferences(ConstantsAndTools.SHARED_PREFERENCES, 0);
+					SharedPreferences.Editor ed = sh.edit();
+					ed.putBoolean(ConstantsAndTools.ONLINE_MODE, true);					
+					finish();
+					break;
 				case(R.id.prepare_1_next):
 					f = new PrepareTwoFragment();
 					break;
@@ -93,6 +100,8 @@ public class PrepareActivity extends FragmentActivity {
 			Boolean hasNetwork = ConstantsAndTools.isOnline(getActivity());
 			TextView networkState = (TextView) view.findViewById(R.id.prepare_1_network);
 			Button btnNext = (Button) view.findViewById(R.id.prepare_1_next);
+			Button btnReject = (Button) view.findViewById(R.id.prepare_1_reject);
+			btnReject.setOnClickListener(nextButtonListener);
 			
 			if (hasNetwork) {
 				networkState.setText(
