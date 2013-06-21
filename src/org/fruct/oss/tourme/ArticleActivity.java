@@ -2,18 +2,17 @@ package org.fruct.oss.tourme;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.RenderPriority;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 public class ArticleActivity extends Activity {
 
@@ -25,6 +24,8 @@ public class ArticleActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_article);
+		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// Get article Id\name\URL from intent
 		Intent intent = getIntent();
@@ -35,6 +36,18 @@ public class ArticleActivity extends Activity {
 
 		// And load it to the webView
 		setupWebView(articleId);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		switch(item.getItemId()) {
+		case(android.R.id.home):
+				finish();
+				break;
+		}
+				
+		return true;		
 	}
 
 	@Override
@@ -85,9 +98,13 @@ public class ArticleActivity extends Activity {
         public void onPageFinished(WebView view, String url) {
         	String webViewTitle = view.getTitle();
         	if (webViewTitle != null) {
-        		int lastDashIndex = webViewTitle.lastIndexOf("—");
-        		webViewTitle = webViewTitle.substring(0, lastDashIndex);
-        		ArticleActivity.this.setTitle(webViewTitle);
+        		try {
+	        		int lastDashIndex = webViewTitle.lastIndexOf("—");
+	        		webViewTitle = webViewTitle.substring(0, lastDashIndex);
+	        		ArticleActivity.this.setTitle(webViewTitle);
+        		} catch (Exception e) {
+        			ArticleActivity.this.setTitle(webViewTitle);
+        		}
         	}
         }
     }
