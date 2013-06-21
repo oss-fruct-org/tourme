@@ -11,6 +11,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 public class MapFragment extends Fragment {
@@ -64,8 +66,22 @@ public class MapFragment extends Fragment {
 		myWebView.loadUrl("file:///android_asset/map.html");
 		myWebView.addJavascriptInterface(new AppInterface(getActivity()), "Android"); // TODO FIXME
 		// url = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-		Log.v("Map tiles URL: ", url);
+
 		myWebView.loadUrl("javascript:setUrl(" + url + ")");
+		
+		myWebView.setWebViewClient(new WebViewClient() {
+			   public void onPageFinished(WebView view, String url) {
+				   
+				   // Online\offline mode depends on setting
+				   SharedPreferences sh = getActivity().getSharedPreferences(ConstantsAndTools.SHARED_PREFERENCES, 0);
+				   if (sh.getBoolean(ConstantsAndTools.ONLINE_MODE, false))
+					   myWebView.loadUrl("javascript:setOnlineLayer();");
+				   else
+					   myWebView.loadUrl("javascript:setOfflineLayer();");
+				   
+				   myWebView.loadUrl("javascript:setPrepareMode(false);"); // Enable touch-to-add-point
+			    }
+		});
 		
 		
 		// TODO: delete

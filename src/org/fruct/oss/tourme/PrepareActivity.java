@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -148,7 +149,15 @@ public class PrepareActivity extends FragmentActivity {
 			final WebView webView = (WebView) view.findViewById(R.id.prepare_2_webview);
 			webView.getSettings().setJavaScriptEnabled(true);
 			webView.loadUrl("file:///android_asset/map.html");
-			webView.loadUrl("javascript:setOnlineLayer();"); // Online mode ONLY (preparing mode, no cache)
+			
+			webView.setWebViewClient(new WebViewClient() {
+
+				   public void onPageFinished(WebView view, String url) {
+					   webView.loadUrl("javascript:setOnlineLayer();"); // Online mode ONLY (preparing mode, no cache)
+					   webView.loadUrl("javascript:setPrepareMode(true);"); // Enable touch-to-add-point
+				    }
+			});
+			
 			
 			// Seekbar only has maximum value (see layout for definition, e.g. android:max="300" (kms))
 			SeekBar s = (SeekBar) view.findViewById(R.id.prepare_2_seekbar);
@@ -161,6 +170,7 @@ public class PrepareActivity extends FragmentActivity {
 					if (progress < 20)
 						progress = 20;
 					webView.loadUrl("javascript:setRadius(" + progress + ");");
+					// TODO: move to onStopTracking?
 				}
 
 				@Override

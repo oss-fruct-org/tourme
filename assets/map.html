@@ -1,7 +1,7 @@
 
 <html>
 <head>
-	<title>Leaflet mobile example</title>
+	<title>Leaflet Map</title>
 
 	<link rel="stylesheet" href="css/leaflet.css" />
 <meta name="viewport"  content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -29,10 +29,17 @@
 		TourMe = {};
 
 		// TODO
-		RADIUS = 20000 //metres
+		RADIUS = 20000; //metres
+
+		// Режим подготовки к поездке, маркеры отмечаются при нажатии 
+		PREPARE_MODE = false; 
 
 		function setRadius(r) {
 			RADIUS = r*1000;
+		}
+
+		function setPrepareMode(flag) {
+			PREPARE_MODE = flag == true ? true : false; 
 		}
 
 		function setUrl(url){
@@ -85,9 +92,12 @@
 				var circle = L.circle(options.latlng, RADIUS, {
 					stroke: false,
 				});
-				TourMe.addMarkersLayer.addLayer(marker);
-				TourMe.addMarkersLayer.addLayer(circle);
-				//TourMe.map.invalidateSize(false);
+
+				if (PREPARE_MODE) {
+					TourMe.addMarkersLayer.addLayer(marker);
+					TourMe.addMarkersLayer.addLayer(circle);
+					//TourMe.map.invalidateSize(false);
+				}
 			});
 
 			/*var baseLayers = {
@@ -98,7 +108,7 @@
 
 			//L.control.layers(baseLayers).addTo(TourMe.map);
 
-			addTestMarkers();
+			//addTestMarkers();
 		}
 		
 		function setOnlineLayer(){
@@ -111,7 +121,7 @@
 			TourMe.map.removeLayer(onlineLayer);
 			TourMe.map.addLayer(offlineLayer);
 		}
-		function addTestMarkers(){
+		/*function addTestMarkers(){
 				//test
 			var i = 0;
 			for (;i<5;i++){
@@ -133,7 +143,7 @@
 			for (;i<5;i++){
 				addMarker("bustour",61.800322+0.004,34.320819+i*0.002,"bustour");
 			}
-		}
+		}*/
 		function addMarker(group, lat, lng, description){
 			var url = "js/images/markers/"+group+".png";
 			var markerIcon = L.icon({
