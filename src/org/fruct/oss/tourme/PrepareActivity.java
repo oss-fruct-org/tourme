@@ -1,12 +1,12 @@
 package org.fruct.oss.tourme;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +16,8 @@ import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 public class PrepareActivity extends FragmentActivity {
@@ -41,8 +43,6 @@ public class PrepareActivity extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				Fragment f = null;
-				FragmentManager fm = null;
-				FragmentTransaction ft = null;
 				
 				switch(v.getId()) {
 				case(R.id.prepare_1_next):
@@ -73,6 +73,7 @@ public class PrepareActivity extends FragmentActivity {
 	
 	/**
 	 * Second screen of Welcome\prepare
+	 * Welcome text, Internet connection check
 	 * @author alexander
 	 *
 	 */
@@ -115,6 +116,7 @@ public class PrepareActivity extends FragmentActivity {
 	
 	/**
 	 * Second screen of Welcome\prepare
+	 * Region selector
 	 * @author alexander
 	 *
 	 */
@@ -127,6 +129,7 @@ public class PrepareActivity extends FragmentActivity {
 			return view;
 		}
 		
+		@SuppressLint("SetJavaScriptEnabled")
 		@Override
 		public void onViewCreated(View view, Bundle savedInstanceState) {
 			
@@ -135,6 +138,26 @@ public class PrepareActivity extends FragmentActivity {
 			webView.getSettings().setJavaScriptEnabled(true);
 			webView.loadUrl("file:///android_asset/map.html");
 			webView.loadUrl("javascript:setOnlineLayer();"); // Online mode ONLY (preparing mode, no cache)
+			
+			// Seekbar only has maximum value (see layout for definition, e.g. android:max="300" (kms))
+			SeekBar s = (SeekBar) view.findViewById(R.id.prepare_2_seekbar);
+			s.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
+
+				@Override
+				public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+					// 'Progress' varies from 0 to value in layout
+					// TODO: change the radius of selection
+				}
+
+				@Override
+				public void onStartTrackingTouch(SeekBar seekBar) {
+				}
+
+				@Override
+				public void onStopTrackingTouch(SeekBar seekBar) {
+				}
+				
+			});
 			
 			// Set up the webView size (depends on screen height)
 			WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
@@ -160,6 +183,7 @@ public class PrepareActivity extends FragmentActivity {
 	
 	/**
 	 * Third screen of Welcome\prepare
+	 * Downloading, unpacking and preparing items
 	 * @author alexander
 	 *
 	 */
