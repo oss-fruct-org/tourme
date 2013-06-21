@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -165,12 +166,6 @@ public class PrepareActivity extends FragmentActivity {
 
 				@Override
 				public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-					// 'Progress' varies from 0 to value in layout
-					// We need to provide radius from 10km to 300 km
-					if (progress < 20)
-						progress = 20;
-					webView.loadUrl("javascript:setRadius(" + progress + ");");
-					// TODO: move to onStopTracking?
 				}
 
 				@Override
@@ -179,6 +174,12 @@ public class PrepareActivity extends FragmentActivity {
 
 				@Override
 				public void onStopTrackingTouch(SeekBar seekBar) {
+					// 'Progress' varies from 0 to value in layout
+					// We need to provide radius from 10km to 300 km
+					int progress = seekBar.getProgress();
+					if (progress < 20)
+						progress = 20;
+					webView.loadUrl("javascript:setRadius(" + progress + ");");
 				}
 				
 			});
