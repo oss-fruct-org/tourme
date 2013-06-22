@@ -10,15 +10,13 @@
         android:layout_height="fill_parent"/>
    
     <!-- App drawer (left pane) -->
-	<LinearLayout
+	<RelativeLayout
         android:orientation="vertical"
         android:id="@+id/left_drawer"
         android:layout_width="240dp"
 	    android:layout_height="match_parent"
 	    android:layout_gravity="start"
 	    android:background="#111" >
-	    
-	    
     
 	    <ListView
 	        android:id="@+id/left_drawer_list"
@@ -29,21 +27,26 @@
 	        android:dividerHeight="0dp" />
 	    
 	    <View
+	        android:id="@+id/drawer_divider"
+	        android:layout_below="@+id/left_drawer_list"
 		    android:layout_width="220dp"
-		    android:gravity="center"
+		    android:layout_centerHorizontal="true"
 		    android:layout_height="1dp"
-		    android:background="#333"/>
+		    android:background="#222"/>
 	    
-	    <TextView 
-	        android:id="@+id/drawer_dummy"
+   	   <ListView
+	        android:id="@+id/left_drawer_list_service"
 	        android:layout_width="fill_parent"
-        	android:layout_height="wrap_content"
-        	android:text="12378"
-        	android:textSize="14sp"
-        	android:textColor="#CC6600" />
+	        android:layout_height="wrap_content"	        	        
+	        android:choiceMode="singleChoice"
+	        android:divider="@android:color/transparent"
+	        android:dividerHeight="0dp"
+	        android:layout_below="@+id/drawer_divider"
+	        android:listSelector="#111"
+	        android:cacheColorHint="#111" />
 	    
     
-    </LinearLayout>
+    </RelativeLayout>
     
     
 

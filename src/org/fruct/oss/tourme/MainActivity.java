@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
 
@@ -29,6 +31,8 @@ public class MainActivity extends FragmentActivity implements
 	public static Context context = null;
 	
 	private ListView drawer;
+	private ListView drawerService;
+	private ArrayAdapter<String> drawerServiceAdapter;
 	ActionBarDrawerToggle drawerToggle;
 	DrawerLayout drawerLayout;
 	
@@ -71,15 +75,31 @@ public class MainActivity extends FragmentActivity implements
 
 		// Fill in the drawer with string array
 		drawer = (ListView) findViewById(R.id.left_drawer_list);
+		drawerService = (ListView) findViewById(R.id.left_drawer_list_service);
+
 		String[] drawerItems = getResources().getStringArray(R.array.drawer_items);
+		String[] drawerItemsService = getResources().getStringArray(R.array.drawer_items_service);
+		
 		drawer.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawerItems));
-		// TODO: add 3 more elems (settings etc) and make them look different
+		drawerServiceAdapter = new ArrayAdapter<String>(this, R.layout.drawer_list_item_service, drawerItemsService);
+		drawerService.setAdapter(drawerServiceAdapter);
+		
 		drawer.setOnItemClickListener(new ListView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				drawerItemSwitch(position);
+				drawerItemSwitch(position, view);
 			}
 		});
+		
+		drawerService.setOnItemClickListener(new ListView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				ListView lv = (ListView) parent;
+				lv.setItemChecked(position, false);
+				drawerItemSwitch(position + 100, view);
+			}
+		});
+
 		
 		drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.LEFT);		
 		
@@ -117,19 +137,19 @@ public class MainActivity extends FragmentActivity implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_main, menu);
+		//getMenuInflater().inflate(R.menu.activity_main, menu);		
+		//return super.onCreateOptionsMenu(menu);
 		
-		return super.onCreateOptionsMenu(menu);
+		return false;
 	}
 
-		
 	/**
 	 * Replace fragment in this main activity by drawer position
 	 * @author alexander
 	 * @param id - number in drawer (clicked)
 	 * 
 	 */
-	public void drawerItemSwitch(int id) {
+	public void drawerItemSwitch(int id, View view) {
 		FragmentManager fm = null;
 		Fragment f = null;
 		FragmentTransaction ft = null;
@@ -159,15 +179,37 @@ public class MainActivity extends FragmentActivity implements
 			case(6):
 				f = new TravellogFragment();
 				break;
-			case(7):
-				Toast.makeText(context, "Switching to on[off]line mode...", Toast.LENGTH_SHORT).show(); // TODO
-				break;
-			case(8):
+				
+			// Bottom drawer's ListView handler	
+			case(100):
 				Toast.makeText(context, "Going to plan new trip...", Toast.LENGTH_SHORT).show(); // TODO
 				break;
-			case(9):
+			case(101):
+				ListView lv = (ListView) findViewById(R.id.left_drawer_list_service);
+				TextView netMode = (TextView) view;
+
+				// TODO: somebody fix this please (doesn't work)
+				ed = sh.edit();
+				
+				if (sh.getBoolean("ONLINE_MODE", false) == true) {
+					ed.putBoolean(ConstantsAndTools.ONLINE_MODE, false);
+					netMode.setText(getResources().getString(R.string.map_menu_on));
+					drawerService.invalidateViews();
+					Log.e("123", netMode.getText()+"");
+					drawerService.invalidateViews();
+				} else {
+					ed.putBoolean(ConstantsAndTools.ONLINE_MODE, true);		
+					netMode.setText(getResources().getString(R.string.map_menu_off));
+					drawerService.invalidateViews();
+					Log.e("123", netMode.getText()+"");
+					drawerService.invalidateViews();
+				} // TODO: if map fragment, do something				
+				
+				ed.commit();
+				
+				break;			
+			case(102):
 				i = new Intent(this, SettingsActivity.class);
-				Toast.makeText(context, "Opening Settings...", Toast.LENGTH_SHORT).show(); // TODO:
 			default:
 				break;
 		}
@@ -194,11 +236,7 @@ public class MainActivity extends FragmentActivity implements
 	          return true;
 		}
 		
-		Intent i = null;
-		
-		FragmentManager fm = null;
-		Fragment f = null;
-		FragmentTransaction ft = null;
+/*		Intent i = null;
 		
 		switch(item.getItemId()) {
 			case(R.id.menu_settings):
@@ -223,18 +261,10 @@ public class MainActivity extends FragmentActivity implements
 		}
 		
 		if (i != null)
-			startActivity(i);
+			startActivity(i);*/
 
-		if (f != null) {
-			fm = getFragmentManager();
-			ft = fm.beginTransaction();
-			ft.replace(R.id.fragment_container, f);
-			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-			ft.commit();
-			drawerLayout.closeDrawers();
-		}
-		
 		return super.onOptionsItemSelected(item);		
+		
 	}
 
 	

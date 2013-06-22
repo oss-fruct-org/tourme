@@ -19,7 +19,8 @@
 
     <string name="menu_add_data">Download data</string>
     <string name="menu_onoff_online_mode">DEL Switch online/offline mode</string>
-    <string name="map_menu_onoff">Online/offline</string>
+    <string name="map_menu_on">Switch to online mode</string>
+    <string name="map_menu_off">Switch to offline mode</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_article">ArticleActivity</string>
     <string name="map_points_categories_title">Filter points</string>
@@ -36,12 +37,14 @@
         <item>@string/practical_info</item>
         <item>@string/favourites</item>
         <item>@string/travellog</item>
-        <!--
-             <item>Online mode</item>
-        <item>Plan new trip</item>
-        <item>Settings</item>
-        -->
     </string-array>
+    
+    <string-array name="drawer_items_service">
+		<item>Plan new trip??</item>
+		<item>@string/map_menu_on</item>
+		<item>@string/menu_settings</item>
+    </string-array>
+    
     <string-array name="map_points_categories">
         <item>Sights</item>
         <item>ATMs</item>

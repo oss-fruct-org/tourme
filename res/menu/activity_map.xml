@@ -14,11 +14,11 @@
         android:icon="@drawable/ic_action_nearby"
         android:title="@string/map_menu_nearby"/>
     
-    <item
+<!--     <item
         android:id="@+id/map_menu_onoff"
         android:orderInCategory="100"
         android:showAsAction="always"
         android:icon="@drawable/ic_action_map_nearby"
-        android:title="@string/map_menu_onoff"/>
+        android:title="@string/map_menu_onoff"/> -->
 
 </menu>

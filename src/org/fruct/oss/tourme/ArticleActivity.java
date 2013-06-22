@@ -9,10 +9,13 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.RenderPriority;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 public class ArticleActivity extends Activity {
 
@@ -71,13 +74,14 @@ public class ArticleActivity extends Activity {
         
         //Wait for the page to load then send the location information
         webView.setWebViewClient(new BrowserWebViewClient());
+        webView.setWebChromeClient(new BrowserWebChromeClient());
         webView.loadUrl(URL);
         
         // Connect java and js by interface
         //webView.addJavascriptInterface(new JavaScriptInterface(this), "android");
 	}
 
-	 /* 
+	/** 
      * Web client for opening external links (domain != wikipedia.org TODO) in external browser,
      * not in webView (preserves for Internet surfing via our webView)
      */
@@ -106,7 +110,23 @@ public class ArticleActivity extends Activity {
         			ArticleActivity.this.setTitle(webViewTitle);
         		}
         	}
+        	ProgressBar pbar = (ProgressBar) findViewById(R.id.article_progressbar);
+        	pbar.setVisibility(View.GONE);
+        	view.setVisibility(View.VISIBLE);
         }
+    }
+    
+    /**
+     * Hold the page loading progress and show progressbar
+     * @author alexander
+     *
+     */
+    private class BrowserWebChromeClient extends WebChromeClient {
+
+    	public void onProgressChanged(WebView webView, int progress) {
+    		ProgressBar pbar = (ProgressBar) findViewById(R.id.article_progressbar);
+    		pbar.setProgress(progress);
+    	}
     }
     
     /* 

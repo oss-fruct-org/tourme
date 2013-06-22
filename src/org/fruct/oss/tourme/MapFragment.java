@@ -263,8 +263,8 @@ public class MapFragment extends Fragment {
 			case (R.id.map_menu_nearby):
 				f = new NearbyFragment();
 				break;
-			case (R.id.map_menu_onoff):
-				break;
+			/*case (R.id.map_menu_onoff):
+				break;*/
 			default:
 				break;
 		}
