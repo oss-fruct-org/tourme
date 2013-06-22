@@ -32,7 +32,6 @@ public class MainActivity extends FragmentActivity implements
 	
 	private ListView drawer;
 	private ListView drawerService;
-	private ArrayAdapter<String> drawerServiceAdapter;
 	ActionBarDrawerToggle drawerToggle;
 	DrawerLayout drawerLayout;
 	
@@ -81,13 +80,12 @@ public class MainActivity extends FragmentActivity implements
 		String[] drawerItemsService = getResources().getStringArray(R.array.drawer_items_service);
 		
 		drawer.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawerItems));
-		drawerServiceAdapter = new ArrayAdapter<String>(this, R.layout.drawer_list_item_service, drawerItemsService);
-		drawerService.setAdapter(drawerServiceAdapter);
+		drawerService.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item_service, drawerItemsService));
 		
 		drawer.setOnItemClickListener(new ListView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				drawerItemSwitch(position, view);
+				drawerItemSwitch(position);
 			}
 		});
 		
@@ -96,7 +94,7 @@ public class MainActivity extends FragmentActivity implements
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				ListView lv = (ListView) parent;
 				lv.setItemChecked(position, false);
-				drawerItemSwitch(position + 100, view);
+				drawerItemSwitch(position + 100);
 			}
 		});
 
@@ -149,7 +147,7 @@ public class MainActivity extends FragmentActivity implements
 	 * @param id - number in drawer (clicked)
 	 * 
 	 */
-	public void drawerItemSwitch(int id, View view) {
+	public void drawerItemSwitch(int id) {
 		FragmentManager fm = null;
 		Fragment f = null;
 		FragmentTransaction ft = null;
@@ -186,25 +184,20 @@ public class MainActivity extends FragmentActivity implements
 				break;
 			case(101):
 				ListView lv = (ListView) findViewById(R.id.left_drawer_list_service);
-				TextView netMode = (TextView) view;
-
+				TextView netMode = (TextView) lv.getChildAt(1);
 				// TODO: somebody fix this please (doesn't work)
 				ed = sh.edit();
 				
 				if (sh.getBoolean("ONLINE_MODE", false) == true) {
 					ed.putBoolean(ConstantsAndTools.ONLINE_MODE, false);
 					netMode.setText(getResources().getString(R.string.map_menu_on));
-					drawerService.invalidateViews();
 					Log.e("123", netMode.getText()+"");
-					drawerService.invalidateViews();
 				} else {
 					ed.putBoolean(ConstantsAndTools.ONLINE_MODE, true);		
 					netMode.setText(getResources().getString(R.string.map_menu_off));
-					drawerService.invalidateViews();
 					Log.e("123", netMode.getText()+"");
-					drawerService.invalidateViews();
 				} // TODO: if map fragment, do something				
-				
+				drawerService.invalidateViews();
 				ed.commit();
 				
 				break;			
