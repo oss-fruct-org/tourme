@@ -70,7 +70,7 @@ public class MainActivity extends FragmentActivity implements
 		getActionBar().setHomeButtonEnabled(true);
 
 		// Fill in the drawer with string array
-		drawer = (ListView) findViewById(R.id.left_drawer);
+		drawer = (ListView) findViewById(R.id.left_drawer_list);
 		String[] drawerItems = getResources().getStringArray(R.array.drawer_items);
 		drawer.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawerItems));
 		// TODO: add 3 more elems (settings etc) and make them look different
@@ -133,6 +133,7 @@ public class MainActivity extends FragmentActivity implements
 		FragmentManager fm = null;
 		Fragment f = null;
 		FragmentTransaction ft = null;
+		Intent i = null;
 		
 		// I know, it's kinda bicycle, but I dunno how to do better
 		switch(id) {
@@ -165,6 +166,7 @@ public class MainActivity extends FragmentActivity implements
 				Toast.makeText(context, "Going to plan new trip...", Toast.LENGTH_SHORT).show(); // TODO
 				break;
 			case(9):
+				i = new Intent(this, SettingsActivity.class);
 				Toast.makeText(context, "Opening Settings...", Toast.LENGTH_SHORT).show(); // TODO:
 			default:
 				break;
@@ -177,7 +179,13 @@ public class MainActivity extends FragmentActivity implements
 			ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 			ft.commit();
 			drawerLayout.closeDrawers();
+			return;
 		}
+		
+		if (i != null) {
+			startActivity(i);
+		}
+		
 	}
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -186,13 +194,15 @@ public class MainActivity extends FragmentActivity implements
 	          return true;
 		}
 		
+		Intent i = null;
+		
 		FragmentManager fm = null;
 		Fragment f = null;
 		FragmentTransaction ft = null;
 		
 		switch(item.getItemId()) {
 			case(R.id.menu_settings):
-				Toast.makeText(context, "No settings implemented yet", Toast.LENGTH_SHORT).show(); // TODO
+				i = new Intent(this, SettingsActivity.class);
 				break;
 			case (R.id.add_data):
 				Toast.makeText(context, "Nothing implemented yet", Toast.LENGTH_SHORT).show(); // TODO
@@ -211,6 +221,9 @@ public class MainActivity extends FragmentActivity implements
 			default:
 				break;
 		}
+		
+		if (i != null)
+			startActivity(i);
 
 		if (f != null) {
 			fm = getFragmentManager();

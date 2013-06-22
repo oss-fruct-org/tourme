@@ -8,6 +8,7 @@
     <string name="favourites">Favourites</string>
     <string name="travellog">Travel Log</string>
     <string name="menu_settings">Settings</string>
+    <string name="title_activity_settings">@string/menu_settings</string>
     <!--
     <string name="actionbar_main">Home</string>
     <string name="actionbar_map">Map</string>    
@@ -72,24 +73,32 @@
     <string name="title_activity_map_chooser">Choose a region to go</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_prepare">Trip planner</string>
-    
-    <!-- String for Welcome\prepare screen -->
+
+    <!-- Strings for Welcome\prepare screen -->
     <string name="prepare_1_welcome_text">Welcome! TourMe is an application that helps you during your trip. It provides you map, points of interest, location info and useful
         practical info. To use the app, you have to download additional content. Our aim is to provide absolutely offline experience (may be you won\'t be able to use internet
         over the trip).\n\nNow you are to pass a few steps to prepare to your first trip.\n\nYou can cancel downloading items and continue using online mode</string>
-	<string name="prepare_1_network">Your network connection is</string>
-	<string name="available">OK</string>
-	<string name="unavailable">unavailable</string>
-	<string name="no_network">Oops! There is no network available. Please, connect to a network and try again later</string>
-	<string name="prepare_button_next">Next</string>
-	<string name="prepare_button_reject">Cancel</string>
-	
-	<string name="prepare_2_text">Here you have to select regions you want to travel to. Tap on the map to place a mark at a region. To unselect, tap the marker.
+    <string name="prepare_1_network">Your network connection is</string>
+    <string name="available">OK</string>
+    <string name="unavailable">unavailable</string>
+    <string name="no_network">Oops! There is no network available. Please, connect to a network and try again later</string>
+    <string name="prepare_button_next">Next</string>
+    <string name="prepare_button_reject">Cancel</string>
+    <string name="prepare_2_text">Here you have to select regions you want to travel to. Tap on the map to place a mark at a region. To unselect, tap the marker.
 	    You can change the selection size with the seek bar in the bottom. If you are ready, press the \'Next\' button</string>
-	<string name="prepare_2_radius">Selection size:</string>
-	
-	<string name="prepare_3_text">Almost finished. Wait till we download and unpack the items</string>
-	<string name="prepare_3_finished">Download finished. Press \'Done\' to proceed. And have a nice trip!</string>
-	<string name="prepare_button_done">Done</string>
+    <string name="prepare_2_radius">Selection size:</string>
+    <string name="prepare_3_text">Almost finished. Wait till we download and unpack the items</string>
+    <string name="prepare_3_finished">Download finished. Press \'Done\' to proceed. And have a nice trip!</string>
+    <string name="prepare_button_done">Done</string>
+
+
+    <!-- Preference screen -->
+    <string name="info">Information and used sources</string>
+    <string name="about">About</string>
+    <string name="libraries">Used libraries</string>
+    <string name="delete_cache">Manage trips</string>
+    <string name="delete_cache_summary">Remove saved points, articles and map tiles for some trips</string>
+    <string name="plan_new_trip">Plan a new trip</string>
+    <string name="plan_new_trip_summary">Choose a region and download items</string>
 
 </resources>

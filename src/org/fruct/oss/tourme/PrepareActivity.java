@@ -119,7 +119,7 @@ public class PrepareActivity extends FragmentActivity {
 								getResources().getString(R.string.no_network));				
 				
 				btnNext.setEnabled(false);
-			}			
+			}	
 			
 		}
 	}

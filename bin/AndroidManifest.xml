@@ -73,6 +73,14 @@
             android:name="org.fruct.oss.tourme.PrepareActivity"
             android:label="@string/title_activity_prepare" >
         </activity>
+        <activity
+            android:name="org.fruct.oss.tourme.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="org.fruct.oss.tourme.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.fruct.oss.tourme.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
