@@ -48,6 +48,10 @@
 			TourMe.radious = 500;
 		}
 
+		// Double click Android WebView bug work around
+		// No need in this hack in Leaflet v. 0.6.1 (currently in dev)
+		var lastClickTime = 0;
+
 		/**
 		 * Устанавливает режим работы карты
 		 * loadRegion - добавление регионов для загрузки
@@ -88,16 +92,27 @@
 			TourMe.addMarkersLayer.addTo(TourMe.map);
 
 			TourMe.map.on('click', function(options){
-				var marker = L.marker(options.latlng)/**/;
-				var circle = L.circle(options.latlng, RADIUS, {
-					stroke: false,
-				});
 
 				if (PREPARE_MODE) {
-					TourMe.addMarkersLayer.addLayer(marker);
-					TourMe.addMarkersLayer.addLayer(circle);
-					//TourMe.map.invalidateSize(false);
+					var current = new Date().getTime();
+	    			var delta = current - lastClickTime;
+
+	    			// Android WebView bug hack
+	    			// WebView emits ghost clicks near 300 ms
+	    			if (delta > 400) {
+						var marker = L.marker(options.latlng);
+						var circle = L.circle(options.latlng, RADIUS, {
+							stroke: false,
+						});
+						
+						TourMe.addMarkersLayer.addLayer(marker);
+						TourMe.addMarkersLayer.addLayer(circle);
+						//TourMe.map.invalidateSize(false);
+					}
+
+					window.lastClickTime = current;
 				}
+				
 			});
 
 			/*var baseLayers = {

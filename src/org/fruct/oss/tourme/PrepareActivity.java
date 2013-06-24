@@ -12,6 +12,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebView;
@@ -159,7 +160,6 @@ public class PrepareActivity extends FragmentActivity {
 				    }
 			});
 			
-			
 			// Seekbar only has maximum value (see layout for definition, e.g. android:max="300" (kms))
 			SeekBar s = (SeekBar) view.findViewById(R.id.prepare_2_seekbar);
 			s.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
@@ -180,8 +180,7 @@ public class PrepareActivity extends FragmentActivity {
 					if (progress < 20)
 						progress = 20;
 					webView.loadUrl("javascript:setRadius(" + progress + ");");
-				}
-				
+				}				
 			});
 			
 			// Set up the webView size (depends on screen height)
