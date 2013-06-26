@@ -125,6 +125,10 @@
 
 			//addTestMarkers();
 		}
+
+		function clearAllMarkers() {
+			TourMe.addMarkersLayer.clearLayers();
+		}
 		
 		function setOnlineLayer(){
 			TourMe.map.removeLayer(offlineLayer);
