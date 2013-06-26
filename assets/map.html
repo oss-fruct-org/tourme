@@ -97,16 +97,22 @@
 					var current = new Date().getTime();
 	    			var delta = current - lastClickTime;
 
+	    			android_webview_hack = L.Browser.android ? 400 : 0;
+
 	    			// Android WebView bug hack
 	    			// WebView emits ghost clicks near 300 ms
-	    			if (delta > 400) {
+	    			if (delta > android_webview_hack) {
 						var marker = L.marker(options.latlng);
 						var circle = L.circle(options.latlng, RADIUS, {
 							stroke: false,
 						});
 						
-						TourMe.addMarkersLayer.addLayer(marker);
+						//TourMe.addMarkersLayer.addLayer(marker);
 						TourMe.addMarkersLayer.addLayer(circle);
+
+						circle.on('click', function() {
+							TourMe.map.removeLayer(circle);
+						});
 						//TourMe.map.invalidateSize(false);
 					}
 
