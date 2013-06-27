@@ -186,19 +186,23 @@ public class MainActivity extends FragmentActivity implements
 				ListView lv = (ListView) findViewById(R.id.left_drawer_list_service);
 				TextView netMode = (TextView) lv.getChildAt(1);
 				// TODO: somebody fix this please (doesn't work)
+				drawerService.invalidateViews();
 				ed = sh.edit();
-				
+				drawerService.invalidateViews();
 				if (sh.getBoolean("ONLINE_MODE", false) == true) {
 					ed.putBoolean(ConstantsAndTools.ONLINE_MODE, false);
 					netMode.setText(getResources().getString(R.string.map_menu_on));
+					drawerService.invalidateViews();
 					Log.e("123", netMode.getText()+"");
 				} else {
 					ed.putBoolean(ConstantsAndTools.ONLINE_MODE, true);		
 					netMode.setText(getResources().getString(R.string.map_menu_off));
+					drawerService.invalidateViews();
 					Log.e("123", netMode.getText()+"");
 				} // TODO: if map fragment, do something				
 				drawerService.invalidateViews();
 				ed.commit();
+				drawerService.invalidateViews();
 				
 				break;			
 			case(102):
@@ -208,6 +212,7 @@ public class MainActivity extends FragmentActivity implements
 		}
 		
 		if (f != null) {
+			drawerService.invalidateViews();
 			fm = getFragmentManager();
 			ft = fm.beginTransaction();
 			ft.replace(R.id.fragment_container, f);
@@ -218,8 +223,10 @@ public class MainActivity extends FragmentActivity implements
 		}
 		
 		if (i != null) {
+			drawerService.invalidateViews();
 			startActivity(i);
 		}
+		drawerService.invalidateViews();
 		
 	}
 	

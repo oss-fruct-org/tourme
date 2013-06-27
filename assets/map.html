@@ -41,6 +41,7 @@
 		function setPrepareMode(flag) {
 			PREPARE_MODE = flag == true ? true : false;
 			
+			TourMe.map.removeLayer(prepareModeLayer);
 			TourMe.map.removeLayer(offlineLayer);
 			TourMe.map.removeLayer(onlineLayer);
 			TourMe.map.addLayer(prepareModeLayer);
@@ -124,7 +125,11 @@
 						TourMe.addMarkersLayer.addLayer(circle);
 
 						circle.on('click', function() {
-							TourMe.map.removeLayer(circle);
+							var click_current = new Date().getTime();
+	    					var click_delta = click_current - lastClickTime;
+	    					if (click_delta > android_webview_hack)
+								TourMe.map.removeLayer(circle);
+							window.lastClickTime = click_current;
 						});
 						//TourMe.map.invalidateSize(false);
 					}
@@ -140,12 +145,14 @@
 		}
 		
 		function setOnlineLayer(){
+			TourMe.map.removeLayer(prepareModeLayer);
 			TourMe.map.removeLayer(offlineLayer);
 			TourMe.map.removeLayer(onlineLayer);
 			TourMe.map.addLayer(onlineLayer);
 		}
 
 		function setOfflineLayer(){
+			TourMe.map.removeLayer(prepareModeLayer);
 			TourMe.map.removeLayer(offlineLayer);
 			TourMe.map.removeLayer(onlineLayer);
 			TourMe.map.addLayer(offlineLayer);
