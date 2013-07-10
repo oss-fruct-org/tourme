@@ -34,7 +34,7 @@ public class ArticleActivity extends Activity {
 		Intent intent = getIntent();
 		articleId = intent.getStringExtra(ConstantsAndTools.ARTICLE_ID);
 		articleTitle = intent.getStringExtra(ConstantsAndTools.ARTICLE_TITLE);
-		Log.i(ConstantsAndTools.ARTICLE_ID, articleId); // FIXME: if no Id passed?
+		//Log.i(ConstantsAndTools.ARTICLE_ID, articleId); // FIXME: if no Id passed?
 		setTitle(articleTitle);
 
 		// And load it to the webView
@@ -48,8 +48,11 @@ public class ArticleActivity extends Activity {
 		case(android.R.id.home):
 				finish();
 				break;
+		case(R.id.article_activity_show_on_map):
+			// TODO: open Map and center on selected point
+			break;
 		}
-				
+		
 		return true;		
 	}
 
@@ -99,7 +102,11 @@ public class ArticleActivity extends Activity {
         }        
         
         @Override
-        public void onPageFinished(WebView view, String url) {
+        public void onPageFinished(WebView view, String url) {       	
+        	
+        	// Hide Wikipedia's searchbar
+        	webView.loadUrl("javascript:document.getElementsByClassName('header')[0].style.display='none'");
+        	
         	String webViewTitle = view.getTitle();
         	if (webViewTitle != null) {
         		try {

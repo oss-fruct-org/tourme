@@ -86,7 +86,7 @@
     <string name="unavailable">unavailable</string>
     <string name="no_network">Oops! There is no network available. Please, connect to a network and try again later</string>
     <string name="prepare_button_next">Next</string>
-    <string name="prepare_button_reject">Cancel</string>
+    <string name="prepare_button_reject">Skip</string>
     <string name="prepare_2_text">Here you have to select regions you want to travel to. Tap on the map to place a mark at a region. To unselect, tap the marker.
 	    You can change the selection size with the seek bar in the bottom. If you are ready, press the \'Next\' button</string>
     <string name="prepare_2_radius">Selection size:</string>
@@ -103,5 +103,7 @@
     <string name="delete_cache_summary">Remove saved points, articles and map tiles for some trips</string>
     <string name="plan_new_trip">Plan a new trip</string>
     <string name="plan_new_trip_summary">Choose a region and download items</string>
+    
+    <string name="menu_article_activity_show_on_map">Show on map</string>
 
 </resources>
