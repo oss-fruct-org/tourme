@@ -7,6 +7,7 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,6 +69,13 @@ public class NearbyFragment extends ListFragment {
 						Intent i = new Intent(getActivity(), ArticleActivity.class);
 						i.putExtra(ConstantsAndTools.ARTICLE_ID, p.mobileurl);
 						i.putExtra(ConstantsAndTools.ARTICLE_TITLE, p.title);
+						
+						// Put bundle of article's coordinates
+						Bundle coords = new Bundle();
+						coords.putString("latitude", p.latitude);
+						coords.putString("longitude", p.longitude);
+						i.putExtra(ConstantsAndTools.ARTICLE_COORDINATES, coords);
+						
 						startActivity(i);
 					}			
 				});

@@ -21,6 +21,8 @@ public class ArticleActivity extends Activity {
 
 	private String articleId = null;
 	private String articleTitle = null;
+	private Bundle articleCoords;
+	
 	private WebView webView;
 
 	@Override
@@ -32,9 +34,11 @@ public class ArticleActivity extends Activity {
 
 		// Get article Id\name\URL from intent
 		Intent intent = getIntent();
-		articleId = intent.getStringExtra(ConstantsAndTools.ARTICLE_ID);
+		articleId = intent.getStringExtra(ConstantsAndTools.ARTICLE_ID); // FIXME: if no Id passed?
 		articleTitle = intent.getStringExtra(ConstantsAndTools.ARTICLE_TITLE);
-		//Log.i(ConstantsAndTools.ARTICLE_ID, articleId); // FIXME: if no Id passed?
+		
+		articleCoords = intent.getBundleExtra(ConstantsAndTools.ARTICLE_COORDINATES);
+		
 		setTitle(articleTitle);
 
 		// And load it to the webView
@@ -50,6 +54,15 @@ public class ArticleActivity extends Activity {
 				break;
 		case(R.id.article_activity_show_on_map):
 			// TODO: open Map and center on selected point
+			// 1. put LatLon & fragment id to intent
+			// 2. open activity & set args for fragment
+			// 3. open fragment by fragment id there
+			// 4. handle args in fragment
+			Intent i = new Intent(this, MainActivity.class);
+			i.putExtra(ConstantsAndTools.ARTICLE_COORDINATES, articleCoords);
+			//i.putExtra(ConstantsAndTools.FRAGMENT_TO_OPEN, "map");
+			startActivity(i);
+			
 			break;
 		}
 		

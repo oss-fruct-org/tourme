@@ -102,7 +102,6 @@ public class MapFragment extends Fragment {
 		
 	}
 	
-	
 	public void switchOnlineOfflineMode() {
 		int mode = 0; // TODO: get current mode
 		String urlToLoad = "javascript:";
@@ -149,14 +148,20 @@ public class MapFragment extends Fragment {
 	
 
 	@Override
-	public void onStart() {
-		super.onStart();
-		// During startup, check if there are arguments passed to the fragment.
-		// onStart is a good place to do this because the layout has already
-		// been applied to the fragment at this point so we can safely call the
-		// method below that sets the article text.
-		
-		// Bundle args = getArguments();
+	public void onResume() {
+		super.onResume();
+	
+		Bundle args = getArguments();
+		if (args != null) {
+			// This means transition from ArticleActivity ('show on map' button)
+			// Enlarge zoom level on current coordinates
+			String lat = "0";//args.getString("latitude");
+			String lon = "0";//args.getString("longitude");
+			int zoom = 16; // TODO: is 16 enough?
+			
+			myWebView.loadUrl("javascript:centerWithZoomAt(" + lat + "," + lon + ", " + zoom +");");
+			Log.e("launch", "javascript:centerWithZoomAt(" + lat + ", " + lon + ", " + zoom +");");
+		}
 	}
 	
 
@@ -171,8 +176,8 @@ public class MapFragment extends Fragment {
 		// FIXME: group? What group? What will happen when group isn't exist?
 		myWebView.loadUrl("javascript:addMarker('" + group + "', " + lat + ", "
 				+ lon + ", '" + description + "');"); // TODO: what if aposotrophe is in name?
-		Log.e("js", "javascript:addMarker(" + group + ", " + lat + ", " + lon
-				+ ", '" + description + "');");
+		//Log.e("js", "javascript:addMarker(" + group + ", " + lat + ", " + lon
+		//		+ ", '" + description + "');");
 	}
 	
 

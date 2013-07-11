@@ -16,6 +16,9 @@ public class ConstantsAndTools {
 	// Intent extras
 	public static String ARTICLE_ID = "ARTICLE_ID";
 	public static String ARTICLE_TITLE = "ARTICLE_TITLE";
+	public static String ARTICLE_COORDINATES = "ARTICLE_COORDINATES";
+	
+	public static String FRAGMENT_TO_OPEN = "FRAGMENT_TO_OPEN";
 	
 	// TAG
 	public static String TAG = "org.fruct.oss.tourme";

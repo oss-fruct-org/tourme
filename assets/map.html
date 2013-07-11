@@ -180,6 +180,10 @@
 			TourMe.map.setZoom(num);
 		}
 
+		function centerWithZoomAt(latitude, longitude, zoom) {
+			TourMe.map.setView([latitude, longitude], zoom, null);
+		}
+
 	</script>
 </body>
 </html>

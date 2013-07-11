@@ -52,11 +52,7 @@ public class MainActivity extends FragmentActivity implements
 
             // Home screen fragment
             HomeFragment firstFragment = new HomeFragment();
-
-            // In case this activity was started with special instructions from an Intent,
-            // pass the Intent's extras to the fragment as arguments
-            //firstFragment.setArguments(getIntent().getExtras());
-
+            
             // Add the fragment to the 'fragment_container' FrameLayout
             getFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, firstFragment).commit();
@@ -124,6 +120,22 @@ public class MainActivity extends FragmentActivity implements
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState(); // FIXME app crashes when orientation changes
+    }
+    
+    protected void onNewIntent(Intent intent) {
+    	super.onNewIntent(intent);
+    	
+    	// General way of interaction between ArticleActivity and Map:
+    	// ArticleActivity (intent+bundle) -> MainActivity onNewIntent(bundle) -> MapFragment onStart (set[get]Arguments+bundle)
+    	
+    	// Get data if it has been passed from NearbyActivity (by button 'show on map')
+    	if (intent.getExtras() != null && intent.getExtras().containsKey(ConstantsAndTools.ARTICLE_COORDINATES)) {
+			Bundle articleInfo = intent.getBundleExtra(ConstantsAndTools.ARTICLE_COORDINATES);
+			Fragment mapFragment = new MapFragment();
+			mapFragment.setArguments(articleInfo);
+			getFragmentManager().beginTransaction().replace(R.id.fragment_container, mapFragment).commit();
+		}
+
     }
     
     @Override
