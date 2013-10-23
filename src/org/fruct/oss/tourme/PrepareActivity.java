@@ -1,5 +1,7 @@
 package org.fruct.oss.tourme;
 
+//import com.nutiteq.MapView;
+
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Context;
@@ -138,7 +140,7 @@ public class PrepareActivity extends FragmentActivity {
 			View view = inflater.inflate(R.layout.fragment_prepare_2, container, false);
 			return view;
 		}
-		
+		/*
 		@SuppressLint("SetJavaScriptEnabled")
 		@Override
 		public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -173,12 +175,12 @@ public class PrepareActivity extends FragmentActivity {
 				@Override
 				public void onStopTrackingTouch(SeekBar seekBar) {
 					// 'Progress' varies from 0 to value in layout
-					// We need to provide radius from 10km to 300 km
+					// We need to provide radius from 10km(?) to 300 km
 					int progress = seekBar.getProgress();
 					if (progress < 20)
 						progress = 20;
 					webView.loadUrl("javascript:setRadius(" + progress + ");");
-				}				
+				}
 			});
 			
 			// Set up the webView size (depends on screen height)
@@ -198,9 +200,13 @@ public class PrepareActivity extends FragmentActivity {
 			Button btnNext = (Button) view.findViewById(R.id.prepare_2_next);
 			btnNext.setEnabled(true);
 			btnNext.setOnClickListener(nextButtonListener);
+			
+			webView.loadUrl("javascript:setRadius(" + s.getProgress() + ");");
 		}
 		
 		// TODO: a method to count approx. size of archives to download NEEDED?
+		 
+		 */
 	}
 	
 	/**
@@ -215,10 +221,13 @@ public class PrepareActivity extends FragmentActivity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 			
 			View view = inflater.inflate(R.layout.fragment_prepare_3, container, false);
+			
+			//MapView mapView = (MapView) view.findViewById(R.id.mapView);
+			
 			return view;
 		}
 		
-		@Override
+		/*@Override
 		public void onViewCreated(View view, Bundle savedInstanceState) {
 			
 			// TODO: show (activate) Done button after downloading
@@ -229,7 +238,7 @@ public class PrepareActivity extends FragmentActivity {
 			//TODO: show TextView after downloading
 			TextView txtFinished = (TextView) view.findViewById(R.id.prepare_3_finished);
 			txtFinished.setVisibility(View.VISIBLE);
-		}
+		}*/
 	}
 
 }

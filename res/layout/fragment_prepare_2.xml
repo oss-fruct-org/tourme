@@ -11,6 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp">
 
+
 	    <TextView
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
@@ -39,7 +40,8 @@
 		        android:id="@+id/prepare_2_seekbar"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:max="300" /> <!-- in kilometers -->
+		        android:max="300"
+		        android:progress="150"/> <!-- in kilometers -->
        	           
 	    </LinearLayout>
 	    

@@ -2,6 +2,18 @@ package org.fruct.oss.tourme;
 
 import java.util.ArrayList;
 
+import com.nutiteq.MapView;
+import com.nutiteq.components.Components;
+import com.nutiteq.components.MapPos;
+import com.nutiteq.geometry.Marker;
+import com.nutiteq.projections.EPSG3857;
+import com.nutiteq.rasterlayers.TMSMapLayer;
+import com.nutiteq.style.MarkerStyle;
+import com.nutiteq.ui.DefaultLabel;
+import com.nutiteq.ui.Label;
+import com.nutiteq.utils.UnscaledBitmapLoader;
+import com.nutiteq.vectorlayers.MarkerLayer;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,6 +25,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -30,17 +45,67 @@ import android.widget.Toast;
 public class MapFragment extends Fragment {
 
 	private ArrayList<Integer> selectedCategories;
-
-	private WebView myWebView;
+	
+	private MapView mapView;
+	private TMSMapLayer mapLayer;
+	private MarkerLayer markerLayer;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.activity_map, container, false);
+		
+		mapView = (MapView) view.findViewById(R.id.mapView);
+		mapView.setComponents(new Components());
+		
+		Bitmap watermark = BitmapFactory.decodeResource(view.getResources(),
+		        R.drawable.ic_launcher);
+		
+		// Doesn't work without license
+		//MapView.setWatermark(watermark, 0, 0, 1);
+		
+		// Define base layer. Here we use MapQuest open tiles which are free to use
+		// Almost all online maps use EPSG3857 projection
+		mapLayer = new TMSMapLayer(new EPSG3857(), 0, 18, 0, "http://otile1.mqcdn.com/tiles/1.0.0/osm/", "/", ".png");
+		mapView.getLayers().setBaseLayer(mapLayer);
+		 
+		// start mapping
+		mapView.startMapping();
+		      
+		markerLayer = new MarkerLayer(mapLayer.getProjection());
+
+
+		// add event listener
+		//MyLocationMapEventListener mapListener = new MyLocationMapEventListener(this, mapView);
+		//mapView.getOptions().setMapListener(mapListener);
+
+		// add GPS My Location functionality 
+		//MyLocationCircle locationCircle = new MyLocationCircle();
+		//mapListener.setLocationCircle(locationCircle);
+		//initGps(locationCircle);
 
 		return view;
 	}
+	
+	private void addMarker(String category, String longitude, String latitude, String title, String description) {
+
+		Bitmap pointMarker = UnscaledBitmapLoader.decodeResource(getResources(), R.drawable.ic_launcher); // FIXME: icon category		
+		MarkerStyle markerStyle = MarkerStyle.builder().setBitmap(pointMarker).setSize(0.5f).setColor(Color.WHITE).build();
+		
+		// define label what is shown when you click on marker
+		Label markerLabel = new DefaultLabel(title, description);
+
+		// define location of the marker, it must be converted to base map coordinate system
+		MapPos markerLocation = mapLayer.getProjection().fromWgs84(Float.parseFloat(longitude), Float.parseFloat(latitude));
+
+		// create layer and add object to the layer, finally add layer to the map. 
+		// All overlay layers must be same projection as base layer, so we reuse it
+		if (markerLayer != null) {
+			markerLayer.add(new Marker(markerLocation, markerLabel, markerStyle, null));
+			mapView.getLayers().addLayer(markerLayer);
+		}
+	}
+
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +122,7 @@ public class MapFragment extends Fragment {
 	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		myWebView = (WebView) view.findViewById(R.id.mapview);
+		/*myWebView = (WebView) view.findViewById(R.id.mapview);
 
 		// FIXME: Will it work fine?
 		String url = Environment.getExternalStorageDirectory()
@@ -81,19 +146,20 @@ public class MapFragment extends Fragment {
 				   
 				   myWebView.loadUrl("javascript:setPrepareMode(false);"); // Enable touch-to-add-point
 			    }
-		});
+		});*/
 		
 		
 		// TODO: delete
 		// Show articles from Wiki on map
-		WikilocationPoints w = new WikilocationPoints(61.78f, 34.33f, 2000, 30000, "ru") {
+		WikilocationPoints w = new WikilocationPoints(61.78f, 34.33f, 2000, 30000, "ru") { // TODO
 			@Override
 			public void onPostExecute(String result){
 				ArrayList<PointInfo> points = this.openAndParse();
 				
 				for (int i = 0; i < points.size(); i ++) {
 					PointInfo p = points.get(i);
-					addMarker("pyramid", p.latitude, p.longitude, p.title);
+					addMarker("doesnt matter yet", p.longitude, p.latitude, p.title, "nothing yet"); // FIXME
+					//addMarker("pyramid", p.latitude, p.longitude, p.title);
 				}
 			}
 		};
@@ -101,6 +167,7 @@ public class MapFragment extends Fragment {
 		w.execute();
 		
 	}
+	
 	
 	public void switchOnlineOfflineMode() {
 		int mode = 0; // TODO: get current mode
@@ -111,7 +178,7 @@ public class MapFragment extends Fragment {
 		else
 			urlToLoad = urlToLoad + "setOfflineLayer();";
 			
-		myWebView.loadUrl(urlToLoad);		
+		//myWebView.loadUrl(urlToLoad);		
 	}
 	
 	@Override
@@ -126,6 +193,7 @@ public class MapFragment extends Fragment {
 	 * @author alexander
 	 *
 	 */
+	/*
 	public class AppInterface {
 		Context cont;
 		
@@ -133,12 +201,12 @@ public class MapFragment extends Fragment {
 	        cont = c;
 	    }
 
-	    /** Show a toast from the web page */
+	   // Show a toast from the web page
 	    @JavascriptInterface
 	    public void showToast(String toast) {
 	        Toast.makeText(cont, toast, Toast.LENGTH_SHORT).show();
 	    }
-	}
+	}*/
 	
 
 	@Override
@@ -147,6 +215,7 @@ public class MapFragment extends Fragment {
 	}
 	
 
+	// FIXME all of this
 	@Override
 	public void onResume() {
 		super.onResume();
@@ -155,12 +224,12 @@ public class MapFragment extends Fragment {
 		if (args != null) {
 			// This means transition from ArticleActivity ('show on map' button)
 			// Enlarge zoom level on current coordinates
-			String lat = "0";//args.getString("latitude");
-			String lon = "0";//args.getString("longitude");
+			String lat = args.getString("latitude");
+			String lon = args.getString("longitude");
 			int zoom = 16; // TODO: is 16 enough?
 			
-			myWebView.loadUrl("javascript:centerWithZoomAt(" + lat + "," + lon + ", " + zoom +");");
-			Log.e("launch", "javascript:centerWithZoomAt(" + lat + ", " + lon + ", " + zoom +");");
+			//myWebView.loadUrl("javascript:centerWithZoomAt(" + lat + "," + lon + ", " + zoom +");");
+			//Log.e("launch", "javascript:centerWithZoomAt(" + lat + ", " + lon + ", " + zoom +");");
 		}
 	}
 	
@@ -171,14 +240,14 @@ public class MapFragment extends Fragment {
 	}
 	
 
-	public void addMarker(String group, String lat, String lon,
+	/*public void addMarker(String group, String lat, String lon,
 			String description) {
 		// FIXME: group? What group? What will happen when group isn't exist?
 		myWebView.loadUrl("javascript:addMarker('" + group + "', " + lat + ", "
 				+ lon + ", '" + description + "');"); // TODO: what if aposotrophe is in name?
 		//Log.e("js", "javascript:addMarker(" + group + ", " + lat + ", " + lon
 		//		+ ", '" + description + "');");
-	}
+	}*/
 	
 
 	/**

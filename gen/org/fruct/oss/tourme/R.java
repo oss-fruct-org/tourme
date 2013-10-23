@@ -505,10 +505,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int left_drawer=0x7f04000a;
         public static final int left_drawer_list=0x7f04000b;
         public static final int left_drawer_list_service=0x7f04000d;
+        public static final int mapView=0x7f040017;
         public static final int map_menu_filter=0x7f040037;
         public static final int map_menu_nearby=0x7f040038;
         public static final int mapchooser=0x7f040018;
-        public static final int mapview=0x7f040017;
         public static final int menu_favourites=0x7f040034;
         public static final int menu_list_layout=0x7f040010;
         public static final int menu_map=0x7f040033;
