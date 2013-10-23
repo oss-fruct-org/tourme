@@ -34,7 +34,7 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
 
 	private String url = null;
 
-	public WikilocationPoints(float latitude, float longitude, int resultsCount,
+	public WikilocationPoints(double longitude, double latitude, int resultsCount,
 			int radius, String locale) {
 		
 		// TODO: locations find
@@ -130,7 +130,7 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
 			Log.e("file", "can't open or read file");
 		}
 		String myJsonString = builder.toString();
-		
+
 		// JSON parsing
 		JSONObject object;
 		try {

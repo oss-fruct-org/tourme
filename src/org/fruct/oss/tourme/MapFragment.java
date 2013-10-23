@@ -2,18 +2,6 @@ package org.fruct.oss.tourme;
 
 import java.util.ArrayList;
 
-import com.nutiteq.MapView;
-import com.nutiteq.components.Components;
-import com.nutiteq.components.MapPos;
-import com.nutiteq.geometry.Marker;
-import com.nutiteq.projections.EPSG3857;
-import com.nutiteq.rasterlayers.TMSMapLayer;
-import com.nutiteq.style.MarkerStyle;
-import com.nutiteq.ui.DefaultLabel;
-import com.nutiteq.ui.Label;
-import com.nutiteq.utils.UnscaledBitmapLoader;
-import com.nutiteq.vectorlayers.MarkerLayer;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -23,24 +11,37 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Toast;
+import android.widget.TextView;
+
+import com.nutiteq.MapView;
+import com.nutiteq.components.Components;
+import com.nutiteq.components.MapPos;
+import com.nutiteq.geometry.Marker;
+import com.nutiteq.projections.EPSG3857;
+import com.nutiteq.rasterlayers.TMSMapLayer;
+import com.nutiteq.style.MarkerStyle;
+import com.nutiteq.ui.DefaultLabel;
+import com.nutiteq.ui.Label;
+import com.nutiteq.ui.ViewLabel;
+import com.nutiteq.utils.UnscaledBitmapLoader;
+import com.nutiteq.vectorlayers.MarkerLayer;
 
 public class MapFragment extends Fragment {
 
@@ -49,19 +50,23 @@ public class MapFragment extends Fragment {
 	private MapView mapView;
 	private TMSMapLayer mapLayer;
 	private MarkerLayer markerLayer;
+	
+	private LocationManager mLocationManager;
+	
+	Context context;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.activity_map, container, false);
 		
+		context = getActivity();
+		
 		mapView = (MapView) view.findViewById(R.id.mapView);
 		mapView.setComponents(new Components());
 		
-		Bitmap watermark = BitmapFactory.decodeResource(view.getResources(),
-		        R.drawable.ic_launcher);
-		
 		// Doesn't work without license
+		//Bitmap watermark = BitmapFactory.decodeResource(view.getResources(), R.drawable.ic_launcher);
 		//MapView.setWatermark(watermark, 0, 0, 1);
 		
 		// Define base layer. Here we use MapQuest open tiles which are free to use
@@ -74,37 +79,105 @@ public class MapFragment extends Fragment {
 		      
 		markerLayer = new MarkerLayer(mapLayer.getProjection());
 
+		
+		mapView.getLayers().addLayer(markerLayer);
 
-		// add event listener
-		//MyLocationMapEventListener mapListener = new MyLocationMapEventListener(this, mapView);
-		//mapView.getOptions().setMapListener(mapListener);
-
-		// add GPS My Location functionality 
-		//MyLocationCircle locationCircle = new MyLocationCircle();
-		//mapListener.setLocationCircle(locationCircle);
-		//initGps(locationCircle);
 
 		return view;
 	}
 	
+	/**
+	 * 
+	 * @param category
+	 * @param longitude
+	 * @param latitude
+	 * @param title
+	 * @param description
+	 */
 	private void addMarker(String category, String longitude, String latitude, String title, String description) {
 
 		Bitmap pointMarker = UnscaledBitmapLoader.decodeResource(getResources(), R.drawable.ic_launcher); // FIXME: icon category		
 		MarkerStyle markerStyle = MarkerStyle.builder().setBitmap(pointMarker).setSize(0.5f).setColor(Color.WHITE).build();
 		
 		// define label what is shown when you click on marker
-		Label markerLabel = new DefaultLabel(title, description);
-
+		Label markerLabel;
+		
+		// TODO: go from maerkerLabel to Wiki article
+		
+		if (description == null)
+			markerLabel = new DefaultLabel(title);
+		else
+			markerLabel = new DefaultLabel(title, description);
+		
 		// define location of the marker, it must be converted to base map coordinate system
 		MapPos markerLocation = mapLayer.getProjection().fromWgs84(Float.parseFloat(longitude), Float.parseFloat(latitude));
 
 		// create layer and add object to the layer, finally add layer to the map. 
 		// All overlay layers must be same projection as base layer, so we reuse it
 		if (markerLayer != null) {
-			markerLayer.add(new Marker(markerLocation, markerLabel, markerStyle, null));
-			mapView.getLayers().addLayer(markerLayer);
-		}
+			Marker marker = new Marker(markerLocation, markerLabel, markerStyle, null);
+			markerLayer.add(marker);
+		}		
 	}
+
+	
+	/**
+	 * Clear all markers from markers' layer
+	 */
+	private void clearMarkers() {
+		if (markerLayer != null)
+			markerLayer.clear();
+	}
+	
+	
+	public final LocationListener mLocationListener = new LocationListener() {	   
+
+		@Override
+		public void onLocationChanged(Location location) {
+			
+			double lon = location.getLongitude();
+			double lat = location.getLatitude();
+			
+			clearMarkers();
+			
+			// TODO: delete
+			// Show articles from Wiki on map
+			WikilocationPoints w = new WikilocationPoints(lon, lat, 2000, 30000, "ru") { // TODO
+				@Override
+				public void onPostExecute(String result){
+					ArrayList<PointInfo> points = this.openAndParse();
+					
+					for (int i = 0; i < points.size(); i ++) {
+						PointInfo p = points.get(i);
+						
+						addMarker(p.type, p.longitude, p.latitude, p.title, null);
+						//addMarker("pyramid", p.latitude, p.longitude, p.title);
+					}
+				}
+			};
+			
+			w.execute();
+			
+		}
+
+		@Override
+		public void onProviderDisabled(String provider) {
+			// TODO Auto-generated method stub			
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+
 
 	
 	@Override
@@ -122,6 +195,13 @@ public class MapFragment extends Fragment {
 	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
+		
+		// Location things
+		if (context != null) {
+			mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);	
+		    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3600, 10, mLocationListener); // FIXME 3600000, 1000, provider ?
+		}
+		
 		/*myWebView = (WebView) view.findViewById(R.id.mapview);
 
 		// FIXME: Will it work fine?
@@ -147,24 +227,6 @@ public class MapFragment extends Fragment {
 				   myWebView.loadUrl("javascript:setPrepareMode(false);"); // Enable touch-to-add-point
 			    }
 		});*/
-		
-		
-		// TODO: delete
-		// Show articles from Wiki on map
-		WikilocationPoints w = new WikilocationPoints(61.78f, 34.33f, 2000, 30000, "ru") { // TODO
-			@Override
-			public void onPostExecute(String result){
-				ArrayList<PointInfo> points = this.openAndParse();
-				
-				for (int i = 0; i < points.size(); i ++) {
-					PointInfo p = points.get(i);
-					addMarker("doesnt matter yet", p.longitude, p.latitude, p.title, "nothing yet"); // FIXME
-					//addMarker("pyramid", p.latitude, p.longitude, p.title);
-				}
-			}
-		};
-		
-		w.execute();
 		
 	}
 	
