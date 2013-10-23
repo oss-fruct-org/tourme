@@ -1,5 +1,8 @@
 package org.fruct.oss.tourme;
 
+import java.util.Arrays;
+import java.util.Locale;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -22,6 +25,13 @@ public class ConstantsAndTools {
 	
 	// TAG
 	public static String TAG = "org.fruct.oss.tourme";
+	
+	// Wikipedia articles
+	public static int ARTICLES_AMOUNT = 50; // 50 items is maximum (need offset)
+	public static int ARTICLES_RADIUS = 20000; // 20 km is maximum
+	public static final String[] AVAILABLE_LOCALES = new String[] {"ar", "bg", "ca", "cs", "da", "de", "en", "eo",
+		"es", "fa", "fi", "fr", "he", "hu", "id", "it", "ja", "ko", "lt", "ms", "nl", "no", "nn", "pl", "pt", "ro",
+		"ru", "sk", "sl", "sr", "sv", "tr", "uk", "vi", "vo", "war", "zh"};
 	
 	
 	/**
@@ -89,5 +99,21 @@ public class ConstantsAndTools {
 			return true;
 
 		return false;		
+	}
+	
+	/**
+	 * Get device language
+	 * @param context
+	 * @return language code
+	 */
+	public static String getLocale(Context context) {
+		Locale current = context.getResources().getConfiguration().locale;
+		String lang = current.getLanguage();		
+		
+		if (Arrays.asList(AVAILABLE_LOCALES).contains(lang))		
+			return lang;
+		
+		// If locale is not supported
+		return "en";
 	}
 }

@@ -53,6 +53,11 @@ public class MapFragment extends Fragment {
 	
 	private LocationManager mLocationManager;
 	
+	private double currentLongitude = 0;
+	private double currentLatitude = 0;
+	
+	private boolean firstLaunch = true;
+	
 	Context context;
 
 	@Override
@@ -73,7 +78,10 @@ public class MapFragment extends Fragment {
 		// Almost all online maps use EPSG3857 projection
 		mapLayer = new TMSMapLayer(new EPSG3857(), 0, 18, 0, "http://otile1.mqcdn.com/tiles/1.0.0/osm/", "/", ".png");
 		mapView.getLayers().setBaseLayer(mapLayer);
-		 
+		
+		mapView.getOptions().setDoubleClickZoomIn(true);
+		mapView.getOptions().setKineticRotation(false);
+		
 		// start mapping
 		mapView.startMapping();
 		      
@@ -135,14 +143,25 @@ public class MapFragment extends Fragment {
 		@Override
 		public void onLocationChanged(Location location) {
 			
-			double lon = location.getLongitude();
-			double lat = location.getLatitude();
+			currentLongitude = location.getLongitude();
+			currentLatitude = location.getLatitude();
 			
-			clearMarkers();
+			// Fly to current location at first launch (after location detection)
+			if (firstLaunch && currentLongitude != 0) {
+				Log.e("firstLaunch", ""+currentLongitude);
+				mapView.setFocusPoint(mapLayer.getProjection().fromWgs84(currentLongitude, currentLatitude));
+				mapView.setZoom(14);
+				firstLaunch = false;
+			}
+			
+			clearMarkers();			
+
+			String locale = ConstantsAndTools.getLocale(context);
 			
 			// TODO: delete
 			// Show articles from Wiki on map
-			WikilocationPoints w = new WikilocationPoints(lon, lat, 2000, 30000, "ru") { // TODO
+			WikilocationPoints w = new WikilocationPoints(currentLongitude, currentLatitude,
+					ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
 				@Override
 				public void onPostExecute(String result){
 					ArrayList<PointInfo> points = this.openAndParse();
@@ -201,33 +220,6 @@ public class MapFragment extends Fragment {
 			mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);	
 		    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3600, 10, mLocationListener); // FIXME 3600000, 1000, provider ?
 		}
-		
-		/*myWebView = (WebView) view.findViewById(R.id.mapview);
-
-		// FIXME: Will it work fine?
-		String url = Environment.getExternalStorageDirectory()
-				+ "/osmdroid/Mapnik";
-		myWebView.getSettings().setJavaScriptEnabled(true);
-		myWebView.loadUrl("file:///android_asset/map.html");
-		myWebView.addJavascriptInterface(new AppInterface(getActivity()), "Android"); // TODO FIXME
-		// url = "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-
-		myWebView.loadUrl("javascript:setUrl(" + url + ")");
-		
-		myWebView.setWebViewClient(new WebViewClient() {
-			   public void onPageFinished(WebView view, String url) {
-				   
-				   // Online\offline mode depends on setting
-				   SharedPreferences sh = getActivity().getSharedPreferences(ConstantsAndTools.SHARED_PREFERENCES, 0);
-				   if (sh.getBoolean(ConstantsAndTools.ONLINE_MODE, false))
-					   myWebView.loadUrl("javascript:setOnlineLayer();");
-				   else
-					   myWebView.loadUrl("javascript:setOfflineLayer();");
-				   
-				   myWebView.loadUrl("javascript:setPrepareMode(false);"); // Enable touch-to-add-point
-			    }
-		});*/
-		
 	}
 	
 	

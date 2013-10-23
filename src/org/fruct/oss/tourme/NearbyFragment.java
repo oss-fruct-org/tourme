@@ -49,11 +49,7 @@ public class NearbyFragment extends ListFragment {
 			mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);	
 		    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3600, 10, mLocationListener); // FIXME 3600000, 1000, provider ?
 		}
-
         
-		
-		
-		
 	}
 	
 	public final LocationListener mLocationListener = new LocationListener() {
@@ -77,7 +73,10 @@ public class NearbyFragment extends ListFragment {
 			
 			ya.execute();*/
 			
-			WikilocationPoints w = new WikilocationPoints(lon, lat, 2000, 30000, "ru") { // FIXME
+			String locale = ConstantsAndTools.getLocale(context);
+			
+			WikilocationPoints w = new WikilocationPoints(lon, lat, 
+					ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
 				@Override
 				public void onPostExecute(String result){
 					points = this.openAndParse();
