@@ -12,5 +12,16 @@
         android:id="@+id/fragment_container_prepare"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>
+    
+    <TextView 
+        android:text="DEMO PREVIEW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview_demo_label"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="#666"
+        android:textColor="#ffffff"/>
+    
 
 </RelativeLayout>

@@ -49,7 +49,10 @@ public class MapFragment extends Fragment {
 	
 	private MapView mapView;
 	private TMSMapLayer mapLayer;
-	private MarkerLayer markerLayer;
+	
+	private MarkerLayer markerLayerSights, markerLayerATM, markerLayerWC, markerLayerHotels,
+		markerLayerHospitals, markerLayerPolice;	
+
 	
 	private LocationManager mLocationManager;
 	
@@ -85,10 +88,9 @@ public class MapFragment extends Fragment {
 		// start mapping
 		mapView.startMapping();
 		      
-		markerLayer = new MarkerLayer(mapLayer.getProjection());
+		markerLayerSights = new MarkerLayer(mapLayer.getProjection());
 
-		
-		mapView.getLayers().addLayer(markerLayer);
+		mapView.getLayers().addLayer(markerLayerSights);
 
 
 		return view;
@@ -102,7 +104,7 @@ public class MapFragment extends Fragment {
 	 * @param title
 	 * @param description
 	 */
-	private void addMarker(String category, String longitude, String latitude, String title, String description) {
+	private void addMarker(String layerType, String category, String longitude, String latitude, String title, String description) {
 
 		Bitmap pointMarker = UnscaledBitmapLoader.decodeResource(getResources(), R.drawable.ic_launcher); // FIXME: icon category		
 		MarkerStyle markerStyle = MarkerStyle.builder().setBitmap(pointMarker).setSize(0.5f).setColor(Color.WHITE).build();
@@ -122,10 +124,12 @@ public class MapFragment extends Fragment {
 
 		// create layer and add object to the layer, finally add layer to the map. 
 		// All overlay layers must be same projection as base layer, so we reuse it
-		if (markerLayer != null) {
-			Marker marker = new Marker(markerLocation, markerLabel, markerStyle, null);
-			markerLayer.add(marker);
-		}		
+		Marker marker = new Marker(markerLocation, markerLabel, markerStyle, null);
+		
+		if (layerType.equals("wiki"))			
+			markerLayerSights.add(marker);
+		// TODO: other categories
+
 	}
 
 	
@@ -133,8 +137,8 @@ public class MapFragment extends Fragment {
 	 * Clear all markers from markers' layer
 	 */
 	private void clearMarkers() {
-		if (markerLayer != null)
-			markerLayer.clear();
+		//if (markerLayer != null)
+		markerLayerSights.clear();
 	}
 	
 	
@@ -151,31 +155,29 @@ public class MapFragment extends Fragment {
 				Log.e("firstLaunch", ""+currentLongitude);
 				mapView.setFocusPoint(mapLayer.getProjection().fromWgs84(currentLongitude, currentLatitude));
 				mapView.setZoom(14);
-				firstLaunch = false;
-			}
+				firstLaunch = false;			
 			
-			clearMarkers();			
-
-			String locale = ConstantsAndTools.getLocale(context);
-			
-			// TODO: delete
-			// Show articles from Wiki on map
-			WikilocationPoints w = new WikilocationPoints(currentLongitude, currentLatitude,
-					ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
-				@Override
-				public void onPostExecute(String result){
-					ArrayList<PointInfo> points = this.openAndParse();
-					
-					for (int i = 0; i < points.size(); i ++) {
-						PointInfo p = points.get(i);
+				clearMarkers();			
+	
+				String locale = ConstantsAndTools.getLocale(context);
+				
+				// Show articles from Wiki on map
+				WikilocationPoints w = new WikilocationPoints(currentLongitude, currentLatitude,
+						ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
+					@Override
+					public void onPostExecute(String result){
+						ArrayList<PointInfo> points = this.openAndParse();
 						
-						addMarker(p.type, p.longitude, p.latitude, p.title, null);
-						//addMarker("pyramid", p.latitude, p.longitude, p.title);
+						for (int i = 0; i < points.size(); i ++) {
+							PointInfo p = points.get(i);
+							
+							addMarker("wiki", p.type, p.longitude, p.latitude, p.title, null);
+						}
 					}
-				}
-			};
-			
-			w.execute();
+				};
+				
+				w.execute();
+			}
 			
 		}
 
@@ -218,7 +220,7 @@ public class MapFragment extends Fragment {
 		// Location things
 		if (context != null) {
 			mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);	
-		    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3600, 10, mLocationListener); // FIXME 3600000, 1000, provider ?
+		    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3600, 10, mLocationListener); // FIXME 3600000, 1000, provider ?
 		}
 	}
 	
@@ -292,17 +294,7 @@ public class MapFragment extends Fragment {
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 	}
-	
 
-	/*public void addMarker(String group, String lat, String lon,
-			String description) {
-		// FIXME: group? What group? What will happen when group isn't exist?
-		myWebView.loadUrl("javascript:addMarker('" + group + "', " + lat + ", "
-				+ lon + ", '" + description + "');"); // TODO: what if aposotrophe is in name?
-		//Log.e("js", "javascript:addMarker(" + group + ", " + lat + ", " + lon
-		//		+ ", '" + description + "');");
-	}*/
-	
 
 	/**
 	 * Categories chooser
@@ -348,19 +340,20 @@ public class MapFragment extends Fragment {
 					.setPositiveButton(R.string.ok,
 							new DialogInterface.OnClickListener() {
 								@Override
-								public void onClick(DialogInterface dialog,
-										int id) {
+								public void onClick(DialogInterface dialog,	int id) {
 									// User clicked OK, so save the
 									// mSelectedItems results somewhere
 									// or return them to the component that
 									// opened the dialog
-									// TODO: do something
-									// System.out.print("asdasda");
-									// myWebView.loadUrl("javascript:setZoom(1)");
-									String[] testArray = getResources()
+									/*String[] testArray = getResources()
 											.getStringArray(
-													R.array.map_points_categories);
-									System.out.print(testArray);
+													R.array.map_points_categories);*/
+									
+									if (selectedCategories.contains(0))
+										markerLayerSights.setVisible(true);
+									else
+										markerLayerSights.setVisible(false);
+
 								}
 							})
 					.setNegativeButton(R.string.cancel,

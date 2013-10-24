@@ -6,6 +6,8 @@ import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -13,15 +15,29 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.nutiteq.MapView;
+import com.nutiteq.components.Components;
+import com.nutiteq.components.MapPos;
+import com.nutiteq.geometry.Marker;
+import com.nutiteq.geometry.VectorElement;
+import com.nutiteq.projections.EPSG3857;
+import com.nutiteq.rasterlayers.TMSMapLayer;
+import com.nutiteq.style.MarkerStyle;
+import com.nutiteq.ui.DefaultLabel;
+import com.nutiteq.ui.Label;
+import com.nutiteq.ui.MapListener;
+import com.nutiteq.utils.UnscaledBitmapLoader;
+import com.nutiteq.vectorlayers.MarkerLayer;
 
 public class PrepareActivity extends FragmentActivity {
 
@@ -140,26 +156,32 @@ public class PrepareActivity extends FragmentActivity {
 			View view = inflater.inflate(R.layout.fragment_prepare_2, container, false);
 			return view;
 		}
-		/*
+		
+		private static MarkerLayer circleLayer;
+		private static TMSMapLayer mapLayer;
+		
 		@SuppressLint("SetJavaScriptEnabled")
 		@Override
 		public void onViewCreated(View view, Bundle savedInstanceState) {
 			
 			// TODO: provide button to delete all markers
 			
-			// TODO: prepare mode selection
-			final WebView webView = (WebView) view.findViewById(R.id.prepare_2_webview);
-			webView.getSettings().setJavaScriptEnabled(true);
-			webView.loadUrl("file:///android_asset/map.html");
+			MapView mapView = (MapView) view.findViewById(R.id.prepare_2_mapView);
+			mapView.setComponents(new Components());
+			mapLayer = new TMSMapLayer(new EPSG3857(), 0, 18, 0, "http://otile1.mqcdn.com/tiles/1.0.0/osm/", "/", ".png"); // TODO min max zoom
+			mapView.getLayers().setBaseLayer(mapLayer);			
+			mapView.getOptions().setDoubleClickZoomIn(true);
+			mapView.getOptions().setKineticRotation(false);
 			
-			webView.setWebViewClient(new WebViewClient() {
-
-				   public void onPageFinished(WebView view, String url) {
-					   webView.loadUrl("javascript:setOnlineLayer();"); // Online mode ONLY (preparing mode, no cache)
-					   webView.loadUrl("javascript:setPrepareMode(true);"); // Enable touch-to-add-point
-				    }
-			});
+			// start mapping
+			mapView.startMapping();			
 			
+			circleLayer = new MarkerLayer(mapLayer.getProjection());
+			mapView.getLayers().addLayer(circleLayer);
+			
+			MapEventListener mapListener = new MapEventListener(getActivity());
+	        mapView.getOptions().setMapListener(mapListener);
+						
 			// Seekbar only has maximum value (see layout for definition, e.g. android:max="300" (kms))
 			SeekBar s = (SeekBar) view.findViewById(R.id.prepare_2_seekbar);
 			s.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
@@ -179,7 +201,7 @@ public class PrepareActivity extends FragmentActivity {
 					int progress = seekBar.getProgress();
 					if (progress < 20)
 						progress = 20;
-					webView.loadUrl("javascript:setRadius(" + progress + ");");
+					//webView.loadUrl("javascript:setRadius(" + progress + ");");
 				}
 			});
 			
@@ -190,24 +212,59 @@ public class PrepareActivity extends FragmentActivity {
 			display.getSize(size);
 			int height = size.y;
 			
-			LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) webView.getLayoutParams();
+			LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mapView.getLayoutParams();
 			params.height = Math.round(height/2); // 0.5 from the screen size
-			webView.setLayoutParams(params);
-			
-			// TODO: add JS-interface (see MapFragment.java)
+			mapView.setLayoutParams(params);
 			
 			// TODO: minimum 1 region must be presented to show button
 			Button btnNext = (Button) view.findViewById(R.id.prepare_2_next);
 			btnNext.setEnabled(true);
 			btnNext.setOnClickListener(nextButtonListener);
-			
-			webView.loadUrl("javascript:setRadius(" + s.getProgress() + ");");
 		}
 		
 		// TODO: a method to count approx. size of archives to download NEEDED?
-		 
-		 */
+		
+		private class MapEventListener extends MapListener {
+			
+			Context context;
+			
+			public MapEventListener(Context context) {
+		        this.context = context;
+		    }
+
+			@Override
+			public void onLabelClicked(VectorElement arg0, boolean arg1) {
+			}
+
+			@Override
+			public void onMapClicked(double x, double y, boolean isLongClick) {
+				if (!isLongClick) {
+					Bitmap pointMarker = UnscaledBitmapLoader.decodeResource(getResources(), R.drawable.ic_launcher);	
+					MarkerStyle markerStyle = MarkerStyle.builder().setBitmap(pointMarker).setSize(0.5f).setColor(Color.WHITE).build();
+
+					Label markerLabel = new DefaultLabel("0");					
+					MapPos markerLocation = mapLayer.getProjection().fromWgs84((new EPSG3857()).toWgs84(x, y).x, (new EPSG3857()).toWgs84(x, y).y);
+
+					Marker marker = new Marker(markerLocation, markerLabel, markerStyle, null);
+					
+					circleLayer.add(marker);
+				}
+			}
+
+			@Override
+			public void onMapMoved() {
+			}
+
+			@Override
+			public void onVectorElementClicked(VectorElement arg0, double arg1,
+					double arg2, boolean arg3) {
+			}
+			
+		}
+
 	}
+	
+	
 	
 	/**
 	 * Third screen of Welcome\prepare
