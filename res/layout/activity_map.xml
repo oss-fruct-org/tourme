@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
+    
    <com.nutiteq.MapView
     android:id="@+id/mapView"
     android:layout_width="fill_parent" 

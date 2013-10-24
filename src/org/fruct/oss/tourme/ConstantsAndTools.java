@@ -27,8 +27,9 @@ public class ConstantsAndTools {
 	public static String TAG = "org.fruct.oss.tourme";
 	
 	// Wikipedia articles
-	public static int ARTICLES_AMOUNT = 50; // 50 items is maximum (need offset)
-	public static int ARTICLES_RADIUS = 20000; // 20 km is maximum
+	public static int ARTICLES_AMOUNT = 500; 
+	public static int ARTICLES_MAXIMUM_PER_TIME = 50; // 50 items is maximum per one iteration (API limitation)
+	public static int ARTICLES_RADIUS = 20000; // 20 km is maximum (API limitation)
 	public static final String[] AVAILABLE_LOCALES = new String[] {"ar", "bg", "ca", "cs", "da", "de", "en", "eo",
 		"es", "fa", "fi", "fr", "he", "hu", "id", "it", "ja", "ko", "lt", "ms", "nl", "no", "nn", "pl", "pt", "ro",
 		"ru", "sk", "sl", "sr", "sv", "tr", "uk", "vi", "vo", "war", "zh"};
