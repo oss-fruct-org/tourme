@@ -22,6 +22,9 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -44,6 +47,8 @@ public class HomeFragment extends Fragment {
 	ViewPager viewPager = null;
 	
 	TextView currencyView;
+	TextView phraseView;
+	TextView weatherView;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,22 +110,86 @@ public class HomeFragment extends Fragment {
 			}
 		};
 		
-		TextView b = (TextView) view.findViewById(R.id.openTravelpedia);
+/*		TextView b = (TextView) view.findViewById(R.id.openTravelpedia);
 		TextView b1 = (TextView) view.findViewById(R.id.openNearby);
 		TextView b2 = (TextView) view.findViewById(R.id.openPracticalInfo);
 		TextView b3 = (TextView) view.findViewById(R.id.openPhrasebook);
 		b.setOnClickListener(l);
 		b1.setOnClickListener(l);
 		b2.setOnClickListener(l);
-		b3.setOnClickListener(l);
+		b3.setOnClickListener(l);*/
+		
+		currencyView = (TextView) view.findViewById(R.id.currency);
+		phraseView = (TextView) view.findViewById(R.id.phrase);
+		weatherView = (TextView) view.findViewById(R.id.weather);
+		
+		randomPhrase();
 		
 		GetAndFillCurrency cur = new GetAndFillCurrency();
 		cur.execute();
 		
-		currencyView = (TextView) view.findViewById(R.id.currency);
-		
+		GetAndFillWeather wea = new GetAndFillWeather();
+		wea.execute();
 	}
-	
+		
+	private class GetAndFillWeather extends AsyncTask<Void, Integer, String> {
+		
+		@Override
+		protected String doInBackground(Void... params) {
+			try {
+				Context context = getActivity();
+				
+				Double lon = MainActivity.currentLongitude;
+				Double lat = MainActivity.currentLatitude;
+				
+				Uri.Builder b = Uri.parse("http://api.openweathermap.org/data/2.5/weather").buildUpon();
+				b.appendQueryParameter("lon", String.valueOf(lon));
+				b.appendQueryParameter("lat", String.valueOf(lat));
+				b.appendQueryParameter("units", "metric"); /// FIXME
+				b.appendQueryParameter("lang", String.valueOf(ConstantsAndTools.getLocale(getActivity()))); // If isn't supported, it'll be English				
+				Uri uri = b.build();
+				
+				// Create a URL for the desired page
+				URL url = new URL(uri.toString());
+				
+				// Read all the text returned by the server
+				BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+				String str, tempStr = "";
+				while ((str = in.readLine()) != null) {
+					 tempStr = tempStr + str;
+				}
+				in.close();
+				
+				return tempStr;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return null;			
+		}
+		
+		// Parse JSON file
+		@Override
+		public void onPostExecute(String result) {
+			String wea = getResources().getString(R.string.not_available);
+			
+			try {
+				JSONObject resultObject = new JSONObject(result);
+				
+				String weatherBrief = resultObject.getJSONArray("weather").getJSONObject(0).getString("description");
+				String tempMin = resultObject.getJSONObject("main").getString("temp");
+				String windSpeed = resultObject.getJSONObject("wind").getString("speed");
+				
+				wea = String.format("%s, %.0f°C / %.0fkm/h", weatherBrief.substring(0,1).toUpperCase() + weatherBrief.substring(1),
+						Double.valueOf(tempMin), Double.valueOf(windSpeed)); // FIXME: locale degrees and units
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.e("res", result+"*");
+			}
+			
+			weatherView.setText(wea);
+		}
+	}
 	private class GetAndFillCurrency extends AsyncTask<Void, Integer, String> {
 
 		@Override
@@ -132,8 +201,6 @@ public class HomeFragment extends Fragment {
 				b.appendQueryParameter("to", String.valueOf(ConstantsAndTools.getDeviceCurrency(context)));
 				b.appendQueryParameter("from", "EUR"); // FIXME: get currency of country
 				Uri uri = b.build();
-				
-				
 				
 				 // Create a URL for the desired page
 			    URL url = new URL(uri.toString());
@@ -169,15 +236,33 @@ public class HomeFragment extends Fragment {
 			
 			currencyView.setText(currency);
 		}
-		
-		
+	}
+	
+	/**
+	 * Show random phrase
+	 */
+	private void randomPhrase() {
+		new Thread(new Runnable() {
+		    public void run() {
+		      try {
+		    	  String jsonString = ConstantsAndTools.loadJSONFromAsset("ruFi.json", getActivity()); // FIXME
+		    	  JSONArray phrasebook = new JSONArray(jsonString);
+		    	  int phraseNumber = (int) (Math.random()*phrasebook.length());
+		    	  String phraseLang1 = phrasebook.getJSONArray(phraseNumber).getString(0);
+		    	  String phraseLang2 = phrasebook.getJSONArray(phraseNumber).getString(1);
+		    	  phraseView.setText(phraseLang1 + " — " + phraseLang2);
+	    	  } catch (Exception e) {
+		    	  e.printStackTrace();
+		      }
+		    }
+		  }).start();
 	}
 	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setHasOptionsMenu(true);
+		//this.setHasOptionsMenu(true);
 	}
 	
 	@Override
@@ -197,7 +282,7 @@ public class HomeFragment extends Fragment {
 		Fragment f = null;
 		FragmentTransaction ft = null;
 		
-		switch(v.getId()) {
+		/*switch(v.getId()) {
 			case(R.id.openTravelpedia):
 				// TODO
 				break;
@@ -210,7 +295,7 @@ public class HomeFragment extends Fragment {
 			case(R.id.openPhrasebook):
 				// TODO
 				break;
-		}
+		}*/
 		
 		if (f != null) {
 			fm = getFragmentManager();

@@ -52,7 +52,7 @@ public class MapFragment extends Fragment {
 	
 	private MarkerLayer markerLayerSights, markerLayerATM, markerLayerWC, markerLayerHotels,
 		markerLayerHospitals, markerLayerPolice;	
-
+	private MarkerLayer markerLayerArticle;
 	
 	private LocationManager mLocationManager;
 	
@@ -60,6 +60,7 @@ public class MapFragment extends Fragment {
 	private double currentLatitude = 0;
 	
 	private boolean firstLaunch = true;
+	private boolean fromArticle = false;
 	
 	Context context;
 
@@ -89,8 +90,10 @@ public class MapFragment extends Fragment {
 		mapView.startMapping();
 		      
 		markerLayerSights = new MarkerLayer(mapLayer.getProjection());
+		markerLayerArticle = new MarkerLayer(mapLayer.getProjection());
 
 		mapView.getLayers().addLayer(markerLayerSights);
+		mapView.getLayers().addLayer(markerLayerArticle);
 
 
 		return view;
@@ -128,6 +131,9 @@ public class MapFragment extends Fragment {
 		
 		if (layerType.equals("wiki"))			
 			markerLayerSights.add(marker);
+		if (layerType.equals("fromArticles"))
+			markerLayerArticle.add(marker);
+		
 		// TODO: other categories
 
 	}
@@ -151,7 +157,7 @@ public class MapFragment extends Fragment {
 			currentLatitude = location.getLatitude();
 			
 			// Fly to current location at first launch (after location detection)
-			if (firstLaunch && currentLongitude != 0) {
+			if (firstLaunch && currentLongitude != 0 && !fromArticle) {
 				Log.e("firstLaunch", ""+currentLongitude);
 				mapView.setFocusPoint(mapLayer.getProjection().fromWgs84(currentLongitude, currentLatitude));
 				mapView.setZoom(14);
@@ -213,7 +219,6 @@ public class MapFragment extends Fragment {
 	 * Init webView with map after the view creation It'll not work in onCreate
 	 * etc
 	 */
-	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		
@@ -223,47 +228,14 @@ public class MapFragment extends Fragment {
 		    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3600, 10, mLocationListener); // FIXME 3600000, 1000, provider ?
 		}
 	}
-	
-	
-	public void switchOnlineOfflineMode() {
-		int mode = 0; // TODO: get current mode
-		String urlToLoad = "javascript:";
-		
-		if (mode == 0)
-			urlToLoad = urlToLoad + "setOnlineLayer();";
-		else
-			urlToLoad = urlToLoad + "setOfflineLayer();";
-			
-		//myWebView.loadUrl(urlToLoad);		
-	}
+
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.activity_map, menu);
 	}
-	
-	/**
-	 * Bind this javascript interface to make
-	 * interaction between JS and Java (predefined functions)
-	 * @author alexander
-	 *
-	 */
-	/*
-	public class AppInterface {
-		Context cont;
-		
-	    AppInterface(Context c) {
-	        cont = c;
-	    }
 
-	   // Show a toast from the web page
-	    @JavascriptInterface
-	    public void showToast(String toast) {
-	        Toast.makeText(cont, toast, Toast.LENGTH_SHORT).show();
-	    }
-	}*/
-	
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
@@ -278,14 +250,16 @@ public class MapFragment extends Fragment {
 	
 		Bundle args = getArguments();
 		if (args != null) {
+			fromArticle = true;
 			// This means transition from ArticleActivity ('show on map' button)
 			// Enlarge zoom level on current coordinates
 			String lat = args.getString("latitude");
 			String lon = args.getString("longitude");
-			int zoom = 16; // TODO: is 16 enough?
+			int zoom = 16;
 			
-			//myWebView.loadUrl("javascript:centerWithZoomAt(" + lat + "," + lon + ", " + zoom +");");
-			//Log.e("launch", "javascript:centerWithZoomAt(" + lat + ", " + lon + ", " + zoom +");");
+			mapView.setFocusPoint(mapLayer.getProjection().fromWgs84(Double.parseDouble(lon), Double.parseDouble(lat)));
+			mapView.setZoom(zoom);
+			addMarker("fromArticles", "category?", lon, lat, "[title]", null);
 		}
 	}
 	

@@ -4,7 +4,6 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/activity_bck"
         android:orientation="vertical"
         android:padding="10dip"
         android:weightSum="2"
@@ -22,16 +21,6 @@
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-            
-            <TextView
-                android:id="@+id/currency"
-                style="@style/StrokedText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                />
 
            <!-- <TextView
                 android:id="@+id/weather"
@@ -64,10 +53,47 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical" >
-
+            
             <TextView
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:id="@+id/currency"         
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/card_background"
+                android:padding="10dip"
+                android:textSize="22sp"
+                android:layout_weight="1"
+                />
+            
+            <TextView
+                android:gravity="center"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/card_background"
+                android:clickable="true"
+                android:id="@+id/weather"
+                android:padding="10dip"
+                android:layout_weight="1"
+                android:textSize="22sp" />
+            
+            <TextView
+                android:gravity="center"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/card_background"
+                android:clickable="true"
+                android:id="@+id/phrase"
+                android:padding="10dip"
+                android:layout_weight="1"
+                android:textSize="22sp" />
+
+            <!-- <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/card_background"
                 android:clickable="true"
                 android:id="@+id/openTravelpedia"
@@ -106,6 +132,6 @@
                 android:clickable="true"
                 android:padding="10dip"
                 android:text="@string/phrasebook"
-                android:textSize="22sp" />
+                android:textSize="22sp" /> -->
         </LinearLayout>
     </LinearLayout>

@@ -47,7 +47,7 @@ public class NearbyFragment extends ListFragment {
 
 		if (context != null) {
 			mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);	
-		    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3600, 10, mLocationListener); // FIXME 3600000, 1000, provider ?
+		    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3600, 10, mLocationListener); // FIXME 3600000, 1000, provider ?
 		}
         
 	}
@@ -159,7 +159,7 @@ public class NearbyFragment extends ListFragment {
 		    TextView tv = (TextView) convertView.findViewById(R.id.nearby_list_item_title);
 		    TextView distView = (TextView) convertView.findViewById(R.id.nearby_list_item_descr);
 		    
-		    PointInfo p = pointsList.get(position);		 
+		    PointInfo p = pointsList.get(position);
 		    
 		    tv.setText(p.title);
 

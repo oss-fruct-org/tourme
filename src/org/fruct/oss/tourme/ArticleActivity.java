@@ -60,6 +60,7 @@ public class ArticleActivity extends Activity {
 			// 4. handle args in fragment
 			Intent i = new Intent(this, MainActivity.class);
 			i.putExtra(ConstantsAndTools.ARTICLE_COORDINATES, articleCoords);
+			i.putExtra(ConstantsAndTools.ARTICLE_TITLE, articleTitle);
 			//i.putExtra(ConstantsAndTools.FRAGMENT_TO_OPEN, "map");
 			startActivity(i);
 			

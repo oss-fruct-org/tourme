@@ -8,6 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
@@ -37,6 +40,10 @@ public class MainActivity extends FragmentActivity implements
 	
 	SharedPreferences sh;
 	SharedPreferences.Editor ed;
+	
+	public static LocationManager mLocationManager;
+	public static Double currentLatitude;
+	public static Double currentLongitude;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +119,33 @@ public class MainActivity extends FragmentActivity implements
 			Intent i = new Intent (this, PrepareActivity.class);
 			startActivity(i);
 		}
+		
+		if (context != null) {
+			mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);	
+		    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3600000, 1000, mLocationListener); // FIXME 3600000, 1000, provider ?
+		}
 	}
+	
+	public final LocationListener mLocationListener = new LocationListener() {	   
+
+		@Override
+		public void onLocationChanged(Location location) {
+			currentLongitude = location.getLongitude();
+			currentLatitude = location.getLatitude();
+		}
+
+		@Override
+		public void onProviderDisabled(String provider) {
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+		}
+	};
 
 	
     @Override

@@ -1,5 +1,11 @@
 package org.fruct.oss.tourme;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Currency;
 import java.util.Locale;
@@ -130,6 +136,29 @@ public class ConstantsAndTools {
 		
 		return currency.getCurrencyCode();
 	}
+
+	   /**
+     * Load JSON from assets folder
+     * @param filename name of file to load
+     * @param cont context
+     * @return loaded string
+     */
+    public static String loadJSONFromAsset(String filename, Context cont) {
+        String json;
+        try {
+            InputStream is = cont.getAssets().open(filename);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+        return json;
+    }
 	
 	
 }
