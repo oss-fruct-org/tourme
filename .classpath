@@ -8,5 +8,6 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="lib" path="libs/nutiteq-3d-sdk-2.2.1.jar"/>
 	<classpathentry kind="lib" path="libs/javaproj-1.0.6-noawt.jar"/>
+	<classpathentry kind="lib" path="libs/universal-image-loader-1.8.6.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

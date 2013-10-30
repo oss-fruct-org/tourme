@@ -33,6 +33,9 @@ public class ConstantsAndTools {
 	// TAG
 	public static String TAG = "org.fruct.oss.tourme";
 	
+	// Gallery
+	public static int IMAGES_TO_DOWNLOAD_AND_SHOW = 10; // Images to download for home screen gallery
+	
 	// Wikipedia articles
 	public static int ARTICLES_AMOUNT = 500; 
 	public static int ARTICLES_MAXIMUM_PER_TIME = 50; // 50 items is maximum per one iteration (API limitation)

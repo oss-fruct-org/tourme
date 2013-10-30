@@ -487,11 +487,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int vpi__tab_unselected_pressed_holo=0x7f020082;
     }
     public static final class id {
-        public static final int action_settings=0x7f04003b;
+        public static final int action_settings=0x7f04003d;
         public static final int activity_settings_layout=0x7f04001c;
-        public static final int add_data=0x7f040036;
+        public static final int add_data=0x7f040038;
         public static final int articleWebView=0x7f040005;
-        public static final int article_activity_show_on_map=0x7f040031;
+        public static final int article_activity_show_on_map=0x7f040033;
         public static final int article_progressbar=0x7f040006;
         public static final int bottom=0x7f040003;
         public static final int container=0x7f040007;
@@ -502,21 +502,23 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int drawer_layout=0x7f040008;
         public static final int fragment_container=0x7f040009;
         public static final int fragment_container_prepare=0x7f04001a;
+        public static final int image=0x7f04002f;
         public static final int image_caption=0x7f04000f;
         public static final int left_drawer=0x7f04000a;
         public static final int left_drawer_list=0x7f04000b;
         public static final int left_drawer_list_service=0x7f04000d;
+        public static final int loading=0x7f040030;
         public static final int mapView=0x7f040016;
-        public static final int map_menu_filter=0x7f040037;
-        public static final int map_menu_nearby=0x7f040038;
+        public static final int map_menu_filter=0x7f040039;
+        public static final int map_menu_nearby=0x7f04003a;
         public static final int mapchooser=0x7f040017;
-        public static final int menu_favourites=0x7f040034;
+        public static final int menu_favourites=0x7f040036;
         public static final int menu_list_layout=0x7f040010;
-        public static final int menu_map=0x7f040033;
-        public static final int menu_onoff_online_mode=0x7f040035;
-        public static final int menu_settings=0x7f040032;
-        public static final int nearby_list_item_descr=0x7f040030;
-        public static final int nearby_list_item_title=0x7f04002f;
+        public static final int menu_map=0x7f040035;
+        public static final int menu_onoff_online_mode=0x7f040037;
+        public static final int menu_settings=0x7f040034;
+        public static final int nearby_list_item_descr=0x7f040032;
+        public static final int nearby_list_item_title=0x7f040031;
         public static final int none=0x7f040000;
         public static final int phrase=0x7f040013;
         public static final int prepare_1_logo=0x7f040024;
@@ -535,12 +537,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int socical_networks_warn=0x7f040023;
         public static final int textview_demo_label=0x7f04001b;
         public static final int top=0x7f040004;
-        public static final int travellog_add_entry=0x7f040039;
+        public static final int travellog_add_entry=0x7f04003b;
         public static final int travellog_detect_location_btn=0x7f04001f;
         public static final int travellog_detect_location_txt=0x7f040020;
         public static final int travellog_edit_text=0x7f04001e;
         public static final int travellog_edit_title=0x7f04001d;
-        public static final int travellog_post_send=0x7f04003a;
+        public static final int travellog_post_send=0x7f04003c;
         public static final int travellog_switch_share_fb=0x7f040022;
         public static final int travellog_switch_share_vk=0x7f040021;
         public static final int triangle=0x7f040001;
@@ -574,7 +576,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int fragment_prepare_2=0x7f03000f;
         public static final int fragment_prepare_3=0x7f030010;
         public static final int fragment_settings=0x7f030011;
-        public static final int nearby_list_item=0x7f030012;
+        public static final int item_pager_image=0x7f030012;
+        public static final int nearby_list_item=0x7f030013;
     }
     public static final class menu {
         public static final int activity_article=0x7f0c0000;

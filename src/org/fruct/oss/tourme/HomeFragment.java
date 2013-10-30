@@ -1,20 +1,11 @@
 package org.fruct.oss.tourme;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Fragment;
@@ -22,13 +13,12 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,17 +28,31 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 public class HomeFragment extends Fragment {
 
 	public static Context context = null;
-	ViewPager viewPager = null;
-	
+	static ViewPager viewPager = null;
+	static DisplayImageOptions options;
+
 	TextView currencyView;
 	TextView phraseView;
 	TextView weatherView;
+	
+	ImageLoader imageLoader;
+	
+	ArrayList<String> imagesArray;	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,14 +64,27 @@ public class HomeFragment extends Fragment {
 	}
 	
 	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		
-		// Init the gallery		
-		viewPager = (ViewPager) view.findViewById(R.id.viewPager);
-		ImageAdapter adapter = new ImageAdapter(getActivity());
-		viewPager.setAdapter(adapter);
-		
+	public void onViewCreated(View view, Bundle savedInstanceState) {	
 		context = getActivity();
+		
+		options = new DisplayImageOptions.Builder()
+			.showImageForEmptyUri(R.drawable.ic_action_map_nearby)
+			.showImageOnFail(R.drawable.ic_action_filter)
+			.resetViewBeforeLoading(true)
+			.cacheOnDisc(true)
+			.bitmapConfig(Bitmap.Config.RGB_565)
+			.displayer(new FadeInBitmapDisplayer(300))
+			.imageScaleType(ImageScaleType.IN_SAMPLE_INT)
+			.build();
+		
+		imagesArray = new ArrayList<String>();
+		
+		imageLoader = ImageLoader.getInstance();
+		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+				
+		viewPager = (ViewPager) view.findViewById(R.id.viewPager);
+		viewPager.setAdapter(new ImageAdapter(getActivity(), imagesArray));
+		viewPager.setCurrentItem(0);
 		
 		final int delayTime = 5000;
 		final Handler h = new Handler();
@@ -130,6 +147,9 @@ public class HomeFragment extends Fragment {
 		
 		GetAndFillWeather wea = new GetAndFillWeather();
 		wea.execute();
+		
+		GetNearImages images = new GetNearImages();
+		images.execute();
 	}
 		
 	private class GetAndFillWeather extends AsyncTask<Void, Integer, String> {
@@ -178,10 +198,10 @@ public class HomeFragment extends Fragment {
 				
 				String weatherBrief = resultObject.getJSONArray("weather").getJSONObject(0).getString("description");
 				String tempMin = resultObject.getJSONObject("main").getString("temp");
-				String windSpeed = resultObject.getJSONObject("wind").getString("speed");
+				//String windSpeed = resultObject.getJSONObject("wind").getString("speed");
 				
-				wea = String.format("%s, %.0f°C / %.0fkm/h", weatherBrief.substring(0,1).toUpperCase() + weatherBrief.substring(1),
-						Double.valueOf(tempMin), Double.valueOf(windSpeed)); // FIXME: locale degrees and units
+				wea = String.format("%s, %.0f°C", weatherBrief.substring(0,1).toUpperCase() + weatherBrief.substring(1),
+						Double.valueOf(tempMin)); // FIXME: locale degrees and units
 			} catch (Exception e) {
 				e.printStackTrace();
 				Log.e("res", result+"*");
@@ -190,8 +210,10 @@ public class HomeFragment extends Fragment {
 			weatherView.setText(wea);
 		}
 	}
+	
+	
 	private class GetAndFillCurrency extends AsyncTask<Void, Integer, String> {
-
+		
 		@Override
 		protected String doInBackground(Void... params) {
 			try {
@@ -202,15 +224,15 @@ public class HomeFragment extends Fragment {
 				b.appendQueryParameter("from", "EUR"); // FIXME: get currency of country
 				Uri uri = b.build();
 				
-				 // Create a URL for the desired page
-			    URL url = new URL(uri.toString());
-
-			    // Read all the text returned by the server
-			    BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-			    String str = in.readLine(); // Only 1 line of text
-			    in.close();
+				// Create a URL for the desired page
+				URL url = new URL(uri.toString());
 				
-			    return str;
+				// Read all the text returned by the server
+				BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+				String str = in.readLine(); // Only 1 line of text
+				in.close();
+				
+				return str;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -235,6 +257,71 @@ public class HomeFragment extends Fragment {
 			}
 			
 			currencyView.setText(currency);
+		}
+	}
+	
+	
+	private class GetNearImages extends AsyncTask<Void, Integer, String> {
+
+		@Override
+		protected String doInBackground(Void... params) {
+			try {
+				Context context = getActivity();
+				Double lon = MainActivity.currentLongitude;
+				Double lat = MainActivity.currentLatitude;
+				
+				// See more: http://www.panoramio.com/api/data/api.html
+				//http://www.panoramio.com/map/get_panoramas.php?set=public&from=0&to=5&minx=-180&miny=-90&maxx=180&maxy=90&size=medium&mapfilter=true
+				
+				Uri.Builder b = Uri.parse("http://www.panoramio.com/map/get_panoramas.php").buildUpon();
+				b.appendQueryParameter("set", "public");
+				b.appendQueryParameter("from", "0");
+				b.appendQueryParameter("to", ConstantsAndTools.IMAGES_TO_DOWNLOAD_AND_SHOW + "");
+				b.appendQueryParameter("mapfilter", "true");
+				b.appendQueryParameter("size", "medium");
+				// Workaround: panoramio api doesn't have 'radius' parameter, will use +- 0.5 degree (~50 km)
+				b.appendQueryParameter("minx", String.valueOf(lon - 0.5));
+				b.appendQueryParameter("maxx", String.valueOf(lon + 0.5));
+				b.appendQueryParameter("miny", String.valueOf(lat - 0.5));
+				b.appendQueryParameter("maxy", String.valueOf(lat + 0.5));
+				Uri uri = b.build();
+				
+				// Create a URL for the desired page
+			    URL url = new URL(uri.toString());
+
+			    // Read all the text returned by the server
+			    BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+			    String str, tempStr = "";
+				while ((str = in.readLine()) != null) {
+					 tempStr = tempStr + str;
+				}
+				in.close();
+			    in.close();
+				
+			    return tempStr;
+			} catch (Exception e) {
+				e.printStackTrace();				
+			}
+			
+			return null;			
+		}
+		
+		// Parse JSON file
+		@Override
+		public void onPostExecute(String result) {
+			
+			imagesArray = new ArrayList<String>();
+			
+			try {
+				JSONArray photos = new JSONObject(result).getJSONArray("photos");
+				for (int i = 0; i < photos.length()-1; i++) {
+					// EXTRA TODO: see attribution requirements http://www.panoramio.com/api/data/api.html 
+					imagesArray.add(photos.getJSONObject(i).getString("photo_file_url"));
+				}
+				viewPager.setAdapter(new ImageAdapter(getActivity(), imagesArray));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -359,4 +446,89 @@ public class HomeFragment extends Fragment {
 		super.onConfigurationChanged(newConfig);
 	}
 	
+
+	
+	/**
+	 * Image adapter for gallery at main screen
+	 * @author alexander
+	 * TODO: autorotate
+	 */
+	public class ImageAdapter extends PagerAdapter {
+		Context context;
+		private ArrayList<String> images;
+		private LayoutInflater inflater;
+	
+		ImageAdapter(Context context, ArrayList<String> imagesArray) {
+			this.context = context;
+			this.images = imagesArray;
+			inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		}
+		
+		@Override
+		public int getCount() {
+			return images.size();
+		}
+	
+		@Override
+		public boolean isViewFromObject(View view, Object object) {
+			return view.equals(object);
+		}
+	
+		@Override
+		public Object instantiateItem(ViewGroup view, int position) {
+			View imageLayout = inflater.inflate(R.layout.item_pager_image, view, false);
+	        ImageView imageView = (ImageView) imageLayout.findViewById(R.id.image);
+	        imageView.setPadding(0, 0, 0, 0);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+	        final ProgressBar spinner = (ProgressBar) imageLayout.findViewById(R.id.loading);
+	
+	        
+	        imageLoader.displayImage(images.get(position), imageView, options, new SimpleImageLoadingListener() {
+	                @Override
+	                public void onLoadingStarted(String imageUri, View view) {
+	                        spinner.setVisibility(View.VISIBLE);
+	                }
+	
+	                @Override
+	                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+	                        String message = null;
+	                        switch (failReason.getType()) {
+	                                case IO_ERROR:
+	                                        message = "Input/Output error";
+	                                        break;
+	                                case DECODING_ERROR:
+	                                        message = "Image can't be decoded";
+	                                        break;
+	                                case NETWORK_DENIED:
+	                                        message = "Downloads are denied";
+	                                        break;
+	                                case OUT_OF_MEMORY:
+	                                        message = "Out Of Memory error";
+	                                        break;
+	                                case UNKNOWN:
+	                                        message = "Unknown error";
+	                                        break;
+	                        }
+	
+	                        spinner.setVisibility(View.GONE);
+	                        Log.e("super adapter", "failed"+message);
+	                }
+	
+	                @Override
+	                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+	                        spinner.setVisibility(View.GONE);
+	                }
+	        });
+	
+	        ((ViewPager) view).addView(imageLayout, 0);
+	        return imageLayout;        
+
+		}
+	
+		@Override
+		public void destroyItem(ViewGroup container, int position, Object object) {
+			((ViewPager) container).removeView((View) object);
+		}
+	}
+
 }
