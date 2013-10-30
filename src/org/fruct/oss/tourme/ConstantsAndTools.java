@@ -1,6 +1,7 @@
 package org.fruct.oss.tourme;
 
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.Locale;
 
 import android.content.Context;
@@ -117,4 +118,18 @@ public class ConstantsAndTools {
 		// If locale is not supported
 		return "en";
 	}
+	
+
+	/**
+	 * Get device currency
+	 * @param context
+	 * @return currency code
+	 */
+	public static String getDeviceCurrency(Context context) {
+		Currency currency = Currency.getInstance(Locale.getDefault());		
+		
+		return currency.getCurrencyCode();
+	}
+	
+	
 }

@@ -1,10 +1,29 @@
 package org.fruct.oss.tourme;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
@@ -21,8 +40,10 @@ import android.widget.Toast;
 
 public class HomeFragment extends Fragment {
 
-	public static Context context = null;	
+	public static Context context = null;
 	ViewPager viewPager = null;
+	
+	TextView currencyView;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +61,8 @@ public class HomeFragment extends Fragment {
 		viewPager = (ViewPager) view.findViewById(R.id.viewPager);
 		ImageAdapter adapter = new ImageAdapter(getActivity());
 		viewPager.setAdapter(adapter);
+		
+		context = getActivity();
 		
 		final int delayTime = 5000;
 		final Handler h = new Handler();
@@ -90,7 +113,66 @@ public class HomeFragment extends Fragment {
 		b1.setOnClickListener(l);
 		b2.setOnClickListener(l);
 		b3.setOnClickListener(l);
+		
+		GetAndFillCurrency cur = new GetAndFillCurrency();
+		cur.execute();
+		
+		currencyView = (TextView) view.findViewById(R.id.currency);
+		
 	}
+	
+	private class GetAndFillCurrency extends AsyncTask<Void, Integer, String> {
+
+		@Override
+		protected String doInBackground(Void... params) {
+			try {
+				Context context = getActivity();
+				
+				Uri.Builder b = Uri.parse("http://rate-exchange.appspot.com/currency").buildUpon();
+				b.appendQueryParameter("to", String.valueOf(ConstantsAndTools.getDeviceCurrency(context)));
+				b.appendQueryParameter("from", "EUR"); // FIXME: get currency of country
+				Uri uri = b.build();
+				
+				
+				
+				 // Create a URL for the desired page
+			    URL url = new URL(uri.toString());
+
+			    // Read all the text returned by the server
+			    BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+			    String str = in.readLine(); // Only 1 line of text
+			    in.close();
+				
+			    return str;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return null;			
+		}
+		
+		// Parse JSON file
+		@Override
+		public void onPostExecute(String result) {
+			String currency = getResources().getString(R.string.not_available);
+			
+			try {
+				JSONObject resultObject = new JSONObject(result);
+				String from = resultObject.getString("from");
+				String to = resultObject.getString("to");
+				double rate = resultObject.getDouble("rate");
+				
+				currency = String.format("1 %s = %.2f %s", from, rate, to);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			currencyView.setText(currency);
+		}
+		
+		
+	}
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

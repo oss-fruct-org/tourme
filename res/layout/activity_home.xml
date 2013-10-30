@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
             
-            <!-- <TextView
+            <TextView
                 android:id="@+id/currency"
                 style="@style/StrokedText"
                 android:layout_width="wrap_content"
@@ -31,9 +31,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:text="1EUR = 99.99RUR" />
+                />
 
-            <TextView
+           <!-- <TextView
                 android:id="@+id/weather"
                 style="@style/StrokedText"
                 android:layout_width="wrap_content"

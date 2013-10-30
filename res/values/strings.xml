@@ -105,5 +105,7 @@
     <string name="plan_new_trip_summary">Choose a region and download items</string>
     
     <string name="menu_article_activity_show_on_map">Show on map</string>
+    
+    <string name="not_available">n/a</string>
 
 </resources>
