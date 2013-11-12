@@ -9,13 +9,13 @@
 	    android:layout_height="wrap_content"
 	    android:orientation="vertical"
 	    android:padding="10dp" >	
-	    
+<!-- 	    
 	    <EditText
 	        android:id="@+id/travellog_edit_title"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:hint="@string/travellog_edit_title_placeholder"
-	        android:singleLine="true"/>
+	        android:singleLine="true"/> -->
 	    
 	    <EditText
 	        android:id="@+id/travellog_edit_text"
@@ -23,11 +23,13 @@
 	        android:layout_height="0dp"
 	        android:layout_weight="1"
 	        android:hint="@string/travellog_edit_title_text"
-	        android:inputType="textMultiLine" />
+	        android:inputType="textMultiLine"
+	        android:gravity="top|left" />
 	    
 	    <TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:paddingTop="10dp"
 	        android:text="@string/travellog_checkin" />
 	    
 	    <LinearLayout
@@ -41,10 +43,11 @@
 		        android:id="@+id/travellog_detect_location_btn"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:src="@drawable/ic_action_map_nearby"
-		        android:contentDescription="@string/travellog_detect_location"/>
+		        android:contentDescription="@string/travellog_detect_location"
+		        android:src="@drawable/ic_action_map_nearby" />
 		
 		    <TextView 
+		        android:paddingLeft="10dp"
 		        android:id="@+id/travellog_detect_location_txt"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
@@ -53,7 +56,7 @@
 		</LinearLayout>    
 
 	    
-	    <TextView
+	    <!-- <TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/travellog_share_options" />
@@ -83,18 +86,18 @@
 		        android:thumb="@drawable/switch_inner_holo_light"
 		        android:track="@drawable/switch_track_holo_light" />
 	        
-		    <!-- <Switch
+		    <Switch
 		        android:id="@+id/travellog_switch_share_4sq"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="@string/sq" /> -->	    
+		        android:text="@string/sq" />	    
 	    </LinearLayout>
 	    
 	    <TextView
 	        android:id="@+id/socical_networks_warn"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="@string/travellog_info"/>
+	        android:text="@string/travellog_info"/> -->
 		    
 	</LinearLayout>
 

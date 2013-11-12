@@ -165,9 +165,13 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
 			JSONArray globalArray;
 			
 			// FIXME\KILLME SOMEBODY PLEAAAAAASE
-			String fixedString = "[" + myJsonString.substring(0, myJsonString.length()-2) + "]"; // For valid JSON; Viva la wheel reinventing!
-
-			globalArray = new JSONArray(fixedString);
+			try {
+				String fixedString = "[" + myJsonString.substring(0, myJsonString.length()-2) + "]"; // For valid JSON; Viva la wheel reinventing!
+				globalArray = new JSONArray(fixedString);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
 			
 			// Iterate through all of received 
 			for (int j = 0; j < globalArray.length(); j++) {

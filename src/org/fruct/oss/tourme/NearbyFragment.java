@@ -33,8 +33,6 @@ public class NearbyFragment extends ListFragment {
 	NearbyAdapter adapter;
 	ArrayList<PointInfo> points;
 	
-	private LocationManager mLocationManager;
-	
 	Context context;
 	
 	@Override
@@ -45,90 +43,50 @@ public class NearbyFragment extends ListFragment {
         
         context = getActivity();
 
-		if (context != null) {
-			mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);	
-		    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3600, 10, mLocationListener); // FIXME 3600000, 1000, provider ?
-		}
-        
+		double lon = MainActivity.currentLongitude;
+		double lat = MainActivity.currentLatitude;
+		
+		String locale = ConstantsAndTools.getLocale(context);
+		
+		WikilocationPoints w = new WikilocationPoints(lon, lat, 
+				ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
+			@Override
+			public void onPostExecute(String result){
+				points = this.openAndParse();
+				
+				/*for (int i = 0; i < points.size(); i ++) {
+					adapter.add(points.get(i));
+				}
+				adapter.notifyDataSetChanged();*/
+				
+				adapter = new NearbyAdapter(points, getActivity());
+				setListAdapter(adapter);	
+				
+				ListView lv = (ListView) getListView();
+				lv.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view, int position,	long id) {
+						PointInfo p = points.get(position);
+						Intent i = new Intent(getActivity(), ArticleActivity.class);
+						i.putExtra(ConstantsAndTools.ARTICLE_ID, p.mobileurl);
+						i.putExtra(ConstantsAndTools.ARTICLE_TITLE, p.title);
+						
+						// Put bundle of article's coordinates
+						Bundle coords = new Bundle();
+						coords.putString("latitude", p.latitude);
+						coords.putString("longitude", p.longitude);
+						i.putExtra(ConstantsAndTools.ARTICLE_COORDINATES, coords);
+						
+						startActivity(i);
+					}			
+				});
+				
+			}
+		};
+		
+		w.execute();
 	}
-	
-	public final LocationListener mLocationListener = new LocationListener() {
-
-		@Override
-		public void onLocationChanged(Location location) {
-			
-			double lon = location.getLongitude();
-			double lat = location.getLatitude();
-			
-			
-			// Find and add points
-			/*YandexPoints ya = new YandexPoints("банкоматы петрозаводск", 100) { // FIXME TODO
-				@Override
-				public void onPostExecute(String result) {
-					ArrayList<PointInfo> points = this.openAndParse();
-					adapter = new NearbyAdapter(points, getActivity());
-					setListAdapter(adapter);
-				}
-			};		
-			
-			ya.execute();*/
-			
-			String locale = ConstantsAndTools.getLocale(context);
-			
-			WikilocationPoints w = new WikilocationPoints(lon, lat, 
-					ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
-				@Override
-				public void onPostExecute(String result){
-					points = this.openAndParse();
-					
-					/*for (int i = 0; i < points.size(); i ++) {
-						adapter.add(points.get(i));
-					}
-					adapter.notifyDataSetChanged();*/
-					
-					adapter = new NearbyAdapter(points, getActivity());
-					setListAdapter(adapter);	
-					
-					ListView lv = (ListView) getListView();
-					lv.setOnItemClickListener(new OnItemClickListener() {
-
-						@Override
-						public void onItemClick(AdapterView<?> parent, View view, int position,	long id) {
-							PointInfo p = points.get(position);
-							Intent i = new Intent(getActivity(), ArticleActivity.class);
-							i.putExtra(ConstantsAndTools.ARTICLE_ID, p.mobileurl);
-							i.putExtra(ConstantsAndTools.ARTICLE_TITLE, p.title);
-							
-							// Put bundle of article's coordinates
-							Bundle coords = new Bundle();
-							coords.putString("latitude", p.latitude);
-							coords.putString("longitude", p.longitude);
-							i.putExtra(ConstantsAndTools.ARTICLE_COORDINATES, coords);
-							
-							startActivity(i);
-						}			
-					});
-					
-				}
-			};
-			
-			w.execute();
-		}
-
-		@Override
-		public void onProviderDisabled(String provider) {
-		}
-
-		@Override
-		public void onProviderEnabled(String provider) {
-		}
-
-		@Override
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-		}		
-	};
-
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return false;

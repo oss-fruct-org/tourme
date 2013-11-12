@@ -3,15 +3,19 @@ package org.fruct.oss.tourme;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 public class TravellogNewPostActivity extends FragmentActivity {
 
@@ -20,6 +24,9 @@ public class TravellogNewPostActivity extends FragmentActivity {
 	 * current dropdown position.
 	 */
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+	
+	private static Double lat = 0d;
+	private static Double lon = 0d;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +36,26 @@ public class TravellogNewPostActivity extends FragmentActivity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		// If social network(s) connected, hide the warn message
-		SharedPreferences settings = getSharedPreferences(ConstantsAndTools.SHARED_PREFERENCES, 0);
+		/*SharedPreferences settings = getSharedPreferences(ConstantsAndTools.SHARED_PREFERENCES, 0);
 		if (settings.getBoolean(ConstantsAndTools.SOCICAL_NETWORKS_CONNECTED, false)) {
 			TextView socialNetworksWarn = (TextView) findViewById(R.id.socical_networks_warn);
 			socialNetworksWarn.setVisibility(View.GONE);
-		}
+		}*/
+		
+		ImageButton findLocation = (ImageButton) findViewById(R.id.travellog_detect_location_btn);
+		findLocation.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				lat = MainActivity.currentLatitude;
+				lon = MainActivity.currentLongitude;
+				if (lat !=0 || lon != 0) {
+					TextView locationText = (TextView) findViewById(R.id.travellog_detect_location_txt);
+					locationText.setText("OK! " + lat.toString().substring(0,5) + " " +lon.toString().substring(0,5));
+					Log.e("loc", lat + "*" + lon);
+				}
+			}			
+		});
 	}
 
 	/**
@@ -81,6 +103,17 @@ public class TravellogNewPostActivity extends FragmentActivity {
 			finish();
 			return true;
 		case (R.id.travellog_post_send):
+			EditText post = (EditText) findViewById(R.id.travellog_edit_text);
+			
+			if (post.getText() == null) {
+				// TODO
+				Toast.makeText(getApplicationContext(), "Write your thougts about location, please", Toast.LENGTH_SHORT).show();
+				return true;
+			}
+			String postText = post.getText().toString();
+			Log.e("EditText", postText);
+			
+			
 			// TODO
 			break;
 		
@@ -88,6 +121,7 @@ public class TravellogNewPostActivity extends FragmentActivity {
 		
 		return super.onOptionsItemSelected(item);
 	}
+
 	
 }
 

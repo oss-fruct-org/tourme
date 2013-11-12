@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -52,7 +54,7 @@ public class HomeFragment extends Fragment {
 	
 	ImageLoader imageLoader;
 	
-	ArrayList<String> imagesArray;	
+	ArrayList<List<String>> imagesArray;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,7 +79,7 @@ public class HomeFragment extends Fragment {
 			.imageScaleType(ImageScaleType.IN_SAMPLE_INT)
 			.build();
 		
-		imagesArray = new ArrayList<String>();
+		imagesArray = new ArrayList<List<String>>();
 		
 		imageLoader = ImageLoader.getInstance();
 		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
@@ -162,12 +164,18 @@ public class HomeFragment extends Fragment {
 				Double lon = MainActivity.currentLongitude;
 				Double lat = MainActivity.currentLatitude;
 				
+				if (lon == null || lat == null) {
+					return null;
+				}
+				
 				Uri.Builder b = Uri.parse("http://api.openweathermap.org/data/2.5/weather").buildUpon();
 				b.appendQueryParameter("lon", String.valueOf(lon));
 				b.appendQueryParameter("lat", String.valueOf(lat));
 				b.appendQueryParameter("units", "metric"); /// FIXME
 				b.appendQueryParameter("lang", String.valueOf(ConstantsAndTools.getLocale(getActivity()))); // If isn't supported, it'll be English				
 				Uri uri = b.build();
+				
+				Log.e("Weather URL", uri.toString()+"_");
 				
 				// Create a URL for the desired page
 				URL url = new URL(uri.toString());
@@ -219,6 +227,7 @@ public class HomeFragment extends Fragment {
 			try {
 				Context context = getActivity();
 				
+				// http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s=USDRUB=X
 				Uri.Builder b = Uri.parse("http://rate-exchange.appspot.com/currency").buildUpon();
 				b.appendQueryParameter("to", String.valueOf(ConstantsAndTools.getDeviceCurrency(context)));
 				b.appendQueryParameter("from", "EUR"); // FIXME: get currency of country
@@ -243,7 +252,7 @@ public class HomeFragment extends Fragment {
 		// Parse JSON file
 		@Override
 		public void onPostExecute(String result) {
-			String currency = getResources().getString(R.string.not_available);
+			String currency = "1 EUR = 0,78 USD";//getResources().getString(R.string.not_available);
 			
 			try {
 				JSONObject resultObject = new JSONObject(result);
@@ -267,8 +276,9 @@ public class HomeFragment extends Fragment {
 		protected String doInBackground(Void... params) {
 			try {
 				Context context = getActivity();
-				Double lon = MainActivity.currentLongitude;
+				Double lon = MainActivity.currentLongitude; // TODO FIXME TODO What if location is unavailable?
 				Double lat = MainActivity.currentLatitude;
+				Log.e("lat", lon + lat + "*");
 				
 				// See more: http://www.panoramio.com/api/data/api.html
 				//http://www.panoramio.com/map/get_panoramas.php?set=public&from=0&to=5&minx=-180&miny=-90&maxx=180&maxy=90&size=medium&mapfilter=true
@@ -300,7 +310,7 @@ public class HomeFragment extends Fragment {
 				
 			    return tempStr;
 			} catch (Exception e) {
-				e.printStackTrace();				
+				e.printStackTrace();	
 			}
 			
 			return null;			
@@ -310,17 +320,19 @@ public class HomeFragment extends Fragment {
 		@Override
 		public void onPostExecute(String result) {
 			
-			imagesArray = new ArrayList<String>();
+			imagesArray = new ArrayList<List<String>>();
 			
 			try {
 				JSONArray photos = new JSONObject(result).getJSONArray("photos");
 				for (int i = 0; i < photos.length()-1; i++) {
-					// EXTRA TODO: see attribution requirements http://www.panoramio.com/api/data/api.html 
-					imagesArray.add(photos.getJSONObject(i).getString("photo_file_url"));
+					// EXTRA TODO: see attribution requirements http://www.panoramio.com/api/data/api.html
+					JSONObject photoObject = photos.getJSONObject(i);
+					imagesArray.add(Arrays.asList(photoObject.getString("photo_file_url"), photoObject.getString("photo_title")));
 				}
 				viewPager.setAdapter(new ImageAdapter(getActivity(), imagesArray));
 			} catch (Exception e) {
 				e.printStackTrace();
+				Log.e("Near images JSON:", result+"*");
 			}
 		}
 	}
@@ -455,10 +467,10 @@ public class HomeFragment extends Fragment {
 	 */
 	public class ImageAdapter extends PagerAdapter {
 		Context context;
-		private ArrayList<String> images;
+		private ArrayList<List<String>> images;
 		private LayoutInflater inflater;
 	
-		ImageAdapter(Context context, ArrayList<String> imagesArray) {
+		ImageAdapter(Context context, ArrayList<List<String>> imagesArray) {
 			this.context = context;
 			this.images = imagesArray;
 			inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -482,8 +494,12 @@ public class HomeFragment extends Fragment {
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 	        final ProgressBar spinner = (ProgressBar) imageLayout.findViewById(R.id.loading);
 	
+	        // Uncomment this to show image captions
+	        //TextView imageCaption = (TextView) imageLayout.findViewById(R.id.image_caption);
+	        //imageCaption.setText(images.get(position).get(1));
 	        
-	        imageLoader.displayImage(images.get(position), imageView, options, new SimpleImageLoadingListener() {
+	        
+	        imageLoader.displayImage(images.get(position).get(0), imageView, options, new SimpleImageLoadingListener() {
 	                @Override
 	                public void onLoadingStarted(String imageUri, View view) {
 	                        spinner.setVisibility(View.VISIBLE);

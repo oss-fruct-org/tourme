@@ -121,17 +121,25 @@ public class MainActivity extends FragmentActivity implements
 		}
 		
 		if (context != null) {
-			mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);	
-		    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3600000, 1000, mLocationListener); // FIXME 3600000, 1000, provider ?
+			mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+		    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 100, mLocationListener); // 1 min update, 100 km
+		    
+		    Location lastLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		    if (lastLocation != null) {
+			    currentLongitude = lastLocation.getLongitude();
+			    currentLatitude = lastLocation.getLatitude();
+		    }
+		    
 		}
 	}
 	
-	public final LocationListener mLocationListener = new LocationListener() {	   
+	public final LocationListener mLocationListener = new LocationListener() {
 
 		@Override
 		public void onLocationChanged(Location location) {
 			currentLongitude = location.getLongitude();
 			currentLatitude = location.getLatitude();
+			Log.e("Current location is:", currentLongitude + " - " + currentLatitude);
 		}
 
 		@Override
@@ -144,6 +152,7 @@ public class MainActivity extends FragmentActivity implements
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
+			Log.e("status", provider + " " + status + extras);
 		}
 	};
 
@@ -204,22 +213,22 @@ public class MainActivity extends FragmentActivity implements
 			case(0):
 				f = new HomeFragment();
 				break;
-			case(1):
+			case(-1):
 				Toast.makeText(context, "I told you to FIX that!..", Toast.LENGTH_SHORT).show(); // TODO
 				break;
-			case(2):
+			case(1):
 				f = new NearbyFragment();
 				break;
-			case(3):
+			case(2):
 				f = new MapFragment();							
 				break;
-			case(4):
+			case(3):
 				Toast.makeText(context, "Opening practical info...", Toast.LENGTH_SHORT).show(); // TODO
 				break;
-			case(5):
+			case(-5):
 				f = new FavouritesFragment();
 				break;
-			case(6):
+			case(4):
 				f = new TravellogFragment();
 				break;
 				

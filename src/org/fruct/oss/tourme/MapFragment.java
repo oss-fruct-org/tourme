@@ -54,11 +54,6 @@ public class MapFragment extends Fragment {
 		markerLayerHospitals, markerLayerPolice;	
 	private MarkerLayer markerLayerArticle;
 	
-	private LocationManager mLocationManager;
-	
-	private double currentLongitude = 0;
-	private double currentLatitude = 0;
-	
 	private boolean firstLaunch = true;
 	private boolean fromArticle = false;
 	
@@ -81,10 +76,20 @@ public class MapFragment extends Fragment {
 		// Define base layer. Here we use MapQuest open tiles which are free to use
 		// Almost all online maps use EPSG3857 projection
 		mapLayer = new TMSMapLayer(new EPSG3857(), 0, 18, 0, "http://otile1.mqcdn.com/tiles/1.0.0/osm/", "/", ".png");
-		mapView.getLayers().setBaseLayer(mapLayer);
-		
+		mapView.getLayers().setBaseLayer(mapLayer);		
+
+        // Make map smoother
 		mapView.getOptions().setDoubleClickZoomIn(true);
-		mapView.getOptions().setKineticRotation(false);
+		mapView.getOptions().setPreloading(true);
+        mapView.getOptions().setSeamlessHorizontalPan(true);
+        mapView.getOptions().setTileFading(true);
+        mapView.getOptions().setKineticPanning(true);
+        mapView.getOptions().setDoubleClickZoomIn(true);
+        
+        // Configure texture caching
+        mapView.getOptions().setTextureMemoryCacheSize(40 * 1024 * 1024);
+        mapView.getOptions().setCompressedMemoryCacheSize(8 * 1024 * 1024);
+        mapView.getOptions().setPersistentCacheSize(100 * 1024 * 1024); // 100MB cache
 		
 		// start mapping
 		mapView.startMapping();
@@ -98,6 +103,58 @@ public class MapFragment extends Fragment {
 
 		return view;
 	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// Set menu (intrested in Actionbar menu items)
+		this.setHasOptionsMenu(true);
+	}
+	
+
+	/*
+	 * Init webView with map after the view creation It'll not work in onCreate
+	 * etc
+	 */
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		
+	
+		Double lon = MainActivity.currentLongitude;
+		Double lat = MainActivity.currentLatitude;
+		
+		// Fly to current location at first launch (after location detection)
+		if (firstLaunch && lon != 0 && !fromArticle) {
+			Log.e("firstLaunch", ""+lon);
+			mapView.setFocusPoint(mapLayer.getProjection().fromWgs84(lon, lat));
+			mapView.setZoom(14);
+			firstLaunch = false;			
+		
+			clearMarkers();			
+
+			String locale = ConstantsAndTools.getLocale(context);
+			
+			// Show articles from Wiki on map
+			WikilocationPoints w = new WikilocationPoints(lon, lat,
+					ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
+				@Override
+				public void onPostExecute(String result){
+					ArrayList<PointInfo> points = this.openAndParse();
+					
+					if (points != null)
+						for (int i = 0; i < points.size(); i ++) {
+							PointInfo p = points.get(i);
+							
+							addMarker("wiki", p.type, p.longitude, p.latitude, p.title, null);
+						}
+				}
+			};
+			
+			w.execute();
+		}
+		
+	}
+
 	
 	/**
 	 * 
@@ -146,89 +203,6 @@ public class MapFragment extends Fragment {
 		//if (markerLayer != null)
 		markerLayerSights.clear();
 	}
-	
-	
-	public final LocationListener mLocationListener = new LocationListener() {	   
-
-		@Override
-		public void onLocationChanged(Location location) {
-			
-			currentLongitude = location.getLongitude();
-			currentLatitude = location.getLatitude();
-			
-			// Fly to current location at first launch (after location detection)
-			if (firstLaunch && currentLongitude != 0 && !fromArticle) {
-				Log.e("firstLaunch", ""+currentLongitude);
-				mapView.setFocusPoint(mapLayer.getProjection().fromWgs84(currentLongitude, currentLatitude));
-				mapView.setZoom(14);
-				firstLaunch = false;			
-			
-				clearMarkers();			
-	
-				String locale = ConstantsAndTools.getLocale(context);
-				
-				// Show articles from Wiki on map
-				WikilocationPoints w = new WikilocationPoints(currentLongitude, currentLatitude,
-						ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
-					@Override
-					public void onPostExecute(String result){
-						ArrayList<PointInfo> points = this.openAndParse();
-						
-						for (int i = 0; i < points.size(); i ++) {
-							PointInfo p = points.get(i);
-							
-							addMarker("wiki", p.type, p.longitude, p.latitude, p.title, null);
-						}
-					}
-				};
-				
-				w.execute();
-			}
-			
-		}
-
-		@Override
-		public void onProviderDisabled(String provider) {
-			// TODO Auto-generated method stub			
-		}
-
-		@Override
-		public void onProviderEnabled(String provider) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-			// TODO Auto-generated method stub
-			
-		}
-	};
-
-
-	
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		// Set menu (intrested in Actionbar menu items)
-		this.setHasOptionsMenu(true);
-	}
-	
-
-	/*
-	 * Init webView with map after the view creation It'll not work in onCreate
-	 * etc
-	 */
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		
-		// Location things
-		if (context != null) {
-			mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);	
-		    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3600, 10, mLocationListener); // FIXME 3600000, 1000, provider ?
-		}
-	}
-
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

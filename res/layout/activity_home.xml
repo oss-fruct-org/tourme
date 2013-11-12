@@ -5,45 +5,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dip"
+        
         android:weightSum="2"
         tools:context=".MainActivity"
-        tools:ignore="MergeRootFrame" >
+        tools:ignore="MergeRootFrame"
+        android:background="@color/default_activity">
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="@drawable/card_background"
-            android:padding="10dip" >
+            android:layout_weight="1">
 			
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-           <!-- <TextView
-                android:id="@+id/weather"
-                style="@style/StrokedText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="10dp"
-                android:text="Thunderstorm\n +50C, 99% hum" /> -->
-           
-
-            <TextView
-                android:id="@+id/image_caption"
-                style="@style/StrokedText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:text="Place your title here" />
         </RelativeLayout>
 
         <LinearLayout
@@ -52,11 +29,11 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="10dip" >
             
             <TextView
-                android:gravity="center"
-                android:layout_marginTop="10dp"
+                android:gravity="center"                
                 android:id="@+id/currency"         
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -64,6 +41,7 @@
                 android:padding="10dip"
                 android:textSize="22sp"
                 android:layout_weight="1"
+                android:text="1 EUR = 0,78 USD"
                 />
             
             <TextView
@@ -90,48 +68,6 @@
                 android:layout_weight="1"
                 android:textSize="22sp" />
 
-            <!-- <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/card_background"
-                android:clickable="true"
-                android:id="@+id/openTravelpedia"
-                android:padding="10dip"
-                android:text="@string/travelpedia"
-                android:textSize="22sp" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/card_background"
-                android:clickable="true"
-                android:id="@+id/openNearby"
-                android:padding="10dip"
-                android:text="@string/nearby"
-                android:textSize="22sp" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/card_background"
-                android:id="@+id/openPracticalInfo"
-                android:clickable="true"
-                android:padding="10dip"
-                android:text="@string/practical_info"
-                android:textSize="22sp" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/card_background"
-                android:id="@+id/openPhrasebook"
-                android:clickable="true"
-                android:padding="10dip"
-                android:text="@string/phrasebook"
-                android:textSize="22sp" /> -->
+            
         </LinearLayout>
     </LinearLayout>
