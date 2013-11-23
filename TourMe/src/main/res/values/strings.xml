@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TourMe</string>
+    <string name="main">Home</string>
+    <string name="map">Map</string>
+    <string name="nearby">Nearby</string>
+    <string name="favourites">Favourites</string>
+    <string name="travellog">Travel Log</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_settings">@string/menu_settings</string>
+    <!--
+    <string name="actionbar_main">Home</string>
+    <string name="actionbar_map">Map</string>    
+    <string name="actionbar_nearby">Nearby</string>    
+    <string name="actionbar_favour">Favourites</string>
+    <string name="actionbar_log">Travel Log</string>
+    -->
+
+    <string name="menu_add_data">Download data</string>
+    <string name="menu_onoff_online_mode">DEL Switch online/offline mode</string>
+    <string name="map_menu_on">Switch to online mode</string>
+    <string name="map_menu_off">Switch to offline mode</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_article">ArticleActivity</string>
+    <string name="map_points_categories_title">Filter points</string>
+    <string name="map_menu_filter">Filter points</string>
+    <string name="map_menu_nearby">Nearby me</string>
+    <string name="drawer_open">Open left drawer</string>
+    <string name="drawer_close">Close left drawer</string>
+
+    <string-array name="drawer_items">
+        <item>@string/main</item>
+<!--         <item>@string/travelpedia</item> -->
+        <item>@string/nearby</item>
+        <item>@string/map</item>
+        <item>@string/practical_info</item>
+<!--         <item>@string/favourites</item> -->
+        <item>@string/travellog</item>
+    </string-array>
+    
+    <string-array name="drawer_items_service">
+		<item>Plan new trip</item>
+<!-- 		<item>@string/map_menu_on</item> -->
+		<item>@string/menu_settings</item>
+    </string-array>
+    
+    <string-array name="map_points_categories">
+        <item>Sights</item>
+        <item>ATMs</item>
+        <item>WCs</item>
+        <item>Hotels</item>
+        <item>Hospitals</item>
+        <item>Police stations</item>
+    </string-array>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Travel Log -->
+    <string name="travellog_edit_title_placeholder">Title</string>
+    <string name="travellog_edit_title_text">Impressions, thoughts, ideas</string>
+    <string name="travellog_checkin">Add location info</string>
+    <string name="travellog_detect_location">Find location</string>
+    <string name="travellog_share_options">Share options</string>
+    <string name="travellog_info">You should log in to social networks to make check-ins</string>
+    <string name="travellog_add_entry">You should log in to social networks to make check-ins</string>
+    <string name="travellog_post_send">Send</string>
+    <string name="vk">Vk</string>
+    <string name="fb">Fb</string>
+    <string name="sq">Foursquare</string>
+    <string name="title_activity_travel_log_new_entry">TravelLogNewEntry</string>
+    <string name="travelpedia">Travelpedia</string>
+    <string name="practical_info">Practical info</string>
+    <string name="phrasebook">Phasebook</string>
+    <string name="title_activity_map_chooser">Choose a region to go</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_prepare">Trip planner</string>
+
+    <!-- Strings for Welcome\prepare screen -->
+    <string name="prepare_1_welcome_text">Welcome! TourMe is an application that helps you during your trip. It provides you map, points of interest, location info and useful
+        practical info. To use the app, you have to download additional content. Our aim is to provide absolutely offline experience (may be you won\'t be able to use internet
+        over the trip).\n\nNow you are to pass a few steps to prepare to your first trip.\n\nYou can cancel downloading items and continue using online mode</string>
+    <string name="prepare_1_network">Your network connection is</string>
+    <string name="available">OK</string>
+    <string name="unavailable">unavailable</string>
+    <string name="no_network">Oops! There is no network available. Please, connect to a network and try again later</string>
+    <string name="prepare_button_next">Next</string>
+    <string name="prepare_button_reject">Skip</string>
+    <string name="prepare_2_text">Here you have to select regions you want to travel to. Tap on the map to place a mark at a region. To unselect, tap the marker.
+	    You can change the selection size with the seek bar in the bottom. If you are ready, press the \'Next\' button</string>
+    <string name="prepare_2_radius">Selection size:</string>
+    <string name="prepare_3_text">Almost finished. Wait till we download and unpack the items</string>
+    <string name="prepare_3_finished">Download finished. Press \'Done\' to proceed. And have a nice trip!</string>
+    <string name="prepare_button_done">Done</string>
+
+
+    <!-- Preference screen -->
+    <string name="info">Information and used sources</string>
+    <string name="about">About</string>
+    <string name="libraries">Used libraries</string>
+    <string name="delete_cache">Manage trips</string>
+    <string name="delete_cache_summary">Remove saved points, articles and map tiles for some trips</string>
+    <string name="plan_new_trip">Plan a new trip</string>
+    <string name="plan_new_trip_summary">Choose a region and download items</string>
+    
+    <string name="menu_article_activity_show_on_map">Show on map</string>
+    
+    <string name="not_available">n/a</string>
+
+</resources>
