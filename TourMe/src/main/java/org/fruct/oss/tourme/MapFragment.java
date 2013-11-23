@@ -1,7 +1,5 @@
 package org.fruct.oss.tourme;
 
-import java.util.ArrayList;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,24 +9,18 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.nutiteq.MapView;
 import com.nutiteq.components.Components;
@@ -39,9 +31,10 @@ import com.nutiteq.rasterlayers.TMSMapLayer;
 import com.nutiteq.style.MarkerStyle;
 import com.nutiteq.ui.DefaultLabel;
 import com.nutiteq.ui.Label;
-import com.nutiteq.ui.ViewLabel;
 import com.nutiteq.utils.UnscaledBitmapLoader;
 import com.nutiteq.vectorlayers.MarkerLayer;
+
+import java.util.ArrayList;
 
 public class MapFragment extends Fragment {
 
@@ -49,6 +42,7 @@ public class MapFragment extends Fragment {
 	
 	private MapView mapView;
 	private TMSMapLayer mapLayer;
+    private MarkerLayer myLocation = null;
 	
 	private MarkerLayer markerLayerSights, markerLayerATM, markerLayerWC, markerLayerHotels,
 		markerLayerHospitals, markerLayerPolice;	
@@ -76,7 +70,17 @@ public class MapFragment extends Fragment {
 		// Define base layer. Here we use MapQuest open tiles which are free to use
 		// Almost all online maps use EPSG3857 projection
 		mapLayer = new TMSMapLayer(new EPSG3857(), 0, 18, 0, "http://otile1.mqcdn.com/tiles/1.0.0/osm/", "/", ".png");
-		mapView.getLayers().setBaseLayer(mapLayer);		
+        mapView.getLayers().setBaseLayer(mapLayer);
+
+        // Disable map rotation if need
+        SharedPreferences sh = getActivity().getSharedPreferences(ConstantsAndTools.SHARED_PREFERENCES, 0);
+        if (sh.getBoolean(ConstantsAndTools.ALLOW_MAP_ROTATION, false))
+            mapView.getConstraints().setRotatable(true);
+        else
+            mapView.getConstraints().setRotatable(false);
+
+        // Set available zoom limits
+        //mapView.getConstraints().setZoomRange(new Range(10, 16));
 
         // Make map smoother
 		mapView.getOptions().setDoubleClickZoomIn(true);
@@ -100,9 +104,41 @@ public class MapFragment extends Fragment {
 		mapView.getLayers().addLayer(markerLayerSights);
 		mapView.getLayers().addLayer(markerLayerArticle);
 
+        // Show current location marker
+        showMyLocationMarker(true);
 
 		return view;
 	}
+
+    /**
+     * Show or hide current location marker
+     * @param toShow boolean: show or not
+     */
+    private void showMyLocationMarker(Boolean toShow) {
+
+        // Create layer if not defined
+        if (myLocation == null) {
+            myLocation = new MarkerLayer(mapLayer.getProjection());
+
+            Bitmap pointMarker = UnscaledBitmapLoader.decodeResource(getResources(), R.drawable.ic_current_location);
+            MarkerStyle markerStyle = MarkerStyle.builder().setBitmap(pointMarker).build();
+
+            Label markerLabel = new DefaultLabel(getResources().getString(R.string.me));
+
+            MapPos markerLocation = mapLayer.getProjection().fromWgs84(MainActivity.currentLongitude, MainActivity.currentLatitude);
+
+            Marker marker = new Marker(markerLocation, markerLabel, markerStyle, null);
+            myLocation.add(marker);
+            mapView.getLayers().addLayer(myLocation);
+        }
+
+        // Show or hide
+        if (toShow)
+            myLocation.setVisible(true);
+        else
+            myLocation.setVisible(false);
+
+    }
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -118,8 +154,8 @@ public class MapFragment extends Fragment {
 	 */
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		
-	
+
+
 		Double lon = MainActivity.currentLongitude;
 		Double lat = MainActivity.currentLatitude;
 		

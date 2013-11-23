@@ -20,8 +20,8 @@ public class ConstantsAndTools {
 	// SharedPreferences
 	public static String SHARED_PREFERENCES = "TOURME_PREFERENCES";
 	public static String ONLINE_MODE = "ONLINE_MODE";
-	public static String SOCICAL_NETWORKS_CONNECTED = "SOCICAL_NETWORKS_CONNECTED";
 	public static String IS_FIRST_LAUNCH = "IS_FIRST_LAUNCH";
+    public static String ALLOW_MAP_ROTATION = "ALLOW_MAP_ROTATION";
 	
 	// Intent extras
 	public static String ARTICLE_ID = "ARTICLE_ID";
@@ -43,6 +43,10 @@ public class ConstantsAndTools {
 	public static final String[] AVAILABLE_LOCALES = new String[] {"ar", "bg", "ca", "cs", "da", "de", "en", "eo",
 		"es", "fa", "fi", "fr", "he", "hu", "id", "it", "ja", "ko", "lt", "ms", "nl", "no", "nn", "pl", "pt", "ro",
 		"ru", "sk", "sl", "sr", "sv", "tr", "uk", "vi", "vo", "war", "zh"};
+
+    // List of service labels. Now available for 3 locales (ru, en, fi) and 3 types of service articles
+    public static final String[] WIKI_SERVICE_ARTICLES = new String[] {"Проект:", "Участник:", "Категория:", "User:", "WikiProject",
+            "Category:", "Käyttäjä:", "Luokka:", "Wikiprojekti"};
 	
 	
 	/**
@@ -161,6 +165,20 @@ public class ConstantsAndTools {
         }
 
         return json;
+    }
+
+    /**
+     * Check if service article is in title
+     * @param inputString title
+     * @return
+     */
+    public static boolean stringContainsItemFromList(String inputString) {
+        for (int i =0; i < WIKI_SERVICE_ARTICLES.length; i++) {
+            if(inputString.contains(WIKI_SERVICE_ARTICLES[i])) {
+                return true;
+            }
+        }
+        return false;
     }
 	
 	

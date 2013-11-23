@@ -108,4 +108,6 @@
     
     <string name="not_available">n/a</string>
 
+	<string name="me">Me</string>
+
 </resources>

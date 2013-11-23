@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -188,18 +189,21 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
 				for (int i = 0; i < len; i++) {
 					temp = elementsArray.getJSONObject(i);
 					
-					//if (!temp.getString("type").equals("")) { // TODO: filter the sh*t; "" - not work!
-						PointInfo point = new PointInfo();
-						point.type = temp.getString("type");
-						point.title = temp.getString("title");
-						point.url = temp.getString("url");
-						point.mobileurl= temp.getString("mobileurl");
-						point.distance = temp.getString("distance");
-						point.latitude = temp.getString("lat");
-						point.longitude = temp.getString("lng");
-					
-						points.add(point);
-					//}
+                    String title = temp.getString("title");
+
+                    // Filter Wikipedia articles from bad words
+                    if (!ConstantsAndTools.stringContainsItemFromList(title)) {
+                        PointInfo point = new PointInfo();
+                        point.type = temp.getString("type");
+                        point.title = title;
+                        point.url = temp.getString("url");
+                        point.mobileurl= temp.getString("mobileurl");
+                        point.distance = temp.getString("distance");
+                        point.latitude = temp.getString("lat");
+                        point.longitude = temp.getString("lng");
+
+                        points.add(point);
+                    }
 				}
 			}
 		} catch (JSONException e) {
