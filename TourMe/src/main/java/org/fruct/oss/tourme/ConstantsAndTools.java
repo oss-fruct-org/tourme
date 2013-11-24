@@ -47,6 +47,9 @@ public class ConstantsAndTools {
     // List of service labels. Now available for 3 locales (ru, en, fi) and 3 types of service articles
     public static final String[] WIKI_SERVICE_ARTICLES = new String[] {"Проект:", "Участник:", "Категория:", "User:", "WikiProject",
             "Category:", "Käyttäjä:", "Luokka:", "Wikiprojekti"};
+
+    // Databases
+    public static String TABLE_TRAVELLOG = "travellog";
 	
 	
 	/**

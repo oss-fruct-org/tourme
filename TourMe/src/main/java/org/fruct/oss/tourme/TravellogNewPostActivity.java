@@ -2,7 +2,10 @@ package org.fruct.oss.tourme;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -28,6 +31,10 @@ public class TravellogNewPostActivity extends FragmentActivity {
 	private static Double lat = 0d;
 	private static Double lon = 0d;
 
+    String text, locationLongitude, locationLatitude, imageUri;
+
+    private DBHelper dbHelper;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,22 +48,37 @@ public class TravellogNewPostActivity extends FragmentActivity {
 			TextView socialNetworksWarn = (TextView) findViewById(R.id.socical_networks_warn);
 			socialNetworksWarn.setVisibility(View.GONE);
 		}*/
-		
+
+        dbHelper = new DBHelper(this);
+
+        setLocationVariables();
+
 		ImageButton findLocation = (ImageButton) findViewById(R.id.travellog_detect_location_btn);
 		findLocation.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				lat = MainActivity.currentLatitude;
-				lon = MainActivity.currentLongitude;
-				if (lat !=0 || lon != 0) {
-					TextView locationText = (TextView) findViewById(R.id.travellog_detect_location_txt);
-					locationText.setText("OK! " + lat.toString().substring(0,5) + " " +lon.toString().substring(0,5));
-					Log.e("loc", lat + "*" + lon);
-				}
+                setLocationVariables();
 			}			
 		});
 	}
+
+    /**
+     * Set location variables for current post
+     *
+     */
+    private void setLocationVariables() {
+        lat = MainActivity.currentLatitude;
+        lon = MainActivity.currentLongitude;
+        if (lat != 0 || lon != 0) {
+            locationLatitude = lat.toString().substring(0,5);
+            locationLongitude = lon.toString().substring(0,5);
+
+            TextView locationText = (TextView) findViewById(R.id.travellog_detect_location_txt);
+            locationText.setText("OK! " + locationLatitude + " " + locationLongitude);
+        }
+    }
+
 
 	/**
 	 * Backward-compatible version of {@link ActionBar#getThemedContext()} that
@@ -104,23 +126,44 @@ public class TravellogNewPostActivity extends FragmentActivity {
 			return true;
 		case (R.id.travellog_post_send):
 			EditText post = (EditText) findViewById(R.id.travellog_edit_text);
-			
-			if (post.getText() == null) {
-				// TODO
-				Toast.makeText(getApplicationContext(), "Write your thougts about location, please", Toast.LENGTH_SHORT).show();
+            String postText = post.getText().toString();
+
+			if (postText.length() == 0) {
+				Toast.makeText(getApplicationContext(), getResources().getString(R.string.travellog_no_text), Toast.LENGTH_SHORT).show();
 				return true;
 			}
-			String postText = post.getText().toString();
-			Log.e("EditText", postText);
-			
-			
-			// TODO
+
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            ContentValues cv = new ContentValues();
+
+            cv.put("name", postText);
+            cv.put("longitude", locationLongitude);
+            cv.put("latitude", locationLatitude);
+            cv.put("image", "uri"); // TODO: apply image
+
+            // Insert record to database
+            if (db != null) {
+                long rowID = db.insert(ConstantsAndTools.TABLE_TRAVELLOG, null, cv);
+                Log.d("db", "row inserted, ID = " + rowID);
+
+                // Save and close activity
+                if (rowID >= 0) {
+                    dbHelper.close();
+                    finish();
+                }
+            }
+
+            // Don't close the activity
+            dbHelper.close();
+
 			break;
 		
 		}
 		
 		return super.onOptionsItemSelected(item);
 	}
+
+
 
 	
 }
