@@ -75,7 +75,11 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
 			// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
 			// TODO: IS IT NECESSARY TO STORE THIS IN DISK AND NOT IN RAM?
 			// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
-			
+
+            if (isCancelled()) {
+                return null;
+            }
+
 			// Get cache dir (try to use external memory, if n/a, use
 			// internal)
 			File cacheDir = cont.getExternalCacheDir();
@@ -92,6 +96,7 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
 			OutputStream output = new BufferedOutputStream(new FileOutputStream(cacheFile));
 			
 			for (int offset = 0; offset < ConstantsAndTools.ARTICLES_AMOUNT; offset += ConstantsAndTools.ARTICLES_MAXIMUM_PER_TIME) {
+                // TODO: check if no points arrives at second step and finish download
 				Uri tempUri = this.buildUri(offset);
 				
 				String stringUrl = tempUri.toString();

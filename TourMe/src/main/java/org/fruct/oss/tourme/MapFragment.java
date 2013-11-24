@@ -50,8 +50,10 @@ public class MapFragment extends Fragment {
 	
 	private boolean firstLaunch = true;
 	private boolean fromArticle = false;
-	
-	Context context;
+
+    WikilocationPoints w;
+
+    Context context;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -171,10 +173,14 @@ public class MapFragment extends Fragment {
 			String locale = ConstantsAndTools.getLocale(context);
 			
 			// Show articles from Wiki on map
-			WikilocationPoints w = new WikilocationPoints(lon, lat,
+			w = new WikilocationPoints(lon, lat,
 					ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
 				@Override
 				public void onPostExecute(String result){
+                    if(!isAdded()){
+                        return;
+                    }
+
 					ArrayList<PointInfo> points = this.openAndParse();
 					
 					if (points != null)
@@ -190,6 +196,14 @@ public class MapFragment extends Fragment {
 		}
 		
 	}
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        // Kill points downloading
+        w.cancel(true);
+    }
 
 	
 	/**

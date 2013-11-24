@@ -34,6 +34,8 @@ public class NearbyFragment extends ListFragment {
 	ArrayList<PointInfo> points;
 	
 	Context context;
+
+    WikilocationPoints w;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class NearbyFragment extends ListFragment {
 		
 		String locale = ConstantsAndTools.getLocale(context);
 		
-		WikilocationPoints w = new WikilocationPoints(lon, lat, 
+		w = new WikilocationPoints(lon, lat,
 				ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
 			@Override
 			public void onPostExecute(String result){
@@ -87,6 +89,15 @@ public class NearbyFragment extends ListFragment {
 		
 		w.execute();
 	}
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        // Kill points downloading
+        w.cancel(true);
+    }
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return false;
