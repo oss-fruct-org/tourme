@@ -1,6 +1,8 @@
 package org.fruct.oss.tourme;
 
 import android.app.Fragment;
+import android.app.ListFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,16 +14,45 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
-public class TravellogFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class TravellogFragment extends ListFragment {
 
     private DBHelper dbHelper;
+    TravellogAdapter adapter;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.activity_travellog, container, false);
+
+        ListView mainListView = (ListView) view.findViewById(android.R.id.list);
+        mainListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                PostItemInfo item = adapter.getItem(position);
+                int itemId = item.id;
+
+                SQLiteDatabase db = dbHelper.getWritableDatabase();
+                if (db == null)
+                    return false;
+                db.delete(ConstantsAndTools.TABLE_TRAVELLOG, "id=" + itemId, null);
+                db.close();
+
+                adapter.remove(adapter.getItem(position));
+                adapter.notifyDataSetChanged();
+
+                return true;
+            }
+        });
 
 		return view;
 	}
@@ -55,14 +86,24 @@ public class TravellogFragment extends Fragment {
                 int latitudeColIndex = c.getColumnIndex("latitude");
                 int longitudeColIndex = c.getColumnIndex("longitude");
                 int imageColIndex = c.getColumnIndex("image");
+                int dateColIndex = c.getColumnIndex("date");
+
+                ArrayList<PostItemInfo> points = new ArrayList<PostItemInfo>();
 
                 do {
-                    Log.d("db",
-                            "name = " + c.getString(nameColIndex)
-                                    + " " + c.getString(latitudeColIndex) + " " + c.getString(longitudeColIndex) + " " + c.getString(imageColIndex)
-                    );
+                    // Fill adapter with points
+                    PostItemInfo point = new PostItemInfo();
+                    point.text = c.getString(nameColIndex);
+                    point.location = c.getString(latitudeColIndex) + " - " + c.getString(longitudeColIndex);
+                    point.date = c.getString(dateColIndex);
+                    point.id = c.getInt(idColIndex);
 
+                    points.add(point);
                 } while (c.moveToNext());
+
+                adapter = new TravellogAdapter(points, getActivity());
+                setListAdapter(adapter);
+
             } else
                 Log.d("dbb", "0 rows");
             c.close();
@@ -96,5 +137,51 @@ public class TravellogFragment extends Fragment {
 		return true;
 			
 	}
+
+    public class PostItemInfo {
+        public int id;
+        public String text;
+        public String location;
+        public String date;
+        public String imageUri;
+    }
+
+    /**
+     * Aadapter represents TravelLog items
+     */
+    public class TravellogAdapter extends ArrayAdapter<PostItemInfo> {
+
+        private List<PostItemInfo> itemsList;
+        private Context context;
+
+        public TravellogAdapter(List<PostItemInfo> itemsList, Context ctx) {
+            super(ctx, R.layout.travellog_list_item, itemsList);
+            this.itemsList = itemsList;
+            this.context = ctx;
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if (convertView == null) {
+                // This a new view we inflate the new layout
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.travellog_list_item, parent, false);
+            }
+
+            TextView title = (TextView) convertView.findViewById(R.id.travellog_list_item_title);
+            TextView location = (TextView) convertView.findViewById(R.id.travellog_list_item_location);
+            TextView date = (TextView) convertView.findViewById(R.id.travellog_list_item_date);
+
+            PostItemInfo p = itemsList.get(position);
+
+            title.setText(p.text);
+            location.setText(p.location);
+            date.setText(p.date);
+
+            // TODO: add image and date
+
+            return convertView;
+        }
+    }
 
 }

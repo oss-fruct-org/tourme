@@ -112,7 +112,7 @@ public class MainActivity extends FragmentActivity implements
 		if (firstLaunch) {
 			drawerLayout.openDrawer(Gravity.LEFT);
 			ed = sh.edit();
-			//ed.putBoolean(ConstantsAndTools.IS_FIRST_LAUNCH, false); // TODO
+			ed.putBoolean(ConstantsAndTools.IS_FIRST_LAUNCH, false);
 			ed.commit();
 			
 			// At first launch, show welcome screen\prepare mode

@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -140,6 +141,11 @@ public class TravellogNewPostActivity extends FragmentActivity {
             cv.put("longitude", locationLongitude);
             cv.put("latitude", locationLatitude);
             cv.put("image", "uri"); // TODO: apply image
+
+            Time now = new Time();
+            now.setToNow();
+
+            cv.put("date", now.format("%d/%m/%Y").toString());
 
             // Insert record to database
             if (db != null) {
