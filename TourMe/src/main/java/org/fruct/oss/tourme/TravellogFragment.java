@@ -1,6 +1,5 @@
 package org.fruct.oss.tourme;
 
-import android.app.Fragment;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;

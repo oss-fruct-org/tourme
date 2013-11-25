@@ -86,9 +86,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="nutiteq-3d-sdk-2.2.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-18.0.0" level="project" />
-    <orderEntry type="library" exported="" name="javaproj-1.0.6-noawt" level="project" />
     <orderEntry type="library" exported="" name="universal-image-loader-1.8.6" level="project" />
-    <orderEntry type="library" name="libs" level="project" />
+    <orderEntry type="library" exported="" name="javaproj-1.0.6-noawt" level="project" />
   </component>
 </module>
 
