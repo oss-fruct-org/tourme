@@ -13,6 +13,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,7 +36,10 @@ import com.nutiteq.ui.Label;
 import com.nutiteq.utils.UnscaledBitmapLoader;
 import com.nutiteq.vectorlayers.MarkerLayer;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class MapFragment extends Fragment {
 
@@ -109,8 +114,50 @@ public class MapFragment extends Fragment {
         // Show current location marker
         showMyLocationMarker(true);
 
-		return view;
+        TourMeGeoCoder geocoder = new TourMeGeoCoder(getActivity(), MainActivity.currentLatitude, MainActivity.currentLongitude);
+        Log.e("geocoder", geocoder.getCountry() + "_" + geocoder.getCity() + "_" + geocoder.getRegion());
+
+        return view;
 	}
+
+    /**
+     * Geocoder (uses standard Android geocoder)
+     */
+    public class TourMeGeoCoder {
+        Context context;
+        Geocoder geocoder;
+
+        double latitude;
+        double longitude;
+
+        List<Address> addresses;
+
+        public TourMeGeoCoder(Context context, double latitude, double longitude) {
+            this.context = context;
+            this.latitude = latitude;
+            this.longitude = longitude;
+            geocoder = new Geocoder(context); // Will use current device locate
+
+            try {
+                addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public String getCountry() {
+            return addresses.get(0).getCountryName();
+        }
+
+        public String getRegion() {
+            return addresses.get(0).getAdminArea();
+        }
+
+        public String getCity() {
+            return addresses.get(0).getLocality();
+        }
+
+    }
 
     /**
      * Show or hide current location marker

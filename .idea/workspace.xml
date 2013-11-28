@@ -23,7 +23,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="TourMe" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d56d7e7-76bd-4d6f-b589-3f27c6163488" name="Default" comment="" />
@@ -103,6 +103,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="MapFragment.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MapFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="128" column="0" selection-start="4485" selection-end="4485" vertical-scroll-proportion="0.33655393" vertical-offset="2095" max-vertical-offset="8064">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#5912#5949#0" expanded="true" />
+                <element signature="e#10969#11005#0" expanded="true" />
+                <element signature="e#12014#12025#0" expanded="true" />
+                <element signature="e#12648#12663#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TourMe/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
@@ -112,10 +127,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TourMe/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="33" selection-start="736" selection-end="736" vertical-scroll-proportion="0.33152762" vertical-offset="0" max-vertical-offset="1674">
+            <state line="17" column="33" selection-start="736" selection-end="736" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1674">
               <folding />
             </state>
           </provider>
@@ -124,7 +139,7 @@
       <file leaf-file-name="TravellogNewPostActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TravellogNewPostActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="8" selection-start="1178" selection-end="1360" vertical-scroll-proportion="0.0" vertical-offset="720" max-vertical-offset="3294">
+            <state line="81" column="0" selection-start="2632" selection-end="2632" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2862">
               <folding />
             </state>
           </provider>
@@ -145,7 +160,7 @@
       <file leaf-file-name="DBHelper.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/DBHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="19" selection-start="299" selection-end="299" vertical-scroll-proportion="0.0" vertical-offset="234" max-vertical-offset="774">
+            <state line="13" column="19" selection-start="299" selection-end="299" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720">
               <folding />
             </state>
           </provider>
@@ -547,7 +562,6 @@
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/DBHelper.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/NearbyFragment.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/WikilocationPoints.java" />
-        <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MapFragment.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/activity_travellog.xml" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TravellogNewPostActivity.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/travellog_list_item.xml" />
@@ -556,6 +570,7 @@
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TravellogFragment.java" />
         <option value="$PROJECT_DIR$/TourMe/build.gradle" />
         <option value="$PROJECT_DIR$/TourMe/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MapFragment.java" />
       </list>
     </option>
   </component>
@@ -1006,9 +1021,9 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31623036" sideWeight="0.50027734" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31623036" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31623036" sideWeight="0.4997227" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984293" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1250,11 +1265,6 @@
         <state line="51" column="53" selection-start="2073" selection-end="2073" vertical-scroll-proportion="0.33333334" vertical-offset="477" max-vertical-offset="3240" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MapFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="155" column="7" selection-start="5303" selection-end="5303" vertical-scroll-proportion="1.4906937" vertical-offset="1909" max-vertical-offset="7218" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/PointInfo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="9" selection-start="137" selection-end="453" vertical-scroll-proportion="0.20289855" vertical-offset="0" max-vertical-offset="621" />
@@ -1305,13 +1315,6 @@
         <state line="114" column="69" selection-start="3972" selection-end="3972" vertical-scroll-proportion="1.3800322" vertical-offset="637" max-vertical-offset="5652" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/DBHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="19" selection-start="299" selection-end="299" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="774">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/layout/activity_travellog_new_post.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="22" selection-start="524" selection-end="524" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="1854">
@@ -1320,25 +1323,6 @@
       </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TravellogNewPostActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="8" selection-start="1178" selection-end="1360" vertical-scroll-proportion="0.0" vertical-offset="108" max-vertical-offset="3186">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TravellogFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="30" selection-start="713" selection-end="713" vertical-scroll-proportion="0.0" vertical-offset="301" max-vertical-offset="3042">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#onCreate#0;class#TravellogFragment#0" expanded="false" />
-            <element signature="method#onOptionsItemSelected#0;class#TravellogFragment#0" expanded="false" />
-            <element signature="class#PostItemInfo#0;class#TravellogFragment#0" expanded="false" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
@@ -1364,8 +1348,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TourMe/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="33" selection-start="736" selection-end="736" vertical-scroll-proportion="0.33152762" vertical-offset="0" max-vertical-offset="1674">
+        <state line="17" column="33" selection-start="736" selection-end="736" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1674">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TravellogNewPostActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="81" column="0" selection-start="2632" selection-end="2632" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2862">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/DBHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="19" selection-start="299" selection-end="299" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="774">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TravellogFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="30" selection-start="713" selection-end="713" vertical-scroll-proportion="0.0" vertical-offset="301" max-vertical-offset="3042">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#onCreate#0;class#TravellogFragment#0" expanded="false" />
+            <element signature="method#onOptionsItemSelected#0;class#TravellogFragment#0" expanded="false" />
+            <element signature="class#PostItemInfo#0;class#TravellogFragment#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MapFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="128" column="0" selection-start="4485" selection-end="4485" vertical-scroll-proportion="0.33655393" vertical-offset="2095" max-vertical-offset="8064">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5912#5949#0" expanded="true" />
+            <element signature="e#10969#11005#0" expanded="true" />
+            <element signature="e#12014#12025#0" expanded="true" />
+            <element signature="e#12648#12663#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
