@@ -230,7 +230,9 @@ public class HomeFragment extends Fragment {
 				// http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s=USDRUB=X
 				Uri.Builder b = Uri.parse("http://rate-exchange.appspot.com/currency").buildUpon();
 				b.appendQueryParameter("to", String.valueOf(ConstantsAndTools.getDeviceCurrency(context)));
-				b.appendQueryParameter("from", "EUR"); // FIXME: get currency of country
+
+                TourMeGeocoder geocoder = new TourMeGeocoder(getActivity(), MainActivity.currentLatitude, MainActivity.currentLongitude);
+                b.appendQueryParameter("from", geocoder.getCurrency()); // FIXME: what if user in his country?
 				Uri uri = b.build();
 				
 				// Create a URL for the desired page
