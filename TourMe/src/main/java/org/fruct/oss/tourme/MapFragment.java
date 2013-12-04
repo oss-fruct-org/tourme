@@ -115,9 +115,6 @@ public class MapFragment extends Fragment {
         // Show current location marker
         showMyLocationMarker(true);
 
-        TourMeGeocoder geocoder = new TourMeGeocoder(getActivity(), MainActivity.currentLatitude, MainActivity.currentLongitude);
-        Log.e("geocoder", geocoder.getCountry() + "_" + geocoder.getCity() + "_" + geocoder.getCurrency());
-
         return view;
 	}
 

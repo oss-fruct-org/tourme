@@ -42,8 +42,8 @@ public class MainActivity extends FragmentActivity implements
 	SharedPreferences.Editor ed;
 	
 	public static LocationManager mLocationManager;
-	public static Double currentLatitude;
-	public static Double currentLongitude;
+	public static Double currentLatitude = 0d;
+	public static Double currentLongitude = 0d;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

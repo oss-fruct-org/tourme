@@ -2,8 +2,12 @@ package org.fruct.oss.tourme;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
@@ -129,10 +133,10 @@ public class TravellogNewPostActivity extends FragmentActivity {
 			EditText post = (EditText) findViewById(R.id.travellog_edit_text);
             String postText = post.getText().toString();
 
-			if (postText.length() == 0) {
+			/*if (postText.length() == 0) {
 				Toast.makeText(getApplicationContext(), getResources().getString(R.string.travellog_no_text), Toast.LENGTH_SHORT).show();
 				return true;
-			}
+			}*/
 
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             ContentValues cv = new ContentValues();
@@ -141,6 +145,15 @@ public class TravellogNewPostActivity extends FragmentActivity {
             cv.put("longitude", locationLongitude);
             cv.put("latitude", locationLatitude);
             cv.put("image", "uri"); // TODO: apply image
+            cv.put("location", "");
+
+            // Try to put pretty look location
+            try {
+                TourMeGeocoder geocoder = new TourMeGeocoder(getApplicationContext(), Double.parseDouble(locationLatitude), Double.parseDouble(locationLongitude));
+                cv.put("location", geocoder.getCity() + ", " + geocoder.getRegion());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             Time now = new Time();
             now.setToNow();
@@ -168,8 +181,6 @@ public class TravellogNewPostActivity extends FragmentActivity {
 		
 		return super.onOptionsItemSelected(item);
 	}
-
-
 
 	
 }

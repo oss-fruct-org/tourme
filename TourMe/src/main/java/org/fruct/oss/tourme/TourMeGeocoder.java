@@ -3,6 +3,7 @@ package org.fruct.oss.tourme;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.Currency;
@@ -48,6 +49,7 @@ public class TourMeGeocoder {
         Locale locale = address.getLocale();
         Currency currency = Currency.getInstance(locale);
 
+        Log.e("curr", address.getCountryName());
         return currency.getCurrencyCode();
     }
 }

@@ -105,7 +105,7 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
 				URLConnection connection = url.openConnection();
 				connection.connect();
 			
-				InputStream input = new BufferedInputStream(url.openStream());				
+				InputStream input = new BufferedInputStream(url.openStream());
 	
 				byte data[] = new byte[1024];
 				int count;

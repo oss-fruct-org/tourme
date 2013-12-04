@@ -111,4 +111,6 @@
 	<string name="me">Me</string>
 	<string name="travellog_no_text">Write your thougts about location, please</string>
 
+	<string name="travellog_delete_confirmation">Delete this item?</string>
+
 </resources>

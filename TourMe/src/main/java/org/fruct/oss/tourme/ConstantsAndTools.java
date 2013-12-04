@@ -50,7 +50,8 @@ public class ConstantsAndTools {
 
     // Databases
     public static String TABLE_TRAVELLOG = "travellog";
-	
+    public static String TABLE_WIKIARICLES = "wikiartilces";
+
 	
 	/**
 	 * Convert kilometers to miles
@@ -183,6 +184,6 @@ public class ConstantsAndTools {
         }
         return false;
     }
-	
+
 	
 }

@@ -1,7 +1,11 @@
 package org.fruct.oss.tourme;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,8 +27,8 @@ import java.util.List;
 
 public class TravellogFragment extends ListFragment {
 
-    private DBHelper dbHelper;
-    TravellogAdapter adapter;
+    private static DBHelper dbHelper;
+    private static TravellogAdapter adapter;
 
 
 	@Override
@@ -40,6 +44,18 @@ public class TravellogFragment extends ListFragment {
                 PostItemInfo item = adapter.getItem(position);
                 int itemId = item.id;
 
+                String title = item.getTitle();
+                if (title.length() > 10) {
+                    title = title.substring(0, 9) + "...";
+                }
+
+                DialogFragment dialog = ItemDeleteConfirmation.newInstance(title, itemId, position);
+                dialog.show(getFragmentManager(), "confirmation");
+
+                /*ItemDeleteConfirmation dialog = new ItemDeleteConfirmation();
+                dialog.show(getFragmentManager(), "confirmation");
+
+
                 SQLiteDatabase db = dbHelper.getWritableDatabase();
                 if (db == null)
                     return false;
@@ -47,7 +63,7 @@ public class TravellogFragment extends ListFragment {
                 db.close();
 
                 adapter.remove(adapter.getItem(position));
-                adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();*/
 
                 return true;
             }
@@ -55,6 +71,7 @@ public class TravellogFragment extends ListFragment {
 
 		return view;
 	}
+
 
     @Override
     public void onResume() {
@@ -66,7 +83,6 @@ public class TravellogFragment extends ListFragment {
 
     /**
      * Get and show user-created entries as a list
-     * TODO: non-console UI
      * TODO: AsyncTask?
      */
     private void getAndFillTravelLogEntries () {
@@ -86,6 +102,7 @@ public class TravellogFragment extends ListFragment {
                 int longitudeColIndex = c.getColumnIndex("longitude");
                 int imageColIndex = c.getColumnIndex("image");
                 int dateColIndex = c.getColumnIndex("date");
+                int locationColIndex = c.getColumnIndex("location");
 
                 ArrayList<PostItemInfo> points = new ArrayList<PostItemInfo>();
 
@@ -96,6 +113,7 @@ public class TravellogFragment extends ListFragment {
                     point.location = c.getString(latitudeColIndex) + " - " + c.getString(longitudeColIndex);
                     point.date = c.getString(dateColIndex);
                     point.id = c.getInt(idColIndex);
+                    point.locationDescription = c.getString(locationColIndex);
 
                     points.add(point);
                 } while (c.moveToNext());
@@ -143,6 +161,14 @@ public class TravellogFragment extends ListFragment {
         public String location;
         public String date;
         public String imageUri;
+        public String locationDescription; // pretty-look: Petrozavodsk, Republic of Karelia
+
+        public String getTitle() {
+            if (text.length() == 0)
+                return locationDescription;
+            else
+                return text;
+        }
     }
 
     /**
@@ -174,7 +200,19 @@ public class TravellogFragment extends ListFragment {
             PostItemInfo p = itemsList.get(position);
 
             title.setText(p.text);
+
+            // Fill with pretty location if available
             location.setText(p.location);
+            if (!p.locationDescription.equals(""))
+                location.setText(p.locationDescription);
+
+            if ((p.text).length() == 0) {
+                if (!p.locationDescription.equals("")) {
+                    title.setText(p.locationDescription);
+                    location.setText(p.location);
+                }
+            }
+
             date.setText(p.date);
 
             // TODO: add image and date
@@ -183,4 +221,45 @@ public class TravellogFragment extends ListFragment {
         }
     }
 
+    public static class ItemDeleteConfirmation extends DialogFragment {
+
+        public static ItemDeleteConfirmation newInstance(String title, int itemId, int position) {
+            ItemDeleteConfirmation frag = new ItemDeleteConfirmation();
+            Bundle args = new Bundle();
+            args.putString("title", title);
+            args.putInt("itemId", itemId);
+            args.putInt("position", position);
+            frag.setArguments(args);
+            return frag;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            String title = getArguments().getString("title"); // TODO: cut
+            final int itemId = getArguments().getInt("itemId");
+            final int position = getArguments().getInt("position");
+
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(title)
+                    .setMessage(R.string.travellog_delete_confirmation)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            SQLiteDatabase db = dbHelper.getWritableDatabase();
+                            if (db == null)
+                                return;
+                            db.delete(ConstantsAndTools.TABLE_TRAVELLOG, "id=" + itemId, null);
+                            db.close();
+                            adapter.remove(adapter.getItem(position));
+                            adapter.notifyDataSetChanged();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+            // Create the AlertDialog object and return it
+            return builder.create();
+        }
+    }
 }
