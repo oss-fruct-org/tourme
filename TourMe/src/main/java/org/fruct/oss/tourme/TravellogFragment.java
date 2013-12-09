@@ -38,9 +38,30 @@ public class TravellogFragment extends ListFragment {
 		View view = inflater.inflate(R.layout.activity_travellog, container, false);
 
         ListView mainListView = (ListView) view.findViewById(android.R.id.list);
+
+        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("fuck", "statred");
+                Intent showRecord = new Intent(getActivity(), TravellogNewPostActivity.class);
+
+                PostItemInfo item = adapter.getItem(position);
+
+                showRecord.putExtra("show", true);
+                showRecord.putExtra("text", item.text);
+                showRecord.putExtra("location", item.location);
+                showRecord.putExtra("date", item.date);
+                showRecord.putExtra("imageUri", item.imageUri);
+                showRecord.putExtra("locationDescription", item.locationDescription);
+
+                startActivity(showRecord);
+            }
+        });
+
         mainListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.i("fuck", "statred0");
                 PostItemInfo item = adapter.getItem(position);
                 int itemId = item.id;
 
@@ -51,19 +72,6 @@ public class TravellogFragment extends ListFragment {
 
                 DialogFragment dialog = ItemDeleteConfirmation.newInstance(title, itemId, position);
                 dialog.show(getFragmentManager(), "confirmation");
-
-                /*ItemDeleteConfirmation dialog = new ItemDeleteConfirmation();
-                dialog.show(getFragmentManager(), "confirmation");
-
-
-                SQLiteDatabase db = dbHelper.getWritableDatabase();
-                if (db == null)
-                    return false;
-                db.delete(ConstantsAndTools.TABLE_TRAVELLOG, "id=" + itemId, null);
-                db.close();
-
-                adapter.remove(adapter.getItem(position));
-                adapter.notifyDataSetChanged();*/
 
                 return true;
             }
@@ -100,7 +108,7 @@ public class TravellogFragment extends ListFragment {
                 int nameColIndex = c.getColumnIndex("name");
                 int latitudeColIndex = c.getColumnIndex("latitude");
                 int longitudeColIndex = c.getColumnIndex("longitude");
-                int imageColIndex = c.getColumnIndex("image");
+                int imageColIndex = c.getColumnIndex("image"); // TODO
                 int dateColIndex = c.getColumnIndex("date");
                 int locationColIndex = c.getColumnIndex("location");
 

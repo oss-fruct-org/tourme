@@ -8,6 +8,7 @@ import android.app.DialogFragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
@@ -19,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -47,14 +49,20 @@ public class TravellogNewPostActivity extends FragmentActivity {
 		final ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
-		// If social network(s) connected, hide the warn message
-		/*SharedPreferences settings = getSharedPreferences(ConstantsAndTools.SHARED_PREFERENCES, 0);
-		if (settings.getBoolean(ConstantsAndTools.SOCICAL_NETWORKS_CONNECTED, false)) {
-			TextView socialNetworksWarn = (TextView) findViewById(R.id.socical_networks_warn);
-			socialNetworksWarn.setVisibility(View.GONE);
-		}*/
-
         dbHelper = new DBHelper(this);
+
+        Intent fromActivity = getIntent();
+        if (fromActivity.getBooleanExtra("show", false)) {
+            ((EditText)findViewById(R.id.travellog_edit_text)).setText(fromActivity.getStringExtra("text"));
+            (findViewById(R.id.travellog_detect_location_btn)).setVisibility(View.GONE);
+
+            String locationDescription = fromActivity.getStringExtra("locationDescription");
+            if (locationDescription.length() != 0)
+                ((EditText) findViewById(R.id.travellog_detect_location_txt)).setText(locationDescription);
+            else
+                ((EditText)findViewById(R.id.travellog_detect_location_txt)).setText(fromActivity.getStringExtra("location"));
+            return;
+        }
 
         setLocationVariables();
 
