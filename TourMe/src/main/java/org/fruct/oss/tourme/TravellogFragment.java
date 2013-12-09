@@ -42,7 +42,6 @@ public class TravellogFragment extends ListFragment {
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("fuck", "statred");
                 Intent showRecord = new Intent(getActivity(), TravellogNewPostActivity.class);
 
                 PostItemInfo item = adapter.getItem(position);
@@ -61,7 +60,6 @@ public class TravellogFragment extends ListFragment {
         mainListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("fuck", "statred0");
                 PostItemInfo item = adapter.getItem(position);
                 int itemId = item.id;
 

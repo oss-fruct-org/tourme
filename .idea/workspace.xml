@@ -98,17 +98,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TravellogFragment.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="TravellogFragment.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TravellogFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="16" selection-start="1397" selection-end="1422" vertical-scroll-proportion="0.0" vertical-offset="216" max-vertical-offset="4572">
+            <state line="62" column="42" selection-start="2247" selection-end="2247" vertical-scroll-proportion="0.80597013" vertical-offset="216" max-vertical-offset="4536">
               <folding>
-                <element signature="e#1224#2027#0" expanded="true" />
-                <element signature="e#2016#2017#0" expanded="true" />
-                <element signature="e#2079#2782#0" expanded="true" />
-                <element signature="e#2771#2772#0" expanded="true" />
-                <element signature="e#4008#4022#0" expanded="true" />
-                <element signature="e#8744#8782#0" expanded="true" />
+                <element signature="e#1224#1985#0" expanded="true" />
+                <element signature="e#1974#1975#0" expanded="true" />
+                <element signature="e#2037#2697#0" expanded="true" />
+                <element signature="e#2686#2687#0" expanded="true" />
+                <element signature="e#3923#3937#0" expanded="true" />
+                <element signature="e#8659#8697#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -126,10 +126,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="travellog_list_item.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="travellog_list_item.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/layout/travellog_list_item.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="27" selection-start="221" selection-end="221" vertical-scroll-proportion="0.12587413" vertical-offset="0" max-vertical-offset="828">
+            <state line="4" column="27" selection-start="221" selection-end="221" vertical-scroll-proportion="-2.3225806" vertical-offset="0" max-vertical-offset="828">
               <folding />
             </state>
           </provider>
@@ -555,9 +555,9 @@
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/HomeFragment.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TravellogNewPostActivity.java" />
-        <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TravellogFragment.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/activity_travellog.xml" />
         <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/travellog_list_item.xml" />
+        <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TravellogFragment.java" />
       </list>
     </option>
   </component>
@@ -926,7 +926,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3294509" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294509" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984293" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1272,20 +1272,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TravellogFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="16" selection-start="1397" selection-end="1422" vertical-scroll-proportion="0.0" vertical-offset="216" max-vertical-offset="4572">
-          <folding>
-            <element signature="e#1224#2027#0" expanded="true" />
-            <element signature="e#2016#2017#0" expanded="true" />
-            <element signature="e#2079#2782#0" expanded="true" />
-            <element signature="e#2771#2772#0" expanded="true" />
-            <element signature="e#4008#4022#0" expanded="true" />
-            <element signature="e#8744#8782#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/layout/activity_travellog.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="54" selection-start="360" selection-end="360" vertical-scroll-proportion="-4.064516" vertical-offset="0" max-vertical-offset="450">
@@ -1298,12 +1284,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/layout/travellog_list_item.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="27" selection-start="221" selection-end="221" vertical-scroll-proportion="0.12587413" vertical-offset="0" max-vertical-offset="828">
+        <state line="4" column="27" selection-start="221" selection-end="221" vertical-scroll-proportion="-2.3225806" vertical-offset="0" max-vertical-offset="828">
           <folding />
         </state>
       </provider>
       <provider editor-type-id="android-designer">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TravellogFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="42" selection-start="2247" selection-end="2247" vertical-scroll-proportion="0.80597013" vertical-offset="216" max-vertical-offset="4536">
+          <folding>
+            <element signature="e#1224#1985#0" expanded="true" />
+            <element signature="e#1974#1975#0" expanded="true" />
+            <element signature="e#2037#2697#0" expanded="true" />
+            <element signature="e#2686#2687#0" expanded="true" />
+            <element signature="e#3923#3937#0" expanded="true" />
+            <element signature="e#8659#8697#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>
