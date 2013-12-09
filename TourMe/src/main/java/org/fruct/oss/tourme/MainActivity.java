@@ -50,8 +50,11 @@ public class MainActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_fragment_container);
 		context = getApplicationContext();
-		
-        if (findViewById(R.id.fragment_container) != null) {
+
+        HomeFragment firstFragment = new HomeFragment();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, firstFragment).commit();
+
+        /*if (findViewById(R.id.fragment_container) != null) {
 
             if (savedInstanceState != null) {
                 return;
@@ -63,7 +66,7 @@ public class MainActivity extends FragmentActivity implements
             // Add the fragment to the 'fragment_container' FrameLayout
             getFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, firstFragment).commit();
-        }
+        }*/
 		
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawerToggle = new ActionBarDrawerToggle (this,	drawerLayout, R.drawable.ic_drawer,
@@ -163,6 +166,7 @@ public class MainActivity extends FragmentActivity implements
         // Sync the toggle state after onRestoreInstanceState has occurred.
         drawerToggle.syncState(); // FIXME app crashes when orientation changes
     }
+
     
     protected void onNewIntent(Intent intent) {
     	super.onNewIntent(intent);

@@ -61,6 +61,7 @@ public class HomeFragment extends Fragment {
 			Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.activity_home, container, false);
+        setRetainInstance(true);
 
 		return view;
 	}
@@ -153,7 +154,7 @@ public class HomeFragment extends Fragment {
 		GetNearImages images = new GetNearImages();
 		images.execute();
 	}
-		
+
 	private class GetAndFillWeather extends AsyncTask<Void, Integer, String> {
 		
 		@Override
@@ -199,6 +200,10 @@ public class HomeFragment extends Fragment {
 		// Parse JSON file
 		@Override
 		public void onPostExecute(String result) {
+            if (!isAdded()) {
+                return;
+            }
+
 			String wea = getResources().getString(R.string.not_available);
 			
 			try {
@@ -218,6 +223,13 @@ public class HomeFragment extends Fragment {
 			weatherView.setText(wea);
 		}
 	}
+
+    protected void onPostExecute(Void result){
+        if(isAdded()){
+            getResources().getString(R.string.app_name);
+        }
+
+    }
 	
 	
 	private class GetAndFillCurrency extends AsyncTask<Void, Integer, String> {
