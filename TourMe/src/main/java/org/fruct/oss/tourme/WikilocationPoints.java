@@ -71,7 +71,7 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
 	@Override
 	protected String doInBackground(String... urls) {
 		try {
-			
+
 			// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
 			// TODO: IS IT NECESSARY TO STORE THIS IN DISK AND NOT IN RAM?
 			// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO

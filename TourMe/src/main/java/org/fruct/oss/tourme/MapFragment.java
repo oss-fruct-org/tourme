@@ -9,6 +9,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -23,16 +24,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.nutiteq.MapView;
 import com.nutiteq.components.Components;
 import com.nutiteq.components.MapPos;
 import com.nutiteq.geometry.Marker;
+import com.nutiteq.geometry.VectorElement;
 import com.nutiteq.projections.EPSG3857;
 import com.nutiteq.rasterlayers.TMSMapLayer;
+import com.nutiteq.style.LabelStyle;
 import com.nutiteq.style.MarkerStyle;
 import com.nutiteq.ui.DefaultLabel;
 import com.nutiteq.ui.Label;
+import com.nutiteq.ui.MapListener;
 import com.nutiteq.utils.UnscaledBitmapLoader;
 import com.nutiteq.vectorlayers.MarkerLayer;
 
@@ -71,10 +76,6 @@ public class MapFragment extends Fragment {
 		mapView = (MapView) view.findViewById(R.id.mapView);
 		mapView.setComponents(new Components());
 		
-		// Doesn't work without license
-		//Bitmap watermark = BitmapFactory.decodeResource(view.getResources(), R.drawable.ic_launcher);
-		//MapView.setWatermark(watermark, 0, 0, 1);
-		
 		// Define base layer. Here we use MapQuest open tiles which are free to use
 		// Almost all online maps use EPSG3857 projection
 		mapLayer = new TMSMapLayer(new EPSG3857(), 0, 18, 0, "http://otile1.mqcdn.com/tiles/1.0.0/osm/", "/", ".png");
@@ -88,7 +89,7 @@ public class MapFragment extends Fragment {
             mapView.getConstraints().setRotatable(false);
 
         // Set available zoom limits
-        //mapView.getConstraints().setZoomRange(new Range(10, 16));
+        //mapView.getConstraints().setZoomRange(new Range(10, 16)); // TODO
 
         // Make map smoother
 		mapView.getOptions().setDoubleClickZoomIn(true);
@@ -112,11 +113,49 @@ public class MapFragment extends Fragment {
 		mapView.getLayers().addLayer(markerLayerSights);
 		mapView.getLayers().addLayer(markerLayerArticle);
 
+        if (MapView.registerLicense("XTUMwQ0ZIRmhHUURKNVlGMndpK2xFYkZDNm5tRFVGcEVBaFVBcFd2WGhOWW5TeXorODFaWm5EZHRUMkZ3OUo0PQoKcGFja2FnZU5hbWU9b3JnLmZydWN0Lm9zcy50b3VybWUKd2F0ZXJtYXJrPU9TTQoK", getActivity()))
+            Log.i("registration", "ok");
+
+        MapEventListener mapEventListener = new MapEventListener(getActivity());
+        mapView.getOptions().setMapListener(mapEventListener);
+
         // Show current location marker
         showMyLocationMarker(true);
 
         return view;
 	}
+
+    public class MapEventListener extends MapListener {
+        private Context context;
+
+        // activity is often useful to handle click events
+        public MapEventListener(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void onMapMoved() {
+        }
+
+        @Override
+        public void onMapClicked(double v, double v2, boolean b) {
+        }
+
+        @Override
+        public void onVectorElementClicked(VectorElement vectorElement, double v, double v2, boolean b) {
+        }
+
+        // Open activity with article
+        @Override
+        public void onLabelClicked(VectorElement vectorElement, boolean longClick) {
+            // userData is URL
+            if (vectorElement.userData != null) {
+                Intent i = new Intent(getActivity(), ArticleActivity.class);
+                i.putExtra(ConstantsAndTools.ARTICLE_ID, vectorElement.userData.toString());
+                startActivity(i);
+            }
+        }
+    }
 
     /**
      * Show or hide current location marker
@@ -131,7 +170,7 @@ public class MapFragment extends Fragment {
             Bitmap pointMarker = UnscaledBitmapLoader.decodeResource(getResources(), R.drawable.ic_current_location);
             MarkerStyle markerStyle = MarkerStyle.builder().setBitmap(pointMarker).build();
 
-            Label markerLabel = new DefaultLabel(getResources().getString(R.string.me));
+            Label markerLabel = new DefaultLabel("", "", ConstantsAndTools.LABEL_STYLE);
 
             MapPos markerLocation = mapLayer.getProjection().fromWgs84(MainActivity.currentLongitude, MainActivity.currentLatitude);
 
@@ -156,14 +195,8 @@ public class MapFragment extends Fragment {
 	}
 	
 
-	/*
-	 * Init webView with map after the view creation It'll not work in onCreate
-	 * etc
-	 */
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-
-
 		Double lon = MainActivity.currentLongitude;
 		Double lat = MainActivity.currentLatitude;
 		
@@ -193,7 +226,7 @@ public class MapFragment extends Fragment {
 						for (int i = 0; i < points.size(); i ++) {
 							PointInfo p = points.get(i);
 							
-							addMarker("wiki", p.type, p.longitude, p.latitude, p.title, null);
+							addMarker("wiki", p.type, p.longitude, p.latitude, p.title, p.mobileurl, null);
 						}
 				}
 			};
@@ -220,20 +253,24 @@ public class MapFragment extends Fragment {
 	 * @param title
 	 * @param description
 	 */
-	private void addMarker(String layerType, String category, String longitude, String latitude, String title, String description) {
+	private void addMarker(String layerType, String category, String longitude, String latitude, String title, String url, String description) {
 
 		Bitmap pointMarker = UnscaledBitmapLoader.decodeResource(getResources(), R.drawable.ic_launcher); // FIXME: icon category		
-		MarkerStyle markerStyle = MarkerStyle.builder().setBitmap(pointMarker).setSize(0.5f).setColor(Color.WHITE).build();
+		MarkerStyle markerStyle = MarkerStyle.builder()
+                .setBitmap(pointMarker)
+                .setColor(Color.WHITE)
+                .build();
 		
 		// define label what is shown when you click on marker
 		Label markerLabel;
-		
-		// TODO: go from maerkerLabel to Wiki article
-		
+
+        if (title.length() > 40)
+            title = title.substring(0, 40).concat("...");
+
 		if (description == null)
-			markerLabel = new DefaultLabel(title);
+			markerLabel = new DefaultLabel(title, "", ConstantsAndTools.LABEL_STYLE);
 		else
-			markerLabel = new DefaultLabel(title, description);
+			markerLabel = new DefaultLabel(title, description, ConstantsAndTools.LABEL_STYLE);
 		
 		// define location of the marker, it must be converted to base map coordinate system
 		MapPos markerLocation = mapLayer.getProjection().fromWgs84(Float.parseFloat(longitude), Float.parseFloat(latitude));
@@ -241,6 +278,7 @@ public class MapFragment extends Fragment {
 		// create layer and add object to the layer, finally add layer to the map. 
 		// All overlay layers must be same projection as base layer, so we reuse it
 		Marker marker = new Marker(markerLocation, markerLabel, markerStyle, null);
+        marker.userData = url;
 		
 		if (layerType.equals("wiki"))			
 			markerLayerSights.add(marker);
@@ -289,7 +327,7 @@ public class MapFragment extends Fragment {
 			
 			mapView.setFocusPoint(mapLayer.getProjection().fromWgs84(Double.parseDouble(lon), Double.parseDouble(lat)));
 			mapView.setZoom(zoom);
-			addMarker("fromArticles", "category?", lon, lat, "[title]", null);
+			//addMarker("fromArticles", "category?", lon, lat, "[title]", null);
 		}
 	}
 	

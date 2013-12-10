@@ -11,9 +11,12 @@ import java.util.Currency;
 import java.util.Locale;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+
+import com.nutiteq.style.LabelStyle;
 
 public class ConstantsAndTools {
 	
@@ -51,6 +54,16 @@ public class ConstantsAndTools {
     // Databases
     public static String TABLE_TRAVELLOG = "travellog";
     public static String TABLE_WIKIARICLES = "wikiartilces";
+
+    // Map things
+    public static LabelStyle LABEL_STYLE = LabelStyle.builder()
+            .setBackgroundColor(Color.parseColor("#FF222222"))
+            .setBorderColor(Color.parseColor("#FF222222"))
+            .setTitleColor(Color.parseColor("#FFFFFFFF"))
+            .setDescriptionColor(Color.parseColor("#FFFFFFFF"))
+            .setTipSize(20)
+            .setBorderRadius(5)
+            .build();
 
 	
 	/**
