@@ -39,24 +39,6 @@ public class TravellogFragment extends ListFragment {
 
         ListView mainListView = (ListView) view.findViewById(android.R.id.list);
 
-        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent showRecord = new Intent(getActivity(), TravellogNewPostActivity.class);
-
-                PostItemInfo item = adapter.getItem(position);
-
-                showRecord.putExtra("show", true);
-                showRecord.putExtra("text", item.text);
-                showRecord.putExtra("location", item.location);
-                showRecord.putExtra("date", item.date);
-                showRecord.putExtra("imageUri", item.imageUri);
-                showRecord.putExtra("locationDescription", item.locationDescription);
-
-                startActivity(showRecord);
-            }
-        });
-
         mainListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -77,6 +59,22 @@ public class TravellogFragment extends ListFragment {
 
 		return view;
 	}
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Intent showRecord = new Intent(getActivity(), TravellogNewPostActivity.class);
+
+        PostItemInfo item = adapter.getItem(position);
+
+        showRecord.putExtra("show", true);
+        showRecord.putExtra("text", item.text);
+        showRecord.putExtra("location", item.location);
+        showRecord.putExtra("date", item.date);
+        showRecord.putExtra("imageUri", item.imageUri);
+        showRecord.putExtra("locationDescription", item.locationDescription);
+
+        startActivity(showRecord);
+    }
 
 
     @Override
@@ -206,6 +204,10 @@ public class TravellogFragment extends ListFragment {
             PostItemInfo p = itemsList.get(position);
 
             title.setText(p.text);
+            // Cut loooooooooooooong texts
+            if ((p.text).length() > 80) {
+                title.setText((p.text).substring(0, 80));
+            }
 
             // Fill with pretty location if available
             location.setText(p.location);

@@ -2,27 +2,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp">
+    android:padding="10dp"
+	android:focusable="false"
+	android:focusableInTouchMode="false">
 
 	<LinearLayout
 		android:layout_alignParentLeft="true"
 		android:layout_toLeftOf="@+id/travellog_list_item_date"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:orientation="vertical">
+		android:orientation="vertical"
+		android:focusable="false"
+		android:focusableInTouchMode="false">
 
 		<TextView
 			android:id="@+id/travellog_list_item_title"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:textSize="18sp"
-			android:textIsSelectable="false"/>
+			android:focusable="false"
+			android:focusableInTouchMode="false"/>
 
 		<TextView
 			android:id="@+id/travellog_list_item_location"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:textIsSelectable="false"/>
+			android:focusable="false"
+			android:focusableInTouchMode="false"/>
 
 	</LinearLayout>
 
@@ -34,7 +40,8 @@
 		android:layout_alignParentRight="true"
 		android:layout_alignParentTop="true"
 		android:layout_marginLeft="5dp"
-		android:textIsSelectable="false"
+		android:focusable="false"
+		android:focusableInTouchMode="false"
 		/>
 
 </RelativeLayout>

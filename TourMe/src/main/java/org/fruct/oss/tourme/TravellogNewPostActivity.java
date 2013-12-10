@@ -55,12 +55,13 @@ public class TravellogNewPostActivity extends FragmentActivity {
         if (fromActivity.getBooleanExtra("show", false)) {
             ((EditText)findViewById(R.id.travellog_edit_text)).setText(fromActivity.getStringExtra("text"));
             (findViewById(R.id.travellog_detect_location_btn)).setVisibility(View.GONE);
+            (findViewById(R.id.travellog_location_title)).setVisibility(View.GONE);
 
             String locationDescription = fromActivity.getStringExtra("locationDescription");
             if (locationDescription.length() != 0)
-                ((EditText) findViewById(R.id.travellog_detect_location_txt)).setText(locationDescription);
+                ((TextView) findViewById(R.id.travellog_detect_location_txt)).setText(locationDescription);
             else
-                ((EditText)findViewById(R.id.travellog_detect_location_txt)).setText(fromActivity.getStringExtra("location"));
+                ((TextView)findViewById(R.id.travellog_detect_location_txt)).setText(fromActivity.getStringExtra("location"));
             return;
         }
 
