@@ -2,13 +2,17 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+	android:fitsSystemWindows="true"
+	android:clipToPadding="true">
 
     <!-- Fragment container -->
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
+        android:layout_height="fill_parent"
+		android:fitsSystemWindows="true"
+		android:clipToPadding="true"/>
    
     <!-- App drawer (left pane) -->
 	<RelativeLayout
@@ -17,7 +21,10 @@
         android:layout_width="240dp"
 	    android:layout_height="match_parent"
 	    android:layout_gravity="start"
-	    android:background="#111" >
+	    android:background="#111"
+		android:fitsSystemWindows="true"
+		android:clipToPadding="true"
+		>
     
 	    <ListView
 	        android:id="@+id/left_drawer_list"
@@ -25,7 +32,10 @@
 	        android:layout_height="wrap_content"	        	        
 	        android:choiceMode="singleChoice"
 	        android:divider="@android:color/transparent"
-	        android:dividerHeight="0dp" />
+	        android:dividerHeight="0dp"
+			android:fitsSystemWindows="true"
+			android:clipToPadding="true"
+			/>
 	    
 	    <View
 	        android:id="@+id/drawer_divider"

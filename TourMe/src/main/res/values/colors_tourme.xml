@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="pressed_tourme">#CC88aa00</color>
-    <color name="default_activity">#ffeaeaea</color>
+    <color name="default_activity">#ffd9d9d9</color>
+    <!--<color name="default_activity">#ffeaeaea</color>-->
+	<color name="tumma_sininen">#ff004455</color>
+	<color name="dark_sea">#ff00222b</color>
+	<color name="dark_gray">#ff8c8c8c</color>
+	<color name="fresh_green">#ff94b21c</color>
+
+	<color name="main_turquoise">#ff4da4ad</color>
+	<color name="second_dark">#ff2C577D</color>
+	<color name="white">#ffffffff</color>
+
 </resources>

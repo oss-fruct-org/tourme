@@ -16,6 +16,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,6 +54,8 @@ public class HomeFragment extends Fragment {
 	TextView weatherView;
 	
 	ImageLoader imageLoader;
+
+    public static Typeface robotoSlab;
 	
 	ArrayList<List<String>> imagesArray;
 	
@@ -110,12 +113,14 @@ public class HomeFragment extends Fragment {
 		viewPager.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
+                viewPager.getParent().requestDisallowInterceptTouchEvent(true);
 				h.removeCallbacks(r);
 				// If event is end, wait at current page for 2 dealyTime intervals
 				if (event.getAction() == MotionEvent.ACTION_UP) {
-					h.postDelayed(r, delayTime*2);
-				}
-				return false;
+                    h.postDelayed(r, delayTime*2);
+                    viewPager.getParent().requestDisallowInterceptTouchEvent(false);
+                }
+                return false;
 			}
 		});
 		
@@ -129,16 +134,20 @@ public class HomeFragment extends Fragment {
 				buttonSwitchListener(v);
 			}
 		};
-		
-/*		TextView b = (TextView) view.findViewById(R.id.openTravelpedia);
-		TextView b1 = (TextView) view.findViewById(R.id.openNearby);
-		TextView b2 = (TextView) view.findViewById(R.id.openPracticalInfo);
-		TextView b3 = (TextView) view.findViewById(R.id.openPhrasebook);
-		b.setOnClickListener(l);
-		b1.setOnClickListener(l);
-		b2.setOnClickListener(l);
-		b3.setOnClickListener(l);*/
-		
+
+
+
+
+        robotoSlab = Typeface.createFromAsset(getActivity().getAssets(), "RobotoSlab-Bold.ttf");
+        TextView cityName = (TextView) view.findViewById(R.id.viewPagerCityName);
+        cityName.setTypeface(robotoSlab);
+        try {
+            TourMeGeocoder geocoder = new TourMeGeocoder(getActivity(), MainActivity.currentLatitude, MainActivity.currentLongitude);
+            cityName.setText(geocoder.getRegion());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
 		currencyView = (TextView) view.findViewById(R.id.currency);
 		phraseView = (TextView) view.findViewById(R.id.phrase);
 		weatherView = (TextView) view.findViewById(R.id.weather);

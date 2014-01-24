@@ -8,9 +8,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,15 +33,18 @@ import com.nutiteq.geometry.VectorElement;
 import com.nutiteq.projections.EPSG3857;
 import com.nutiteq.rasterlayers.TMSMapLayer;
 import com.nutiteq.style.MarkerStyle;
+import com.nutiteq.style.PointStyle;
 import com.nutiteq.ui.DefaultLabel;
 import com.nutiteq.ui.Label;
 import com.nutiteq.ui.MapListener;
 import com.nutiteq.utils.UnscaledBitmapLoader;
 import com.nutiteq.vectorlayers.MarkerLayer;
+import com.nutiteq.geometry.Point;
 
 public class PrepareActivity extends FragmentActivity {
 
 	static View.OnClickListener nextButtonListener = null;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -117,26 +120,27 @@ public class PrepareActivity extends FragmentActivity {
 			
 			// Set value of network availability
 			Boolean hasNetwork = ConstantsAndTools.isOnline(getActivity());
-			TextView networkState = (TextView) view.findViewById(R.id.prepare_1_network);
+			//TextView networkState = (TextView) view.findViewById(R.id.prepare_1_network);
 			Button btnNext = (Button) view.findViewById(R.id.prepare_1_next);
 			Button btnReject = (Button) view.findViewById(R.id.prepare_1_reject);
 			btnReject.setOnClickListener(nextButtonListener);
-			
+
+            // TODO
 			if (hasNetwork) {
-				networkState.setText(
+				/*networkState.setText(
 						getResources().getString(R.string.prepare_1_network) + " " +
-								getResources().getString(R.string.available));
+								getResources().getString(R.string.available));*/
 				
 				btnNext.setEnabled(true);
 				btnNext.setOnClickListener(nextButtonListener);
 			} else {
-				networkState.setText(
+				/*networkState.setText(
 						getResources().getString(R.string.prepare_1_network) + " " +
 								getResources().getString(R.string.unavailable) + "\n\n" +
-								getResources().getString(R.string.no_network));				
+								getResources().getString(R.string.no_network));		*/
 				
 				btnNext.setEnabled(false);
-			}	
+			}
 			
 		}
 	}
@@ -159,6 +163,7 @@ public class PrepareActivity extends FragmentActivity {
 		
 		private static MarkerLayer circleLayer;
 		private static TMSMapLayer mapLayer;
+        private int selectionSize = 20;
 		
 		@SuppressLint("SetJavaScriptEnabled")
 		@Override
@@ -168,11 +173,15 @@ public class PrepareActivity extends FragmentActivity {
 			
 			MapView mapView = (MapView) view.findViewById(R.id.prepare_2_mapView);
 			mapView.setComponents(new Components());
-			mapLayer = new TMSMapLayer(new EPSG3857(), 0, 18, 0, "http://otile1.mqcdn.com/tiles/1.0.0/osm/", "/", ".png"); // TODO min max zoom
-			mapView.getLayers().setBaseLayer(mapLayer);			
+			mapLayer = new TMSMapLayer(new EPSG3857(), 0, 5, 0, "http://otile1.mqcdn.com/tiles/1.0.0/osm/", "/", ".png"); // TODO min max zoom
+            mapView.getLayers().setBaseLayer(mapLayer);
 			mapView.getOptions().setDoubleClickZoomIn(true);
-			mapView.getOptions().setKineticRotation(false);
-			
+			mapView.getConstraints().setRotatable(false);
+			mapView.setZoom(3);
+
+            if (MapView.registerLicense(ConstantsAndTools.NUTITEQ_LICENSE_NO, getActivity()))
+                Log.i("registration", "ok");
+
 			// start mapping
 			mapView.startMapping();			
 			
@@ -198,17 +207,17 @@ public class PrepareActivity extends FragmentActivity {
 				public void onStopTrackingTouch(SeekBar seekBar) {
 					// 'Progress' varies from 0 to value in layout
 					// We need to provide radius from 10km(?) to 300 km
-					int progress = seekBar.getProgress();
-					if (progress < 20)
-						progress = 20;
+					selectionSize = seekBar.getProgress();
+					if (selectionSize < 20)
+						selectionSize = 20;
 					//webView.loadUrl("javascript:setRadius(" + progress + ");");
 				}
 			});
 			
-			// Set up the webView size (depends on screen height)
+			// Set up the map size (depends on screen height)
 			WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
 			Display display = wm.getDefaultDisplay();
-			Point size = new Point();
+			android.graphics.Point size = new android.graphics.Point();
 			display.getSize(size);
 			int height = size.y;
 			
@@ -238,15 +247,25 @@ public class PrepareActivity extends FragmentActivity {
 
 			@Override
 			public void onMapClicked(double x, double y, boolean isLongClick) {
-				if (!isLongClick) {
-					Bitmap pointMarker = UnscaledBitmapLoader.decodeResource(getResources(), R.drawable.ic_launcher);	
-					MarkerStyle markerStyle = MarkerStyle.builder().setBitmap(pointMarker).setSize(0.5f).setColor(Color.WHITE).build();
+
+                if (!isLongClick) {
+
+                    /*MapPos markerLocation = mapLayer.getProjection().fromWgs84((new EPSG3857()).toWgs84(x, y).x, (new EPSG3857()).toWgs84(x, y).y);
+                    Label markerLabel = new DefaultLabel("0");
+                    PointStyle pointStyle = new PointStyle.Builder()
+                            .setSize(0.5f)
+                            .build();
+                    Point point = new Point(markerLocation, markerLabel, pointStyle, null);
+                    point.attachToLayer(circleLayer);*/
+
+					Bitmap pointMarker = UnscaledBitmapLoader.decodeResource(getResources(), R.drawable.btn_radio_off_pressed_holo_light);
+					MarkerStyle markerStyle = MarkerStyle.builder().setBitmap(pointMarker).setSize(selectionSize*0.01f).build();
 
 					Label markerLabel = new DefaultLabel("0");					
 					MapPos markerLocation = mapLayer.getProjection().fromWgs84((new EPSG3857()).toWgs84(x, y).x, (new EPSG3857()).toWgs84(x, y).y);
 
 					Marker marker = new Marker(markerLocation, markerLabel, markerStyle, null);
-					
+
 					circleLayer.add(marker);
 				}
 			}
@@ -256,9 +275,9 @@ public class PrepareActivity extends FragmentActivity {
 			}
 
 			@Override
-			public void onVectorElementClicked(VectorElement arg0, double arg1,
-					double arg2, boolean arg3) {
-			}
+			public void onVectorElementClicked(VectorElement arg0, double arg1,	double arg2, boolean arg3) {
+                circleLayer.remove((Marker)arg0);
+            }
 			
 		}
 

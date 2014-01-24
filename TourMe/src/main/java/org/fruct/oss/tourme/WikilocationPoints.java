@@ -6,7 +6,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -19,11 +21,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.JsonReader;
 import android.util.Log;
 
 /**
@@ -40,10 +44,11 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
 	private int resultsCount, radius;
 	private String locale;
 
+    private DBHelper dbHelper;
+
 	private Uri buildUri (int offset) {
 		
-		// TODO: locations find
-		// TODO: more parameters to serve: especially type, title		
+		// TODO: more parameters to serve: especially type, title
 		
 		Uri.Builder b = Uri.parse("http://api.wikilocation.org/articles").buildUpon();
 		b.appendQueryParameter("lat", String.valueOf(this.latitude));
@@ -53,170 +58,109 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
 		b.appendQueryParameter("locale", this.locale);
 		b.appendQueryParameter("format", "json");
 		b.appendQueryParameter("offset", String.valueOf(offset));
-		//this.url = b.build().toString();
-		
+
 		return b.build();
 	}
 
-	public WikilocationPoints(double longitude, double latitude, int resultsCount,
+	public WikilocationPoints(Context context, double longitude, double latitude, int resultsCount,
 			int radius, String locale) {
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.resultsCount = resultsCount;
 		this.radius = radius;
 		this.locale = locale;
+
+        this.dbHelper = new DBHelper(context);
 	}
 	
-	// Download and save in cache JSON file
+	// Download and save in database
 	@Override
 	protected String doInBackground(String... urls) {
 		try {
-
-			// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
-			// TODO: IS IT NECESSARY TO STORE THIS IN DISK AND NOT IN RAM?
-			// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
-
             if (isCancelled()) {
                 return null;
             }
 
-			// Get cache dir (try to use external memory, if n/a, use
-			// internal)
-			File cacheDir = cont.getExternalCacheDir();
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-			if (cacheDir == null) {
-				Log.v("EXT_STORAGE", "n/a");
-				cacheDir = cont.getCacheDir();
-			}
-
-			File cacheFile = new File(cacheDir, "wl.json");
-
-			// Download the file
-			
-			OutputStream output = new BufferedOutputStream(new FileOutputStream(cacheFile));
-			
 			for (int offset = 0; offset < ConstantsAndTools.ARTICLES_AMOUNT; offset += ConstantsAndTools.ARTICLES_MAXIMUM_PER_TIME) {
-                // TODO: check if no points arrives at second step and finish download
 				Uri tempUri = this.buildUri(offset);
-				
+
 				String stringUrl = tempUri.toString();
 				
 				URL url = new URL(stringUrl);
-				URLConnection connection = url.openConnection();
-				connection.connect();
-			
-				InputStream input = new BufferedInputStream(url.openStream());
-	
-				byte data[] = new byte[1024];
-				int count;
-	
-				// Save file
-				while ((count = input.read(data)) != -1) {
-					output.write(data, 0, count);
-				}
-				output.write(",".getBytes()); // Multiple JSONs in one file will be separated by comma
-				
-				input.close();
+
+                InputStream input = new BufferedInputStream(url.openStream());
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                String json;
+
+                // Get
+                try {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(input, "UTF-8"));
+                    while ((line = reader.readLine()) != null)
+                        sb.append(line);
+
+                    json = sb.toString();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+                // Parse
+                try {
+                    JSONArray elementsArray = new JSONObject(json).getJSONArray("articles");
+
+                    // Check if there are no more points
+                    if (elementsArray.length() == 0)
+                        return null;
+
+                    // Get all points
+                    for (int i = 0; i < elementsArray.length(); i++) {
+                        JSONObject temp = elementsArray.getJSONObject(i);
+                        ContentValues cv = new ContentValues();
+
+                        String title = temp.getString("title");
+
+                        // Filter Wikipedia articles from bad words
+                        if (!ConstantsAndTools.stringContainsItemFromList(title)) {
+                            cv.put("service", "wiki");
+                            cv.put("latitude", temp.getString("lat"));
+                            cv.put("longitude", temp.getString("lng"));
+                            cv.put("name", title);
+                            cv.put("type", temp.getString("type"));
+                            cv.put("url", temp.getString("mobileurl"));
+                            cv.put("distance", temp.getString("distance"));
+                            //cv.put("timestamp", Long.toString(System.currentTimeMillis() / 1000L)); // FIXME
+                            long rowID = db.insert(ConstantsAndTools.TABLE_WIKIARICLES, null, cv);
+                            //Log.d("tourme", "row inserted, ID = " + rowID);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 			}			
 
-			output.flush();
-			output.close();
-			
 		} catch (Exception e) {
-			Log.e("ERROR downloading file", e.getMessage());
-		}
+			Log.e("tourme", e.getMessage());
+		} finally {
+            // TODO: delete duplicates in database
+            //deleteDuplicates();
+        }
 
-		return null;
+        dbHelper.close();
+        return null;
 	}
+
+    private void deleteDuplicates(SQLiteDatabase db) {
+        // TODO
+    }
 
 	// Parse JSON file
 	@Override
 	public void onPostExecute(String result) {
 		// Make here tricks with UI (after class extending)
-	}
-	
-	protected ArrayList<PointInfo> openAndParse() {
-		
-		ArrayList<PointInfo> points = new ArrayList<PointInfo>();
-
-		// Get cache file (try to get from external storage)
-		File cacheDir = cont.getExternalCacheDir();
-
-		if (cacheDir == null) {
-			Log.i("EXT_STORAGE", "n/a");
-			cacheDir = cont.getCacheDir();
-		}
-
-		// Set bufferedReader
-		BufferedReader reader = null;
-		StringBuilder builder = new StringBuilder();
-		
-		// File reading
-		try {
-			File cacheFile = new File(cacheDir, "wl.json");
-			reader = new BufferedReader(new FileReader(cacheFile));
-			
-			for (String line = null; (line = reader.readLine()) != null;)
-				builder.append(line).append("\n");
-			
-			reader.close();
-			
-		} catch (Exception e) {
-			Log.e("file", "can't open or read file");
-		}
-		
-		String myJsonString = builder.toString();
-
-		
-		try {		
-			// JSON parsing
-			JSONArray globalArray;
-			
-			// FIXME\KILLME SOMEBODY PLEAAAAAASE
-			try {
-				String fixedString = "[" + myJsonString.substring(0, myJsonString.length()-2) + "]"; // For valid JSON; Viva la wheel reinventing!
-				globalArray = new JSONArray(fixedString);
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-			
-			// Iterate through all of received 
-			for (int j = 0; j < globalArray.length(); j++) {
-			
-				//JSONObject articles = object.getJSONObject("articles");
-				JSONArray elementsArray = globalArray.getJSONObject(j).getJSONArray("articles");
-	
-				int len = elementsArray.length();
-				JSONObject temp = null;
-	
-				// TODO: try catch here
-				
-				// Get all points info and write to PointInfo list
-				for (int i = 0; i < len; i++) {
-					temp = elementsArray.getJSONObject(i);
-					
-                    String title = temp.getString("title");
-
-                    // Filter Wikipedia articles from bad words
-                    if (!ConstantsAndTools.stringContainsItemFromList(title)) {
-                        PointInfo point = new PointInfo();
-                        point.type = temp.getString("type");
-                        point.title = title;
-                        point.url = temp.getString("url");
-                        point.mobileurl= temp.getString("mobileurl");
-                        point.distance = temp.getString("distance");
-                        point.latitude = temp.getString("lat");
-                        point.longitude = temp.getString("lng");
-
-                        points.add(point);
-                    }
-				}
-			}
-		} catch (JSONException e) {
-			Log.e("file", "parse error"+e.toString());
-		}
-		
-		return points;
 	}
 }

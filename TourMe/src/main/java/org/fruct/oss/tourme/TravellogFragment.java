@@ -243,7 +243,7 @@ public class TravellogFragment extends ListFragment {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            String title = getArguments().getString("title");
+            String title = getArguments().getString("title"); // TODO: cut
             final int itemId = getArguments().getInt("itemId");
             final int position = getArguments().getInt("position");
 

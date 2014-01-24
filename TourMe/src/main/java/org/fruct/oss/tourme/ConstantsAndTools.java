@@ -52,8 +52,10 @@ public class ConstantsAndTools {
             "Category:", "Käyttäjä:", "Luokka:", "Wikiprojekti"};
 
     // Databases
+    public static String DATABASE_NAME = "tourme_database";
     public static String TABLE_TRAVELLOG = "travellog";
     public static String TABLE_WIKIARICLES = "wikiartilces";
+    public static String NUTITEQ_LICENSE_NO = "XTUMwQ0ZIRmhHUURKNVlGMndpK2xFYkZDNm5tRFVGcEVBaFVBcFd2WGhOWW5TeXorODFaWm5EZHRUMkZ3OUo0PQoKcGFja2FnZU5hbWU9b3JnLmZydWN0Lm9zcy50b3VybWUKd2F0ZXJtYXJrPU9TTQoK";
 
     // Map things
     public static LabelStyle LABEL_STYLE = LabelStyle.builder()

@@ -12,6 +12,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Address;
@@ -113,7 +115,7 @@ public class MapFragment extends Fragment {
 		mapView.getLayers().addLayer(markerLayerSights);
 		mapView.getLayers().addLayer(markerLayerArticle);
 
-        if (MapView.registerLicense("XTUMwQ0ZIRmhHUURKNVlGMndpK2xFYkZDNm5tRFVGcEVBaFVBcFd2WGhOWW5TeXorODFaWm5EZHRUMkZ3OUo0PQoKcGFja2FnZU5hbWU9b3JnLmZydWN0Lm9zcy50b3VybWUKd2F0ZXJtYXJrPU9TTQoK", getActivity()))
+        if (MapView.registerLicense(ConstantsAndTools.NUTITEQ_LICENSE_NO, getActivity()))
             Log.i("registration", "ok");
 
         MapEventListener mapEventListener = new MapEventListener(getActivity());
@@ -212,7 +214,7 @@ public class MapFragment extends Fragment {
 			String locale = ConstantsAndTools.getLocale(context);
 			
 			// Show articles from Wiki on map
-			w = new WikilocationPoints(lon, lat,
+			w = new WikilocationPoints(getActivity(), lon, lat,
 					ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
 				@Override
 				public void onPostExecute(String result){
@@ -220,14 +222,43 @@ public class MapFragment extends Fragment {
                         return;
                     }
 
-					ArrayList<PointInfo> points = this.openAndParse();
+                    DBHelper dbHelper = new DBHelper(getActivity());
+                    SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+                    String where = "";
+                    Double lat = MainActivity.currentLatitude;
+                    Double lon = MainActivity.currentLongitude;
+                    if (lat != 0) {
+                        where = "latitude < " + Double.toString(lat - 0.5d) +
+                        " and latitude > " + Double.toString(lat + 0.5d) + // TODO: degree depend on location
+                        " and longitude < " + Double.toString(lon - 0.5) +
+                        " and longitude > " + Double.toString(lon + 0.5d);
+                    }
+                    Log.d("tourme", where + "_");
+
+                    String[] columns = new String[] {"latitude", "longitude", "name", "url"};
+                    Cursor c = db.query(true, ConstantsAndTools.TABLE_WIKIARICLES, columns, null, null, null, null, null, null); // FIXME not distinct, filter in wiki class
+                    if (c.moveToFirst()) {
+                        // Get text, image and location
+                        int idLatitude = c.getColumnIndex("latitude");
+                        int idLongitude = c.getColumnIndex("longitude");
+                        int idTitle = c.getColumnIndex("name");
+                        int idUrl = c.getColumnIndex("url");
+
+                        do {
+                            addMarker("wiki", null, c.getString(idLongitude), c.getString(idLatitude),
+                                    c.getString(idTitle), c.getString(idUrl), null);
+                        } while (c.moveToNext());
+
+                    }
+					/*ArrayList<PointInfo> points = this.openAndParse();
 					
 					if (points != null)
 						for (int i = 0; i < points.size(); i ++) {
 							PointInfo p = points.get(i);
 							
 							addMarker("wiki", p.type, p.longitude, p.latitude, p.title, p.mobileurl, null);
-						}
+                    }*/
 				}
 			};
 			

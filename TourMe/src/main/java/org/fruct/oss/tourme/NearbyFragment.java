@@ -50,19 +50,20 @@ public class NearbyFragment extends ListFragment {
 		
 		String locale = ConstantsAndTools.getLocale(context);
 		
-		w = new WikilocationPoints(lon, lat,
+		/*w = new WikilocationPoints(lon, lat,
 				ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
 			@Override
 			public void onPostExecute(String result){
-				points = this.openAndParse();
+				points = null;//this.openAndParse();
 				
-				/*for (int i = 0; i < points.size(); i ++) {
-					adapter.add(points.get(i));
-				}
-				adapter.notifyDataSetChanged();*/
+				//for (int i = 0; i < points.size(); i ++) {
+				//	adapter.add(points.get(i));
+				//}
+				//adapter.notifyDataSetChanged();
 				
 				adapter = new NearbyAdapter(points, getActivity());
-				setListAdapter(adapter);	
+                if (adapter.getCount() != 0)
+    				setListAdapter(adapter);
 				
 				ListView lv = (ListView) getListView();
 				lv.setOnItemClickListener(new OnItemClickListener() {
@@ -87,7 +88,7 @@ public class NearbyFragment extends ListFragment {
 			}
 		};
 		
-		w.execute();
+		w.execute();*/
 	}
 
     @Override

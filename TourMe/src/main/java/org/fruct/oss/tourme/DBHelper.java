@@ -14,7 +14,7 @@ import android.util.Log;
 public final class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context) {
-        super(context, "brandNewDb_", null, 2); // TODO: generate release name
+        super(context, ConstantsAndTools.DATABASE_NAME, null, 2);
     }
 
     @Override
@@ -39,7 +39,10 @@ public final class DBHelper extends SQLiteOpenHelper {
                 + "longitude text, "
                 + "name text, "
                 + "description text, "
-                + "timestamp integer"
+                + "type text, "
+                + "url text, "
+                + "distance text, "
+                + "timestamp text"
                 +");");
     }
 

@@ -11,6 +11,7 @@ import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
@@ -20,12 +21,15 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
+
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 
 public class MainActivity extends FragmentActivity implements
@@ -50,6 +54,19 @@ public class MainActivity extends FragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_fragment_container);
 		context = getApplicationContext();
+
+        // Enable translucent statusbar for KitKat and later
+        if (Build.VERSION.SDK_INT >= 19 ){
+            /*Window w = getWindow();
+            w.setFlags(67108864, 67108864);
+
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setTintColor(getResources().getColor(R.color.main_turquoise));
+            tintManager.setStatusBarAlpha(100);*/
+
+        }
+
 
         HomeFragment firstFragment = new HomeFragment();
         getFragmentManager().beginTransaction().replace(R.id.fragment_container, firstFragment).commit();
@@ -112,7 +129,7 @@ public class MainActivity extends FragmentActivity implements
 		
 		// Good practice to show drawer at first launch
 		Boolean firstLaunch = sh.getBoolean(ConstantsAndTools.IS_FIRST_LAUNCH, true);
-		if (firstLaunch) {
+		if (!firstLaunch) {
 			drawerLayout.openDrawer(Gravity.LEFT);
 			ed = sh.edit();
 			ed.putBoolean(ConstantsAndTools.IS_FIRST_LAUNCH, false);

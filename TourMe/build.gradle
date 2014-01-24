@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.+'
+        classpath 'com.android.tools.build:gradle:0.7.+'
     }
 }
 apply plugin: 'android'
@@ -37,6 +37,7 @@ android {
 dependencies {
     compile 'com.android.support:support-v4:18.0.+'
     compile files('src/main/libs/javaproj-1.0.6-noawt.jar')
+    compile files('src/main/libs/systembartint.jar')
     compile files('src/main/libs/universal-image-loader-1.8.6.jar')
     compile files('src/main/libs/nutiteq-3d-sdk-2.2.1.jar')
 }

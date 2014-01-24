@@ -1,7 +1,9 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+	android:fitsSystemWindows="true"
+	android:clipToPadding="true">
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,7 +16,7 @@
         android:padding="10dip"
         android:weightSum="2"
         tools:context=".MainActivity"
-        tools:ignore="MergeRootFrame" >
+        tools:ignore="MergeRootFrame">
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -29,28 +31,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-            <!--
-                 <TextView
-                android:id="@+id/currency"
-                style="@style/StrokedText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:text="1EUR = 99.99RUR" />
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_alignParentBottom="true"
+				>
 
-            <TextView
-                android:id="@+id/weather"
-                style="@style/StrokedText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="10dp"
-                android:text="Thunderstorm\n +50C, 99% hum" />
-            -->
+
+			</LinearLayout>
 
             <TextView
                 android:id="@+id/image_caption"
@@ -121,7 +109,9 @@
         android:orientation="vertical"
         android:id="@+id/drawer"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+		android:fitsSystemWindows="true"
+		android:clipToPadding="true">
     
 	    <ListView
 	        android:id="@+id/left_drawer"
