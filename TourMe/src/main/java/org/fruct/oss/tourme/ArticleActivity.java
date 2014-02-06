@@ -119,8 +119,10 @@ public class ArticleActivity extends Activity {
         public void onPageFinished(WebView view, String url) {       	
         	
         	// Hide Wikipedia's searchbar
-        	webView.loadUrl("javascript:document.getElementsByClassName('header')[0].style.display='none'");
-        	
+            // FIXME: Doesn't work at 4.4 KitKat (sorta ChromeView)
+        	//webView.loadUrl("javascript:document.getElementsByClassName('header')[0].style.display='none'");
+        	//webView.loadUrl("javascript:document.getElementsByClassName('pre-content')[0].style.display=\"none\";");
+
         	String webViewTitle = view.getTitle();
         	if (webViewTitle != null) {
         		try {

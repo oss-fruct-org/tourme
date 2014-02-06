@@ -66,6 +66,7 @@ public class TravellogFragment extends ListFragment {
 
         PostItemInfo item = adapter.getItem(position);
 
+        showRecord.putExtra("id", item.id);
         showRecord.putExtra("show", true);
         showRecord.putExtra("text", item.text);
         showRecord.putExtra("location", item.location);

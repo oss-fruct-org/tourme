@@ -45,6 +45,7 @@ import com.nutiteq.vectorlayers.MarkerLayer;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
@@ -236,17 +237,20 @@ public class MapFragment extends Fragment {
                     }
                     Log.d("tourme", where + "_");
 
-                    String[] columns = new String[] {"latitude", "longitude", "name", "url"};
-                    Cursor c = db.query(true, ConstantsAndTools.TABLE_WIKIARICLES, columns, null, null, null, null, null, null); // FIXME not distinct, filter in wiki class
+                    String[] columns = new String[] {"latitude", "longitude", "name", "url", "type"};
+                    Cursor c = db.query(true, ConstantsAndTools.TABLE_WIKIARTICLES, columns, null, null, null, null, null, null); // FIXME not distinct, filter in wiki class
+
                     if (c.moveToFirst()) {
                         // Get text, image and location
                         int idLatitude = c.getColumnIndex("latitude");
                         int idLongitude = c.getColumnIndex("longitude");
                         int idTitle = c.getColumnIndex("name");
                         int idUrl = c.getColumnIndex("url");
+                        int idType = c.getColumnIndex("type");
 
                         do {
-                            addMarker("wiki", null, c.getString(idLongitude), c.getString(idLatitude),
+                            Log.e("tourme ", idType + " _");
+                            addMarker("wiki", c.getString(idType), c.getString(idLongitude), c.getString(idLatitude),
                                     c.getString(idTitle), c.getString(idUrl), null);
                         } while (c.moveToNext());
 
@@ -286,7 +290,14 @@ public class MapFragment extends Fragment {
 	 */
 	private void addMarker(String layerType, String category, String longitude, String latitude, String title, String url, String description) {
 
-		Bitmap pointMarker = UnscaledBitmapLoader.decodeResource(getResources(), R.drawable.ic_launcher); // FIXME: icon category		
+        // Select icon for category
+        int iconFilename = R.drawable.ic_launcher;
+        if (Arrays.asList(ConstantsAndTools.WIKI_CATEGORIES).contains(category)) {
+            iconFilename = context.getResources().getIdentifier(category, "drawable", context.getPackageName());
+        }
+        Log.e("tourme", "_" + iconFilename + category);
+
+		Bitmap pointMarker = UnscaledBitmapLoader.decodeResource(getResources(), iconFilename); // FIXME: icon category
 		MarkerStyle markerStyle = MarkerStyle.builder()
                 .setBitmap(pointMarker)
                 .setColor(Color.WHITE)

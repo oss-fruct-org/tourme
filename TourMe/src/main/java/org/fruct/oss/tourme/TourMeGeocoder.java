@@ -259,13 +259,6 @@ public class TourMeGeocoder {
         put("GN", "GNF");
     }};;
 
-        /*static {
-            Map<Integer, String> aMap = ....;
-            aMap.put(1, "one");
-            aMap.put(2, "two");
-            myMap = Collections.unmodifiableMap(aMap);
-        }*/
-
     public TourMeGeocoder(Context context, double latitude, double longitude) {
         geocoder = new Geocoder(context); // Will use current device locate
 
@@ -297,5 +290,16 @@ public class TourMeGeocoder {
     // Get currency for country user are
     public String getCurrency() {
         return currencies.get(address.getCountryCode());
+    }
+
+    /**
+     * Get device currency
+     * @param context
+     * @return currency code
+     */
+    public String getDeviceCurrency() {
+        Currency currency = Currency.getInstance(Locale.getDefault());
+
+        return currency.getCurrencyCode();
     }
 }

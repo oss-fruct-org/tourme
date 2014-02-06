@@ -48,8 +48,6 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
 
 	private Uri buildUri (int offset) {
 		
-		// TODO: more parameters to serve: especially type, title
-		
 		Uri.Builder b = Uri.parse("http://api.wikilocation.org/articles").buildUpon();
 		b.appendQueryParameter("lat", String.valueOf(this.latitude));
 		b.appendQueryParameter("lng", String.valueOf(this.longitude));
@@ -134,7 +132,7 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
                             cv.put("url", temp.getString("mobileurl"));
                             cv.put("distance", temp.getString("distance"));
                             //cv.put("timestamp", Long.toString(System.currentTimeMillis() / 1000L)); // FIXME
-                            long rowID = db.insert(ConstantsAndTools.TABLE_WIKIARICLES, null, cv);
+                            long rowID = db.insert(ConstantsAndTools.TABLE_WIKIARTICLES, null, cv);
                             //Log.d("tourme", "row inserted, ID = " + rowID);
                         }
                     }

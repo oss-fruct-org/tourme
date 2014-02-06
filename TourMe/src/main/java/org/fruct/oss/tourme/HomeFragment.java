@@ -242,23 +242,30 @@ public class HomeFragment extends Fragment {
 	
 	
 	private class GetAndFillCurrency extends AsyncTask<Void, Integer, String> {
-		
+
+        private String from;
+        private String to;
+
 		@Override
 		protected String doInBackground(Void... params) {
 			try {
 				Context context = getActivity();
-				
-				// http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s=USDRUB=X
-				Uri.Builder b = Uri.parse("http://rate-exchange.appspot.com/currency").buildUpon();
-				b.appendQueryParameter("to", String.valueOf(ConstantsAndTools.getDeviceCurrency(context)));
 
                 TourMeGeocoder geocoder = new TourMeGeocoder(getActivity(), MainActivity.currentLatitude, MainActivity.currentLongitude);
-                b.appendQueryParameter("from", geocoder.getCurrency()); // FIXME: what if user in his country?
+                // http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s=USDRUB=X
+                //Uri.Builder b = Uri.parse("http://rate-exchange.appspot.com/currency").buildUpon();
+                //b.appendQueryParameter("to", String.valueOf(geocoder.getDeviceCurrency()));
+                //b.appendQueryParameter("from", String.valueOf(geocoder.getCurrency())); // FIXME: what if user in his country?
+                to = String.valueOf(geocoder.getDeviceCurrency());
+                from = String.valueOf(geocoder.getCurrency());
+                String preUrl = "http://www.freecurrencyconverterapi.com/api/convert?q=" + from +"-" + to + "&compact=y";
+                Uri.Builder b = Uri.parse(preUrl).buildUpon();
+
 				Uri uri = b.build();
 				
 				// Create a URL for the desired page
 				URL url = new URL(uri.toString());
-				
+
 				// Read all the text returned by the server
 				BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 				String str = in.readLine(); // Only 1 line of text
@@ -275,13 +282,14 @@ public class HomeFragment extends Fragment {
 		// Parse JSON file
 		@Override
 		public void onPostExecute(String result) {
-			String currency = "1 EUR = 0,78 USD";//getResources().getString(R.string.not_available);
+			String currency = getResources().getString(R.string.not_available);
 			
 			try {
-				JSONObject resultObject = new JSONObject(result);
-				String from = resultObject.getString("from");
-				String to = resultObject.getString("to");
-				double rate = resultObject.getDouble("rate");
+                JSONObject resultObject = new JSONObject(result);
+    				//String from = resultObject.getString("from");
+				//String to = resultObject.getString("to");
+                JSONObject val = resultObject.getJSONObject(from+"-"+to);
+				double rate = val.getDouble("val");
 				
 				currency = String.format("1 %s = %.2f %s", from, rate, to);
 			} catch (Exception e) {

@@ -32,7 +32,7 @@ public final class DBHelper extends SQLiteOpenHelper {
                 + "image text" + ");");
 
         // Database for points storing
-        db.execSQL("create table " + ConstantsAndTools.TABLE_WIKIARICLES + " ("
+        db.execSQL("create table " + ConstantsAndTools.TABLE_WIKIARTICLES + " ("
                 + "id integer primary key autoincrement, "
                 + "service text, "
                 + "latitude text, "

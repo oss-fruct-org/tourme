@@ -42,6 +42,10 @@ public class TravellogNewPostActivity extends FragmentActivity {
 
     private DBHelper dbHelper;
 
+    private boolean isOnlyToShow = false;
+    private int showedItemId = 0;
+    private String locationString;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,14 +56,17 @@ public class TravellogNewPostActivity extends FragmentActivity {
         dbHelper = new DBHelper(this);
 
         Intent fromActivity = getIntent();
-        if (fromActivity.getBooleanExtra("show", false)) {
+        isOnlyToShow = fromActivity.getBooleanExtra("show", false);
+        if (isOnlyToShow) {
+            showedItemId = fromActivity.getIntExtra("id", 0);
+
             ((EditText)findViewById(R.id.travellog_edit_text)).setText(fromActivity.getStringExtra("text"));
             (findViewById(R.id.travellog_detect_location_btn)).setVisibility(View.GONE);
             (findViewById(R.id.travellog_location_title)).setVisibility(View.GONE);
 
-            String locationDescription = fromActivity.getStringExtra("locationDescription");
-            if (locationDescription.length() != 0)
-                ((TextView) findViewById(R.id.travellog_detect_location_txt)).setText(locationDescription);
+            locationString = fromActivity.getStringExtra("locationDescription");
+            if (locationString.length() != 0)
+                ((TextView) findViewById(R.id.travellog_detect_location_txt)).setText(locationString);
             else
                 ((TextView)findViewById(R.id.travellog_detect_location_txt)).setText(fromActivity.getStringExtra("location"));
             return;
@@ -156,12 +163,16 @@ public class TravellogNewPostActivity extends FragmentActivity {
             cv.put("image", "uri"); // TODO: apply image
             cv.put("location", "");
 
-            // Try to put pretty look location
-            try {
-                TourMeGeocoder geocoder = new TourMeGeocoder(getApplicationContext(), Double.parseDouble(locationLatitude), Double.parseDouble(locationLongitude));
-                cv.put("location", geocoder.getCity() + ", " + geocoder.getRegion());
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (!isOnlyToShow) {
+                // Try to put pretty look location
+                try {
+                    TourMeGeocoder geocoder = new TourMeGeocoder(getApplicationContext(), Double.parseDouble(locationLatitude), Double.parseDouble(locationLongitude));
+                    cv.put("location", geocoder.getCity() + ", " + geocoder.getRegion());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                cv.put("location", locationString);
             }
 
             Time now = new Time();
@@ -171,7 +182,14 @@ public class TravellogNewPostActivity extends FragmentActivity {
 
             // Insert record to database
             if (db != null) {
-                long rowID = db.insert(ConstantsAndTools.TABLE_TRAVELLOG, null, cv);
+                long rowID = 0;
+
+                // Do not create new item when just viewing a post
+                if (isOnlyToShow)
+                    rowID = db.update(ConstantsAndTools.TABLE_TRAVELLOG, cv, "id=" + showedItemId, null);
+                else
+                    rowID = db.insert(ConstantsAndTools.TABLE_TRAVELLOG, null, cv);
+
                 Log.d("db", "row inserted, ID = " + rowID);
 
                 // Save and close activity
