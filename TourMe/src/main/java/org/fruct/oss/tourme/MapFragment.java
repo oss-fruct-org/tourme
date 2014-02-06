@@ -16,6 +16,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -146,6 +147,8 @@ public class MapFragment extends Fragment {
 
         @Override
         public void onVectorElementClicked(VectorElement vectorElement, double v, double v2, boolean b) {
+            if (vectorElement.userData.equals("currentLocation"))
+                return;
         }
 
         // Open activity with article
@@ -173,11 +176,13 @@ public class MapFragment extends Fragment {
             Bitmap pointMarker = UnscaledBitmapLoader.decodeResource(getResources(), R.drawable.ic_current_location);
             MarkerStyle markerStyle = MarkerStyle.builder().setBitmap(pointMarker).build();
 
-            Label markerLabel = new DefaultLabel("", "", ConstantsAndTools.LABEL_STYLE);
+            Label markerLabel = new DefaultLabel("", "", ConstantsAndTools.LABEL_STYLE); // FIXME
 
             MapPos markerLocation = mapLayer.getProjection().fromWgs84(MainActivity.currentLongitude, MainActivity.currentLatitude);
 
             Marker marker = new Marker(markerLocation, markerLabel, markerStyle, null);
+            marker.userData = "currentLocation";
+
             myLocation.add(marker);
             mapView.getLayers().addLayer(myLocation);
         }
@@ -210,7 +215,7 @@ public class MapFragment extends Fragment {
 			mapView.setZoom(14);
 			firstLaunch = false;			
 		
-			clearMarkers();			
+			clearMarkers();
 
 			String locale = ConstantsAndTools.getLocale(context);
 			
@@ -235,7 +240,6 @@ public class MapFragment extends Fragment {
                         " and longitude < " + Double.toString(lon - 0.5) +
                         " and longitude > " + Double.toString(lon + 0.5d);
                     }
-                    Log.d("tourme", where + "_");
 
                     String[] columns = new String[] {"latitude", "longitude", "name", "url", "type"};
                     Cursor c = db.query(true, ConstantsAndTools.TABLE_WIKIARTICLES, columns, null, null, null, null, null, null); // FIXME not distinct, filter in wiki class
@@ -249,20 +253,10 @@ public class MapFragment extends Fragment {
                         int idType = c.getColumnIndex("type");
 
                         do {
-                            Log.e("tourme ", idType + " _");
                             addMarker("wiki", c.getString(idType), c.getString(idLongitude), c.getString(idLatitude),
                                     c.getString(idTitle), c.getString(idUrl), null);
                         } while (c.moveToNext());
-
                     }
-					/*ArrayList<PointInfo> points = this.openAndParse();
-					
-					if (points != null)
-						for (int i = 0; i < points.size(); i ++) {
-							PointInfo p = points.get(i);
-							
-							addMarker("wiki", p.type, p.longitude, p.latitude, p.title, p.mobileurl, null);
-                    }*/
 				}
 			};
 			
@@ -309,15 +303,28 @@ public class MapFragment extends Fragment {
         if (title.length() > 40)
             title = title.substring(0, 40).concat("...");
 
+        // Adjust label size to screen density
+        float scale = getResources().getDisplayMetrics().density;
+
+        LabelStyle labelStyle = LabelStyle.builder()
+            .setBackgroundColor(Color.parseColor("#FF222222"))
+            .setBorderColor(Color.parseColor("#FF222222"))
+            .setTitleColor(Color.parseColor("#FFFFFFFF"))
+            .setDescriptionColor(Color.parseColor("#FFFFFFFF"))
+            .setTipSize((int) (10 * scale))
+            .setTitleFont(Typeface.create("Roboto", Typeface.BOLD), 14 * scale)
+            .setBorderRadius(5)
+            .build();
+
 		if (description == null)
-			markerLabel = new DefaultLabel(title, "", ConstantsAndTools.LABEL_STYLE);
+			markerLabel = new DefaultLabel(title, "", labelStyle);
 		else
-			markerLabel = new DefaultLabel(title, description, ConstantsAndTools.LABEL_STYLE);
-		
+			markerLabel = new DefaultLabel(title, description, labelStyle);
+
 		// define location of the marker, it must be converted to base map coordinate system
 		MapPos markerLocation = mapLayer.getProjection().fromWgs84(Float.parseFloat(longitude), Float.parseFloat(latitude));
 
-		// create layer and add object to the layer, finally add layer to the map. 
+		// create layer and add object to the layer, finally add layer to the map.
 		// All overlay layers must be same projection as base layer, so we reuse it
 		Marker marker = new Marker(markerLocation, markerLabel, markerStyle, null);
         marker.userData = url;
