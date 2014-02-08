@@ -59,8 +59,13 @@ public class ConstantsAndTools {
     public static String NUTITEQ_LICENSE_NO = "XTUMwQ0ZIRmhHUURKNVlGMndpK2xFYkZDNm5tRFVGcEVBaFVBcFd2WGhOWW5TeXorODFaWm5EZHRUMkZ3OUo0PQoKcGFja2FnZU5hbWU9b3JnLmZydWN0Lm9zcy50b3VybWUKd2F0ZXJtYXJrPU9TTQoK";
 
     // Wikipedia categories
-    public static String[] WIKI_CATEGORIES = new String[] {"city"}; /*{"adm1st", "adm2st", "adm3rd", "city", "city(XXX", "country", "edu", "event",
-            "forest", "glacier", "isle", "landmark", "mountain", "pass", "railwaystation", "river", "satellite", "waterbody"}; */
+    public static String[] WIKI_CATEGORIES_ADM = new String[] {"adm1st", "adm2nd", "adm3rd"};
+    public static String[] WIKI_CATEGORIES_WATER = new String[] {"river", "waterbody"};
+    public static String[] WIKI_CATEGORIES_MOUNTAIN = new String[] {"mountain", "pass"};
+    public static String[] WIKI_CATEGORIES = new String[] {"city", "country", "edu", "event",
+            "forest", "isle", "landmark", "railwaystation"};
+    /* not used: "glacier", "satellite", "camera" (default icon) */
+
 
     // Map things
     public static LabelStyle LABEL_STYLE = LabelStyle.builder()

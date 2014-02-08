@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
@@ -45,6 +46,8 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
 	private String locale;
 
     private DBHelper dbHelper;
+
+    public Cursor cursor = null; // Cursor to existing items (if items exist)
 
 	private Uri buildUri (int offset) {
 		
@@ -79,7 +82,35 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
                 return null;
             }
 
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            // Check for point in area
+            DBHelper dbHelper = new DBHelper(cont);
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+            String where = "";
+            Double lat = MainActivity.currentLatitude;
+            Double lon = MainActivity.currentLongitude;
+            if (lat != 0) {
+                where = "latitude < " + Double.toString(lat - 0.5d) +
+                        " and latitude > " + Double.toString(lat + 0.5d) + // TODO: degree depend on location
+                        " and longitude < " + Double.toString(lon - 0.5) +
+                        " and longitude > " + Double.toString(lon + 0.5d);
+            }
+
+            String[] columns = new String[] {"latitude", "longitude", "name", "url", "type", "distance"};
+            this.cursor = db.query(true, ConstantsAndTools.TABLE_WIKIARTICLES, columns, null, null, null, null, null, null); // FIXME not distinct, filter in wiki class
+
+            if (this.cursor.getCount() != 0) {
+                Log.e("tourme", "cursor not null " + cursor.getColumnCount() + " - " + cursor.toString());
+                return null;
+            } else {
+                Log.e("tourme", "cursor is null");
+            }
+
+
+            /*
+             * Perform this actions if there are no points for location
+             */
+            db = dbHelper.getWritableDatabase();
 
 			for (int offset = 0; offset < ConstantsAndTools.ARTICLES_AMOUNT; offset += ConstantsAndTools.ARTICLES_MAXIMUM_PER_TIME) {
 				Uri tempUri = this.buildUri(offset);
@@ -135,13 +166,14 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
                             long rowID = db.insert(ConstantsAndTools.TABLE_WIKIARTICLES, null, cv);
                             //Log.d("tourme", "row inserted, ID = " + rowID);
                         }
+                        this.cursor = db.query(true, ConstantsAndTools.TABLE_WIKIARTICLES, columns, null, null, null, null, null, null); // FIXME not distinct, filter in wiki class
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-			}			
-
-		} catch (Exception e) {
+			}
+        } catch (Exception e) {
 			Log.e("tourme", e.getMessage());
 		} finally {
             // TODO: delete duplicates in database

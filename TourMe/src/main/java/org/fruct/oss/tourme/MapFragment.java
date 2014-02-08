@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -228,7 +229,9 @@ public class MapFragment extends Fragment {
                         return;
                     }
 
+                    /*
                     DBHelper dbHelper = new DBHelper(getActivity());
+                     \
                     SQLiteDatabase db = dbHelper.getReadableDatabase();
 
                     String where = "";
@@ -243,19 +246,20 @@ public class MapFragment extends Fragment {
 
                     String[] columns = new String[] {"latitude", "longitude", "name", "url", "type"};
                     Cursor c = db.query(true, ConstantsAndTools.TABLE_WIKIARTICLES, columns, null, null, null, null, null, null); // FIXME not distinct, filter in wiki class
-
-                    if (c.moveToFirst()) {
+                    */
+                    if (this.cursor.moveToFirst()) {
                         // Get text, image and location
-                        int idLatitude = c.getColumnIndex("latitude");
-                        int idLongitude = c.getColumnIndex("longitude");
-                        int idTitle = c.getColumnIndex("name");
-                        int idUrl = c.getColumnIndex("url");
-                        int idType = c.getColumnIndex("type");
+                        int idLatitude = this.cursor.getColumnIndex("latitude");
+                        int idLongitude = this.cursor.getColumnIndex("longitude");
+                        int idTitle = this.cursor.getColumnIndex("name");
+                        int idUrl = this.cursor.getColumnIndex("url");
+                        int idType = this.cursor.getColumnIndex("type");
 
                         do {
-                            addMarker("wiki", c.getString(idType), c.getString(idLongitude), c.getString(idLatitude),
-                                    c.getString(idTitle), c.getString(idUrl), null);
-                        } while (c.moveToNext());
+                            addMarker("wiki", this.cursor.getString(idType), this.cursor.getString(idLongitude),
+                                    this.cursor.getString(idLatitude), this.cursor.getString(idTitle),
+                                    this.cursor.getString(idUrl), null);
+                        } while (this.cursor.moveToNext());
                     }
 				}
 			};
@@ -285,13 +289,25 @@ public class MapFragment extends Fragment {
 	private void addMarker(String layerType, String category, String longitude, String latitude, String title, String url, String description) {
 
         // Select icon for category
-        int iconFilename = R.drawable.ic_launcher;
-        if (Arrays.asList(ConstantsAndTools.WIKI_CATEGORIES).contains(category)) {
-            iconFilename = context.getResources().getIdentifier(category, "drawable", context.getPackageName());
-        }
-        Log.e("tourme", "_" + iconFilename + category);
+        int iconFilename = R.drawable.ic_map_default;
 
-		Bitmap pointMarker = UnscaledBitmapLoader.decodeResource(getResources(), iconFilename); // FIXME: icon category
+        Resources resources = context.getResources();
+
+        Log.e("tourme", category + "+");
+        // Check for
+        if (Arrays.asList(ConstantsAndTools.WIKI_CATEGORIES_ADM).contains(category))
+            iconFilename = resources.getIdentifier("ic_map_adm", "drawable", context.getPackageName());
+
+        if (Arrays.asList(ConstantsAndTools.WIKI_CATEGORIES_MOUNTAIN).contains(category))
+            iconFilename = resources.getIdentifier("ic_map_mountain", "drawable", context.getPackageName());
+
+        if (Arrays.asList(ConstantsAndTools.WIKI_CATEGORIES_WATER).contains(category))
+            iconFilename = resources.getIdentifier("ic_map_water", "drawable", context.getPackageName());
+
+        if (Arrays.asList(ConstantsAndTools.WIKI_CATEGORIES).contains(category))
+            iconFilename = context.getResources().getIdentifier("ic_map_" + category, "drawable", context.getPackageName());
+
+		Bitmap pointMarker = UnscaledBitmapLoader.decodeResource(getResources(), iconFilename);
 		MarkerStyle markerStyle = MarkerStyle.builder()
                 .setBitmap(pointMarker)
                 .setColor(Color.WHITE)
@@ -307,8 +323,8 @@ public class MapFragment extends Fragment {
         float scale = getResources().getDisplayMetrics().density;
 
         LabelStyle labelStyle = LabelStyle.builder()
-            .setBackgroundColor(Color.parseColor("#FF222222"))
-            .setBorderColor(Color.parseColor("#FF222222"))
+            .setBackgroundColor(Color.parseColor("#FF4d4d4d"))
+            .setBorderColor(Color.parseColor("#004d4d4d"))
             .setTitleColor(Color.parseColor("#FFFFFFFF"))
             .setDescriptionColor(Color.parseColor("#FFFFFFFF"))
             .setTipSize((int) (10 * scale))

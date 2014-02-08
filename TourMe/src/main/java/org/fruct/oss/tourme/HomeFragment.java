@@ -31,8 +31,11 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -153,16 +156,47 @@ public class HomeFragment extends Fragment {
 		weatherView = (TextView) view.findViewById(R.id.weather);
 		
 		randomPhrase();
+
+        GetNearImages images = new GetNearImages();
+        images.execute();
 		
 		GetAndFillCurrency cur = new GetAndFillCurrency();
 		cur.execute();
 		
 		GetAndFillWeather wea = new GetAndFillWeather();
 		wea.execute();
-		
-		GetNearImages images = new GetNearImages();
-		images.execute();
+
+        RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.fragment_home_currency);
 	}
+
+
+    /*public static void expandAnimation(final View v) {
+        v.measure(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        final int targtetHeight = v.getMeasuredHeight();
+
+        v.getLayoutParams().height = v.getHeight();
+        v.setVisibility(View.VISIBLE);
+        Animation a = new Animation()
+        {
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                v.getLayoutParams().height = interpolatedTime == 1
+                        ? RelativeLayout.LayoutParams.WRAP_CONTENT
+                        : (int)(targtetHeight * interpolatedTime);
+                v.requestLayout();
+            }
+
+            @Override
+            public boolean willChangeBounds() {
+                return true;
+            }
+        };
+
+        // 1dp/ms
+        a.setDuration((int)(targtetHeight / v.getContext().getResources().getDisplayMetrics().density));
+        v.startAnimation(a);
+    }
+    */
 
 	private class GetAndFillWeather extends AsyncTask<Void, Integer, String> {
 		
@@ -282,6 +316,9 @@ public class HomeFragment extends Fragment {
 		// Parse JSON file
 		@Override
 		public void onPostExecute(String result) {
+            if (!isAdded())
+                return;
+
 			String currency = getResources().getString(R.string.not_available);
 			
 			try {
@@ -306,6 +343,10 @@ public class HomeFragment extends Fragment {
 		@Override
 		protected String doInBackground(Void... params) {
 			try {
+                //
+                // TODO: write 'isAdded' statement
+                //
+
 				Context context = getActivity();
 				Double lon = MainActivity.currentLongitude; // TODO FIXME TODO What if location is unavailable?
 				Double lat = MainActivity.currentLatitude;

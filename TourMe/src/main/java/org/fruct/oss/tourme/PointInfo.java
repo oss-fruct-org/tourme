@@ -13,7 +13,7 @@ public class PointInfo {
 	// WikiLocation specific
 	public String type = null;	
 	public String url = null;
-	public String mobileurl = null;
+	//public String mobileurl = null;
 	public String distance = null;
 	
 	// Yandex specific

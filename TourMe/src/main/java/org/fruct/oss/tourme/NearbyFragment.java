@@ -31,7 +31,7 @@ public class NearbyFragment extends ListFragment {
 	}*/
 	
 	NearbyAdapter adapter;
-	ArrayList<PointInfo> points;
+	//ArrayList<PointInfo> points;
 	
 	Context context;
 
@@ -49,46 +49,69 @@ public class NearbyFragment extends ListFragment {
 		double lat = MainActivity.currentLatitude;
 		
 		String locale = ConstantsAndTools.getLocale(context);
-		
-		/*w = new WikilocationPoints(lon, lat,
-				ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
-			@Override
-			public void onPostExecute(String result){
-				points = null;//this.openAndParse();
-				
-				//for (int i = 0; i < points.size(); i ++) {
-				//	adapter.add(points.get(i));
-				//}
-				//adapter.notifyDataSetChanged();
-				
-				adapter = new NearbyAdapter(points, getActivity());
-                if (adapter.getCount() != 0)
-    				setListAdapter(adapter);
-				
-				ListView lv = (ListView) getListView();
-				lv.setOnItemClickListener(new OnItemClickListener() {
 
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view, int position,	long id) {
-						PointInfo p = points.get(position);
-						Intent i = new Intent(getActivity(), ArticleActivity.class);
-						i.putExtra(ConstantsAndTools.ARTICLE_ID, p.mobileurl);
-						i.putExtra(ConstantsAndTools.ARTICLE_TITLE, p.title);
-						
-						// Put bundle of article's coordinates
-						Bundle coords = new Bundle();
-						coords.putString("latitude", p.latitude);
-						coords.putString("longitude", p.longitude);
-						i.putExtra(ConstantsAndTools.ARTICLE_COORDINATES, coords);
-						
-						startActivity(i);
-					}			
-				});
-				
-			}
-		};
-		
-		w.execute();*/
+        w = new WikilocationPoints(getActivity(), lon, lat,
+                ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
+            @Override
+            public void onPostExecute(String result){
+                if(!isAdded()){
+                    return;
+                }
+                if (this.cursor.moveToFirst()) {
+                    // Get text, image and location
+                    int idLatitude = this.cursor.getColumnIndex("latitude");
+                    int idLongitude = this.cursor.getColumnIndex("longitude");
+                    int idTitle = this.cursor.getColumnIndex("name");
+                    int idUrl = this.cursor.getColumnIndex("url");
+                    //int idType = this.cursor.getColumnIndex("type");
+                    int idDistance = this.cursor.getColumnIndex("distance");
+
+                    final ArrayList<PointInfo> points = new ArrayList<PointInfo>();
+                    do {
+                        PointInfo pointInfo = new PointInfo();
+                        pointInfo.latitude = cursor.getString(idLatitude);
+                        pointInfo.longitude = cursor.getString(idLongitude);
+                        pointInfo.distance = cursor.getString(idDistance); // FIXME
+                        pointInfo.url = cursor.getString(idUrl);
+                        pointInfo.title = cursor.getString(idTitle);
+
+                        points.add(pointInfo);
+
+                    } while (this.cursor.moveToNext());
+
+                    adapter = new NearbyAdapter(points, getActivity());
+                    if (adapter.getCount() != 0)
+                        setListAdapter(adapter);
+
+                    ListView lv = (ListView) getListView();
+                    if (lv != null) {
+                        lv.setOnItemClickListener(new OnItemClickListener() {
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position,	long id) {
+                                PointInfo p = points.get(position);
+                                Intent i = new Intent(getActivity(), ArticleActivity.class);
+
+                                i.putExtra(ConstantsAndTools.ARTICLE_ID, p.url);
+                                i.putExtra(ConstantsAndTools.ARTICLE_TITLE, p.title);
+
+                                // Put bundle of article's coordinates
+                                Bundle coords = new Bundle();
+                                coords.putString("latitude", p.latitude);
+                                coords.putString("longitude", p.longitude);
+                                i.putExtra(ConstantsAndTools.ARTICLE_COORDINATES, coords);
+
+                                startActivity(i);
+                            }
+                        });
+                    }
+
+                }
+            }
+        };
+
+        w.execute();
+
 	}
 
     @Override
@@ -125,7 +148,7 @@ public class NearbyFragment extends ListFragment {
 		        convertView = inflater.inflate(R.layout.nearby_list_item, parent, false);
 		    }
 
-		    // TODO: icons? favourites? click event?
+		    // TODO: icons? favourites?
 		    TextView tv = (TextView) convertView.findViewById(R.id.nearby_list_item_title);
 		    TextView distView = (TextView) convertView.findViewById(R.id.nearby_list_item_descr);
 		    
