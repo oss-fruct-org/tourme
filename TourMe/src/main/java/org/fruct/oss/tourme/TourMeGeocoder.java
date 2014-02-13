@@ -17,8 +17,8 @@ import java.util.Map;
  * (uses standard Android geocoder)
  */
 public class TourMeGeocoder {
-    Geocoder geocoder;
-    Address address;
+    private Geocoder geocoder;
+    private Address address;
 
     public static final Map<String, String> currencies = new HashMap<String, String>(){{
         put("AF", "AFN");
@@ -277,6 +277,11 @@ public class TourMeGeocoder {
         return address.getCountryName();
     }
 
+    // Get country code (e.g. 'fi')
+    public String getCountryCode() {
+        return address.getCountryCode();
+    }
+
     // Get region (e.g. 'South Karelia')
     public String getRegion() {
         return address.getAdminArea();
@@ -294,7 +299,6 @@ public class TourMeGeocoder {
 
     /**
      * Get device currency
-     * @param context
      * @return currency code
      */
     public String getDeviceCurrency() {

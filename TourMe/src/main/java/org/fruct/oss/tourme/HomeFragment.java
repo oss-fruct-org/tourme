@@ -55,6 +55,14 @@ public class HomeFragment extends Fragment {
 	TextView currencyView;
 	TextView phraseView;
 	TextView weatherView;
+
+    TextView countryNameView;
+    TextView countryNameMoreView;
+    TextView populationView;
+    TextView phoneCodeView;
+    TextView domainVIew;
+    TextView langsView;
+
 	
 	ImageLoader imageLoader;
 
@@ -154,6 +162,13 @@ public class HomeFragment extends Fragment {
 		currencyView = (TextView) view.findViewById(R.id.currency);
 		phraseView = (TextView) view.findViewById(R.id.phrase);
 		weatherView = (TextView) view.findViewById(R.id.weather);
+
+        countryNameView = (TextView) view.findViewById(R.id.fragment_home_country_name);;
+        countryNameMoreView = (TextView) view.findViewById(R.id.fragment_home_country_name_more);
+        populationView = (TextView) view.findViewById(R.id.fragment_home_country_population);
+        phoneCodeView = (TextView) view.findViewById(R.id.fragment_home_country_phone_code);
+        domainVIew = (TextView) view.findViewById(R.id.fragment_home_country_domain);
+        langsView = (TextView) view.findViewById(R.id.fragment_home_country_language);
 		
 		randomPhrase();
 
@@ -165,6 +180,9 @@ public class HomeFragment extends Fragment {
 		
 		GetAndFillWeather wea = new GetAndFillWeather();
 		wea.execute();
+
+        GetAndFIllCountryInfo country = new GetAndFIllCountryInfo();
+        country.execute();
 
         RelativeLayout relativeLayout = (RelativeLayout) view.findViewById(R.id.fragment_home_currency);
 	}
@@ -197,6 +215,132 @@ public class HomeFragment extends Fragment {
         v.startAnimation(a);
     }
     */
+
+
+    private class GetAndFIllCountryInfo extends  AsyncTask<Void, Integer, String> {
+
+        TourMeGeocoder geocoder;
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+                Context context = getActivity();
+                Double lat = MainActivity.currentLatitude;
+                Double lon = MainActivity.currentLongitude;
+
+                if (lon == null || lat == null) {
+                    return null;
+                }
+
+                geocoder = new TourMeGeocoder(context, lat, lon);
+                String countryCode = geocoder.getCountryCode();
+
+                String preUrl = "http://restcountries.eu/rest/v1/alpha?codes=" + countryCode;
+                Uri.Builder b = Uri.parse(preUrl).buildUpon();
+                Uri uri = b.build();
+
+                Log.e("Weather URL", uri.toString()+"_");
+
+                // Create a URL for the desired page
+                URL url = new URL(uri.toString());
+
+                // Read all the text returned by the server
+                BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+                String str, tempStr = "";
+
+                while ((str = in.readLine()) != null) {
+                    tempStr = tempStr + str;
+                }
+                in.close();
+
+                return tempStr;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        // Parse JSON file
+        @Override
+        public void onPostExecute(String result) {
+
+            if (!isAdded()) {
+              return;
+            }
+
+            try {
+                JSONObject resultObject = new JSONArray(result).getJSONObject(0);
+
+                // Use localized country name from geocoder
+                String countryName = geocoder.getCountry();
+                countryNameView.setText(countryName);
+
+                // Get alternative spellings of country name
+                JSONArray altSpellings = resultObject.getJSONArray("altSpellings");
+                String strAltSpellings = null;
+                for (int i = 0; i < altSpellings.length() - 1; i++) {
+                    String name = altSpellings.getString(i);
+                    if (name.length() > 2)
+                        if (strAltSpellings == null)
+                            strAltSpellings = name;
+                    else
+                        strAltSpellings = strAltSpellings + ", " + name;
+                }
+                countryNameMoreView.setText(strAltSpellings);
+
+                // Get population
+                String population = resultObject.getInt("population") + "";
+                populationView.setText(population);
+
+                // Get phonde code
+                JSONArray phoneCodes = resultObject.getJSONArray("callingCodes");
+                String strPhoneCodes = null;
+                for (int i = 0; i < phoneCodes.length(); i++) {
+                    String code = phoneCodes.getString(i);
+                    if (strPhoneCodes == null)
+                        strPhoneCodes = code;
+                    else
+                        strPhoneCodes = strPhoneCodes + ", " + code;
+                }
+                phoneCodeView.setText(strPhoneCodes);
+
+                // Get domain
+                JSONArray domain = resultObject.getJSONArray("topLevelDomain");
+                String strDomain = null;
+                for (int i = 0; i < domain.length(); i++) {
+                    String dom = domain.getString(i);
+                    if (strDomain == null)
+                        strDomain = dom;
+                    else
+                        strDomain = strDomain + ", " + dom;
+                }
+                domainVIew.setText(strDomain);
+
+                // Get languages
+                JSONArray lang = resultObject.getJSONArray("languages");
+                String strLangs = null;
+                for (int i = 0; i < lang.length(); i++) {
+                    String lan = lang.getString(i);
+                    if (strLangs == null)
+                        strLangs = lan;
+                    else
+                        strLangs = strLangs + ", " + lan;
+                }
+                langsView.setText(strLangs);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("res", result+"*");
+            }
+    }
+
+
+
+    }
+
+
 
 	private class GetAndFillWeather extends AsyncTask<Void, Integer, String> {
 		

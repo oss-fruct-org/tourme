@@ -36,9 +36,6 @@
       </layout>
     </layouts>
   </component>
-  <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="tourme" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="8d56d7e7-76bd-4d6f-b589-3f27c6163488" name="Default" comment="" />
     <ignored path="TourMe.iws" />
@@ -103,14 +100,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="HomeFragment.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MainActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="148" column="35" selection-start="5323" selection-end="5323" vertical-scroll-proportion="0.6031746" vertical-offset="1744" max-vertical-offset="5678">
+              <folding>
+                <element signature="e#3827#4003#0" expanded="true" />
+                <element signature="e#3998#3999#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HomeFragment.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/HomeFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="198" column="6" selection-start="6339" selection-end="6339" vertical-scroll-proportion="0.84988964" vertical-offset="2063" max-vertical-offset="9724">
+            <state line="328" column="24" selection-start="11323" selection-end="11323" vertical-scroll-proportion="-11.730769" vertical-offset="5237" max-vertical-offset="13056">
               <folding>
-                <element signature="e#7805#7853#0" expanded="true" />
-                <element signature="e#8579#8622#0" expanded="true" />
-                <element signature="e#10330#10378#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#3692#4212#0" expanded="true" />
+                <element signature="e#4207#4208#0" expanded="true" />
+                <element signature="e#4340#4452#0" expanded="true" />
+                <element signature="e#4447#4448#0" expanded="true" />
+                <element signature="e#13032#13080#0" expanded="true" />
+                <element signature="e#13806#13849#0" expanded="true" />
+                <element signature="e#15557#15605#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -122,8 +136,33 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="156" column="55" selection-start="4128" selection-end="4128" vertical-scroll-proportion="-8.16" vertical-offset="2448" max-vertical-offset="3791">
+            <state line="221" column="29" selection-start="5988" selection-end="5988" vertical-scroll-proportion="-12.76" vertical-offset="3438" max-vertical-offset="5644">
+              <folding>
+                <element signature="e#7132#7152#0" expanded="true" />
+                <element signature="e#7911#7931#0" expanded="true" />
+                <element signature="e#8693#8709#0" expanded="true" />
+                <element signature="e#9466#9485#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="118" column="38" selection-start="5700" selection-end="5700" vertical-scroll-proportion="0.0" vertical-offset="1604" max-vertical-offset="2142">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TourMeGeocoder.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TourMeGeocoder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="12" selection-start="462" selection-end="462" vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="1156">
+              <folding>
+                <element signature="class#541:6711" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -539,28 +578,28 @@
         <option value="$PROJECT_DIR$/TourMe/src/main/res/values/styles_tourmeab.xml" />
         <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/activity_fragment_container.xml" />
-        <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MainActivity.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/activity_prepare.xml" />
         <option value="$PROJECT_DIR$/TourMe/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/TourMe/src/main/res/values/colors_tourme.xml" />
         <option value="$PROJECT_DIR$/TourMe/src/main/res/values/tourme_styles.xml" />
         <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/fragment_prepare_1.xml" />
         <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/fragment_prepare_2.xml" />
-        <option value="$PROJECT_DIR$/TourMe/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/PrepareActivity.java" />
         <option value="$PROJECT_DIR$/TourMe/build.gradle" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TravellogFragment.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TravellogNewPostActivity.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/DBHelper.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/ArticleActivity.java" />
-        <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TourMeGeocoder.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/ConstantsAndTools.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MapFragment.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/PointInfo.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/NearbyFragment.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/WikilocationPoints.java" />
-        <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/activity_home.xml" />
+        <option value="$PROJECT_DIR$/TourMe/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TourMeGeocoder.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/HomeFragment.java" />
+        <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/activity_home.xml" />
+        <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -652,7 +691,33 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="libs" />
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TourMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TourMe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -957,13 +1022,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.295764" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29531723" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3282313" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24181919" sideWeight="0.5007874" order="2" side_tool="true" content_ui="tabs" />
@@ -972,16 +1037,16 @@
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24181919" sideWeight="0.50052357" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31623036" sideWeight="0.50027734" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3265306" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1632653" sideWeight="0.49926794" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31292516" sideWeight="0.49926794" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984293" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19939578" sideWeight="0.4992126" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32482994" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="274" y="247" width="1223" height="736" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" x="274" y="247" width="1223" height="736" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1311,35 +1376,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="18" selection-start="5297" selection-end="5297" vertical-scroll-proportion="0.38781163" vertical-offset="1696" max-vertical-offset="2057">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TourMeGeocoder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="299" column="11" selection-start="7751" selection-end="7751" vertical-scroll-proportion="0.45454547" vertical-offset="714" max-vertical-offset="1088">
-          <folding>
-            <element signature="class#525:6695" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/ArticleActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="134" column="13" selection-start="4754" selection-end="4754" vertical-scroll-proportion="0.72727275" vertical-offset="2006" max-vertical-offset="3400">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="0" selection-start="1407" selection-end="1407" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="5627">
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1396,23 +1438,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/layout/activity_home.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TourMeGeocoder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="156" column="55" selection-start="4128" selection-end="4128" vertical-scroll-proportion="-8.16" vertical-offset="2448" max-vertical-offset="3791">
-          <folding />
+        <state line="20" column="12" selection-start="462" selection-end="462" vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="1156">
+          <folding>
+            <element signature="class#541:6711" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/HomeFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="198" column="6" selection-start="6339" selection-end="6339" vertical-scroll-proportion="0.84988964" vertical-offset="2063" max-vertical-offset="9724">
+        <state line="328" column="24" selection-start="11323" selection-end="11323" vertical-scroll-proportion="-11.730769" vertical-offset="5237" max-vertical-offset="13056">
           <folding>
-            <element signature="e#7805#7853#0" expanded="true" />
-            <element signature="e#8579#8622#0" expanded="true" />
-            <element signature="e#10330#10378#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#3692#4212#0" expanded="true" />
+            <element signature="e#4207#4208#0" expanded="true" />
+            <element signature="e#4340#4452#0" expanded="true" />
+            <element signature="e#4447#4448#0" expanded="true" />
+            <element signature="e#13032#13080#0" expanded="true" />
+            <element signature="e#13806#13849#0" expanded="true" />
+            <element signature="e#15557#15605#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="118" column="38" selection-start="5700" selection-end="5700" vertical-scroll-proportion="0.0" vertical-offset="1604" max-vertical-offset="2142">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/layout/activity_home.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="221" column="29" selection-start="5988" selection-end="5988" vertical-scroll-proportion="-12.76" vertical-offset="3438" max-vertical-offset="5644">
+          <folding>
+            <element signature="e#7132#7152#0" expanded="true" />
+            <element signature="e#7911#7931#0" expanded="true" />
+            <element signature="e#8693#8709#0" expanded="true" />
+            <element signature="e#9466#9485#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="148" column="35" selection-start="5323" selection-end="5323" vertical-scroll-proportion="0.6031746" vertical-offset="1744" max-vertical-offset="5678">
+          <folding>
+            <element signature="e#3827#4003#0" expanded="true" />
+            <element signature="e#3998#3999#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -113,4 +113,9 @@
 
 	<string name="travellog_delete_confirmation">Delete this item?</string>
 
+    <string name="population">Population:</string>
+    <string name="phone_code">Phone code:</string>
+    <string name="domain">Domain:</string>
+    <string name="languages">Language:</string>
+
 </resources>
