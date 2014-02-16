@@ -80,6 +80,7 @@
             android:padding="10dip">
 
 			<RelativeLayout
+                android:id="@+id/fragment_home_currency_view"
 				android:layout_width="match_parent"
 				android:layout_height="75dp"
 				android:background="@drawable/card_background">

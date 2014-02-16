@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Gradle: systembartint">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/TourMe/src/main/libs/systembartint.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

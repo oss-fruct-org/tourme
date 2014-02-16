@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -53,6 +54,7 @@ public class HomeFragment extends Fragment {
 	static DisplayImageOptions options;
 
 	TextView currencyView;
+    RelativeLayout currencyViewMain;
 	TextView phraseView;
 	TextView weatherView;
 
@@ -160,6 +162,7 @@ public class HomeFragment extends Fragment {
         }
 
 		currencyView = (TextView) view.findViewById(R.id.currency);
+        currencyViewMain = (RelativeLayout) view.findViewById(R.id.fragment_home_currency_view);
 		phraseView = (TextView) view.findViewById(R.id.phrase);
 		weatherView = (TextView) view.findViewById(R.id.weather);
 
@@ -430,14 +433,14 @@ public class HomeFragment extends Fragment {
 				Context context = getActivity();
 
                 TourMeGeocoder geocoder = new TourMeGeocoder(getActivity(), MainActivity.currentLatitude, MainActivity.currentLongitude);
-                // http://finance.yahoo.com/d/quotes.csv?e=.csv&f=sl1d1t1&s=USDRUB=X
-                //Uri.Builder b = Uri.parse("http://rate-exchange.appspot.com/currency").buildUpon();
-                //b.appendQueryParameter("to", String.valueOf(geocoder.getDeviceCurrency()));
-                //b.appendQueryParameter("from", String.valueOf(geocoder.getCurrency())); // FIXME: what if user in his country?
                 to = String.valueOf(geocoder.getDeviceCurrency());
                 from = String.valueOf(geocoder.getCurrency());
                 String preUrl = "http://www.freecurrencyconverterapi.com/api/convert?q=" + from +"-" + to + "&compact=y";
                 Uri.Builder b = Uri.parse(preUrl).buildUpon();
+
+                // If user is in his country, hide currency view
+                if (to.equals(from))
+                    return null;
 
 				Uri uri = b.build();
 				
@@ -463,6 +466,12 @@ public class HomeFragment extends Fragment {
             if (!isAdded())
                 return;
 
+            // Hide view if nothing to show
+            if (result == null) {
+                currencyViewMain.setVisibility(View.GONE);
+                return;
+            }
+
 			String currency = getResources().getString(R.string.not_available);
 			
 			try {
@@ -471,7 +480,6 @@ public class HomeFragment extends Fragment {
 				//String to = resultObject.getString("to");
                 JSONObject val = resultObject.getJSONObject(from+"-"+to);
 				double rate = val.getDouble("val");
-				
 				currency = String.format("1 %s = %.2f %s", from, rate, to);
 			} catch (Exception e) {
 				e.printStackTrace();

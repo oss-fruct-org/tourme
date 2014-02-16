@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TourMe.iml" filepath="$PROJECT_DIR$/TourMe.iml" />
-      <module fileurl="file://$PROJECT_DIR$/TourMe/TourMe-TourMe.iml" filepath="$PROJECT_DIR$/TourMe/TourMe-TourMe.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TourMe/TourMe.iml" filepath="$PROJECT_DIR$/TourMe/TourMe.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tourme.iml" filepath="$PROJECT_DIR$/tourme.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tourme.iml" filepath="$PROJECT_DIR$/tourme.iml" />
     </modules>
   </component>
 </project>

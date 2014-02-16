@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -87,7 +88,7 @@ public class ArticleActivity extends Activity {
         webView.getSettings().setGeolocationEnabled(true);
         webView.getSettings().setAppCacheEnabled(true);
         webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        webView.getSettings().setRenderPriority(RenderPriority.HIGH);
+        //webView.getSettings().setRenderPriority(RenderPriority.HIGH);
         
         //Wait for the page to load then send the location information
         webView.setWebViewClient(new BrowserWebViewClient());
@@ -106,7 +107,7 @@ public class ArticleActivity extends Activity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             //if (Uri.parse(url).getHost().equals("wikipedia.org"))	// FIXME FOR LOCAL FILES   
-            if (url.contains("wikipedia.org"))      	
+            if (url.contains("wikipedia.org"))
             	return false;
             
             // Start another activity if URL is not for our domain
@@ -119,9 +120,11 @@ public class ArticleActivity extends Activity {
         public void onPageFinished(WebView view, String url) {       	
         	
         	// Hide Wikipedia's searchbar
-            // FIXME: Doesn't work at 4.4 KitKat (sorta ChromeView)
-        	//webView.loadUrl("javascript:document.getElementsByClassName('header')[0].style.display='none'");
-        	//webView.loadUrl("javascript:document.getElementsByClassName('pre-content')[0].style.display=\"none\";");
+            // Not for 4.4
+            if (Build.VERSION.SDK_INT < 19) {
+                webView.loadUrl("javascript:document.getElementsByClassName('header')[0].style.display='none';");
+                webView.loadUrl("javascript:document.getElementsByClassName('pre-content')[0].style.display='none';");
+            }
 
         	String webViewTitle = view.getTitle();
         	if (webViewTitle != null) {
@@ -151,27 +154,8 @@ public class ArticleActivity extends Activity {
     		pbar.setProgress(progress);
     	}
     }
-    
-    /* 
-     * Javascript interaction interface     * 
-     * To use it, in JS write "android.functionname()"
-     */
-    /*@SuppressWarnings("unused")
-    private class JavaScriptInterface {
-    	Context context;
-    	
-    	JavaScriptInterface (Context c) {
-    		context = c;
-    	}
-    	
-    	// Write your functions here
 
-	    public void sendToast(String message) {
-	    	Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-	    } 
-	  }*/
-    
-    /*
+    /**
      * Back button operates browser's history
      * If we're on the first page of webView, then Back button closes the activity
      */
