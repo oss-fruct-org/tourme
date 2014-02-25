@@ -34,7 +34,7 @@
 <!--         <item>@string/travelpedia</item> -->
         <item>@string/nearby</item>
         <item>@string/map</item>
-        <item>@string/practical_info</item>
+       <!-- <item>@string/practical_info</item>-->
 <!--         <item>@string/favourites</item> -->
         <item>@string/travellog</item>
     </string-array>

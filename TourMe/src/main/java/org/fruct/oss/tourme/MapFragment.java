@@ -211,7 +211,7 @@ public class MapFragment extends Fragment {
 		
 		// Fly to current location at first launch (after location detection)
 		if (firstLaunch && lon != 0 && !fromArticle) {
-			Log.e("firstLaunch", ""+lon);
+			//Log.e("firstLaunch", ""+lon);
 			mapView.setFocusPoint(mapLayer.getProjection().fromWgs84(lon, lat));
 			mapView.setZoom(14);
 			firstLaunch = false;			

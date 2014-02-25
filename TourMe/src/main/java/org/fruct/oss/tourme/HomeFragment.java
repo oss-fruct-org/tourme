@@ -1,6 +1,8 @@
 package org.fruct.oss.tourme;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
@@ -9,13 +11,15 @@ import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -32,11 +36,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -53,9 +56,12 @@ public class HomeFragment extends Fragment {
 	static ViewPager viewPager = null;
 	static DisplayImageOptions options;
 
+    ScrollView mainView;
+
 	TextView currencyView;
     RelativeLayout currencyViewMain;
 	TextView phraseView;
+    RelativeLayout phraseViewMain;
 	TextView weatherView;
 
     TextView countryNameView;
@@ -65,6 +71,7 @@ public class HomeFragment extends Fragment {
     TextView domainVIew;
     TextView langsView;
 
+    TourMeGeocoder geocoder = null;
 	
 	ImageLoader imageLoader;
 
@@ -85,7 +92,9 @@ public class HomeFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {	
 		context = getActivity();
-		
+
+        geocoder = new TourMeGeocoder(context, MainActivity.currentLatitude, MainActivity.currentLongitude);
+
 		options = new DisplayImageOptions.Builder()
 			.showImageForEmptyUri(R.drawable.ic_action_map_nearby)
 			.showImageOnFail(R.drawable.ic_action_filter)
@@ -155,15 +164,18 @@ public class HomeFragment extends Fragment {
         TextView cityName = (TextView) view.findViewById(R.id.viewPagerCityName);
         cityName.setTypeface(robotoSlab);
         try {
-            TourMeGeocoder geocoder = new TourMeGeocoder(getActivity(), MainActivity.currentLatitude, MainActivity.currentLongitude);
+            //TourMeGeocoder geocoder = new TourMeGeocoder(getActivity(), MainActivity.currentLatitude, MainActivity.currentLongitude);
             cityName.setText(geocoder.getRegion());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
 
+        mainView = (ScrollView) view.findViewById(R.id.fragment_home_main);
+
 		currencyView = (TextView) view.findViewById(R.id.currency);
         currencyViewMain = (RelativeLayout) view.findViewById(R.id.fragment_home_currency_view);
 		phraseView = (TextView) view.findViewById(R.id.phrase);
+        phraseViewMain = (RelativeLayout) view.findViewById(R.id.fragment_home_phrase);
 		weatherView = (TextView) view.findViewById(R.id.weather);
 
         countryNameView = (TextView) view.findViewById(R.id.fragment_home_country_name);;
@@ -222,7 +234,7 @@ public class HomeFragment extends Fragment {
 
     private class GetAndFIllCountryInfo extends  AsyncTask<Void, Integer, String> {
 
-        TourMeGeocoder geocoder;
+        //TourMeGeocoder geocoder;
 
         @Override
         protected String doInBackground(Void... voids) {
@@ -236,7 +248,7 @@ public class HomeFragment extends Fragment {
                     return null;
                 }
 
-                geocoder = new TourMeGeocoder(context, lat, lon);
+                //geocoder = new TourMeGeocoder(context, lat, lon);
                 String countryCode = geocoder.getCountryCode();
 
                 String preUrl = "http://restcountries.eu/rest/v1/alpha?codes=" + countryCode;
@@ -414,13 +426,7 @@ public class HomeFragment extends Fragment {
 		}
 	}
 
-    protected void onPostExecute(Void result){
-        if(isAdded()){
-            getResources().getString(R.string.app_name);
-        }
 
-    }
-	
 	
 	private class GetAndFillCurrency extends AsyncTask<Void, Integer, String> {
 
@@ -432,7 +438,7 @@ public class HomeFragment extends Fragment {
 			try {
 				Context context = getActivity();
 
-                TourMeGeocoder geocoder = new TourMeGeocoder(getActivity(), MainActivity.currentLatitude, MainActivity.currentLongitude);
+                //TourMeGeocoder geocoder = new TourMeGeocoder(getActivity(), MainActivity.currentLatitude, MainActivity.currentLongitude);
                 to = String.valueOf(geocoder.getDeviceCurrency());
                 from = String.valueOf(geocoder.getCurrency());
                 String preUrl = "http://www.freecurrencyconverterapi.com/api/convert?q=" + from +"-" + to + "&compact=y";
@@ -455,6 +461,7 @@ public class HomeFragment extends Fragment {
 				return str;
 			} catch (Exception e) {
 				e.printStackTrace();
+                Log.e("tourme", e.toString());
 			}
 			
 			return null;			
@@ -565,17 +572,80 @@ public class HomeFragment extends Fragment {
 	 * Show random phrase
 	 */
 	private void randomPhrase() {
-		new Thread(new Runnable() {
-		    public void run() {
-		      try {
-		    	  String jsonString = ConstantsAndTools.loadJSONFromAsset("ruFi.json", getActivity()); // FIXME
-		    	  JSONArray phrasebook = new JSONArray(jsonString);
-		    	  int phraseNumber = (int) (Math.random()*phrasebook.length());
-		    	  String phraseLang1 = phrasebook.getJSONArray(phraseNumber).getString(0);
-		    	  String phraseLang2 = phrasebook.getJSONArray(phraseNumber).getString(1);
-		    	  phraseView.setText(phraseLang1 + " — " + phraseLang2);
-	    	  } catch (Exception e) {
-		    	  e.printStackTrace();
+
+        final DBHelper dbHelper = new DBHelper(getActivity());
+
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    // Load phrases from file to db at first launch
+                    if (MainActivity.firstLaunch) {
+
+                        String langFrom = geocoder.getDeviceLocaleCode();
+                        String langTo = geocoder.getCountryCode();
+
+                        // No phrasebook in current country
+                        if (langFrom.equals(langTo))
+                            throw new NullPointerException("Languages are the same");
+
+                        InputStream is = null;
+                        String filename = "phrasebook-" + langFrom + "-" + langTo;
+                        try {
+                            is = getActivity().getAssets().open(filename);
+                        } catch (NullPointerException e) {
+                            Log.e("tourme", e.toString());
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                            // If file (e.g. en-de) not found, then try to open vice versa file (e.g. de-en)
+                            filename = "phrasebook-" + langTo + "-" + langFrom;
+                            is = getActivity().getAssets().open(filename);
+                        }
+
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+
+                        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+                        String line;
+                        while ((line = reader.readLine()) != null) {
+                            String[] phrases = line.split("\",\"");
+
+                            ContentValues cv = new ContentValues();
+                            cv.put("lang1", phrases[0]); // FIXME
+                            cv.put("lang2", phrases[1]); // FIXME
+
+                            if (db != null) {
+                                db.insert(ConstantsAndTools.TABLE_PHRASEBOOK, null, cv);
+                            }
+                        }
+
+                        if (db != null) {
+                            db.close();
+                        }
+                    }
+
+                    // When and if phrases are loaded, show random phrase
+                    SQLiteDatabase db = dbHelper.getReadableDatabase();
+                    String[] columns = new String[] {"lang1", "lang2"};
+                    Cursor cursor = db.query(ConstantsAndTools.TABLE_PHRASEBOOK, columns, null, null, null, null, null);
+                    int phraseNumber = (int) (Math.random()*cursor.getCount());
+                    cursor.move(phraseNumber);
+                    final String phraseOrig = cursor.getString(cursor.getColumnIndex("lang1"));
+                    final String phraseFore = cursor.getString(cursor.getColumnIndex("lang2"));
+                    cursor.close();
+                    db.close();
+
+                    // Workaround to change layout size automatically
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            phraseView.setText(phraseOrig.replace("\"", "") + " — " + phraseFore.replace("\"", "")); // TODO: to mdash
+                        }
+                    });
+
+                } catch (Exception e) {
+                    phraseViewMain.setVisibility(View.GONE);
+		    	    e.printStackTrace();
+                    Log.e("tourme", e.toString());
 		      }
 		    }
 		  }).start();

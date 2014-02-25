@@ -44,6 +44,14 @@ public final class DBHelper extends SQLiteOpenHelper {
                 + "distance text, "
                 + "timestamp text"
                 +");");
+
+        // Database for phrasebook
+        db.execSQL("create table " + ConstantsAndTools.TABLE_PHRASEBOOK + " ("
+                + "id integer primary key autoincrement, "
+                + "lang1 text, "
+                + "lang2 text"
+                + ");");
+
     }
 
     @Override

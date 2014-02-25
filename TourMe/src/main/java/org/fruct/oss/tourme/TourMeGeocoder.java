@@ -259,7 +259,10 @@ public class TourMeGeocoder {
         put("GN", "GNF");
     }};;
 
+    Context context;
+
     public TourMeGeocoder(Context context, double latitude, double longitude) {
+        this.context = context;
         geocoder = new Geocoder(context); // Will use current device locate
 
         try {
@@ -277,9 +280,15 @@ public class TourMeGeocoder {
         return address.getCountryName();
     }
 
+    // Get device country code (e.g. 'en')
+    public String getDeviceLocaleCode() {
+        return Locale.getDefault().getLanguage().toLowerCase();
+        // context.getResources().getConfiguration().locale;
+    }
+
     // Get country code (e.g. 'fi')
     public String getCountryCode() {
-        return address.getCountryCode();
+        return address.getCountryCode().toLowerCase();
     }
 
     // Get region (e.g. 'South Karelia')

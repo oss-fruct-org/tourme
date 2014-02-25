@@ -36,6 +36,8 @@ public class MainActivity extends FragmentActivity implements
 		ActionBar.OnNavigationListener, ViewFactory {
 
 	public static Context context = null;
+
+    public static Boolean firstLaunch = true;
 	
 	private ListView drawer;
 	private ListView drawerService;
@@ -55,35 +57,21 @@ public class MainActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_fragment_container);
 		context = getApplicationContext();
 
-        // Enable translucent statusbar for KitKat and later
-        if (Build.VERSION.SDK_INT >= 19 ){
-            /*Window w = getWindow();
+        // Enable translucent statusbar for KitKat [and later]
+        /*if (Build.VERSION.SDK_INT >= 19 ){
+            getActionBar().hide();
+            Window w = getWindow();
             w.setFlags(67108864, 67108864);
 
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setTintColor(getResources().getColor(R.color.main_turquoise));
-            tintManager.setStatusBarAlpha(100);*/
-
-        }
+            tintManager.setStatusBarAlpha(0);
+        }*/
 
 
         HomeFragment firstFragment = new HomeFragment();
         getFragmentManager().beginTransaction().replace(R.id.fragment_container, firstFragment).commit();
-
-        /*if (findViewById(R.id.fragment_container) != null) {
-
-            if (savedInstanceState != null) {
-                return;
-            }
-
-            // Home screen fragment
-            HomeFragment firstFragment = new HomeFragment();
-            
-            // Add the fragment to the 'fragment_container' FrameLayout
-            getFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, firstFragment).commit();
-        }*/
 		
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawerToggle = new ActionBarDrawerToggle (this,	drawerLayout, R.drawable.ic_drawer,
@@ -92,8 +80,12 @@ public class MainActivity extends FragmentActivity implements
 		};
 		
 		drawerLayout.setDrawerListener(drawerToggle);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
+
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            getActionBar().setDisplayHomeAsUpEnabled(true);
+            getActionBar().setHomeButtonEnabled(true);
+        }
 
 		// Fill in the drawer with string array
 		drawer = (ListView) findViewById(R.id.left_drawer_list);
@@ -128,16 +120,17 @@ public class MainActivity extends FragmentActivity implements
 		
 		
 		// Good practice to show drawer at first launch
-		Boolean firstLaunch = sh.getBoolean(ConstantsAndTools.IS_FIRST_LAUNCH, true);
-		if (!firstLaunch) {
+		firstLaunch = sh.getBoolean(ConstantsAndTools.IS_FIRST_LAUNCH, true);
+		if (firstLaunch) {
 			drawerLayout.openDrawer(Gravity.LEFT);
 			ed = sh.edit();
-			ed.putBoolean(ConstantsAndTools.IS_FIRST_LAUNCH, false);
+			//ed.putBoolean(ConstantsAndTools.IS_FIRST_LAUNCH, false); / TODO: uncomment
 			ed.commit();
 			
 			// At first launch, show welcome screen\prepare mode
-			Intent i = new Intent (this, PrepareActivity.class);
-			startActivity(i);
+			// TODO: uncomment
+			//Intent i = new Intent (this, PrepareActivity.class);
+			//startActivity(i);
 		}
 		
 		if (context != null) {
@@ -234,22 +227,16 @@ public class MainActivity extends FragmentActivity implements
 			case(0):
 				f = new HomeFragment();
 				break;
-			case(-1):
-				Toast.makeText(context, "I told you to FIX that!..", Toast.LENGTH_SHORT).show(); // TODO
-				break;
 			case(1):
 				f = new NearbyFragment();
 				break;
 			case(2):
 				f = new MapFragment();							
 				break;
-			case(3):
-				Toast.makeText(context, "Opening practical info...", Toast.LENGTH_SHORT).show(); // TODO
-				break;
 			case(-5):
 				f = new FavouritesFragment();
 				break;
-			case(4):
+			case(3):
 				f = new TravellogFragment();
 				break;
 				
@@ -306,40 +293,7 @@ public class MainActivity extends FragmentActivity implements
 	}
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
-
-		if (drawerToggle.onOptionsItemSelected(item)) {
-	          return true;
-		}
-		
-/*		Intent i = null;
-		
-		switch(item.getItemId()) {
-			case(R.id.menu_settings):
-				i = new Intent(this, SettingsActivity.class);
-				break;
-			case (R.id.add_data):
-				Toast.makeText(context, "Nothing implemented yet", Toast.LENGTH_SHORT).show(); // TODO
-				break;
-			case(R.id.menu_onoff_online_mode):
-				// Turn on\off online mode (save to shared preferences)
-				// Check for current state and update
-				ed = sh.edit();
-				if (sh.getBoolean("ONLINE_MODE", false) == true)		
-					ed.putBoolean(ConstantsAndTools.ONLINE_MODE, false);
-				else
-					ed.putBoolean(ConstantsAndTools.ONLINE_MODE, true);
-				
-				ed.commit();
-				break;
-			default:
-				break;
-		}
-		
-		if (i != null)
-			startActivity(i);*/
-
-		return super.onOptionsItemSelected(item);		
-		
+		return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
 	}
 
 	

@@ -6,322 +6,316 @@
 	android:fitsSystemWindows="true"
 	android:clipToPadding="true"
 	android:fillViewport="true"
+    android:id="@+id/fragment_home_main"
 	>
 
 
-
-
-<LinearLayout
-
-        android:id="@+id/container"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="wrap_content">
 
-        android:background="@color/default_activity">
-
-	<!--tools:context=".MainActivity"
-        tools:ignore="MergeRootFrame"-->
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="300dp"
-			android:fitsSystemWindows="true"
-			android:clipToPadding="true">
-
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-			<RelativeLayout
-				android:layout_width="match_parent"
-				android:layout_height="65dp"
-				android:layout_alignParentBottom="true"
-				android:background="@drawable/gradient">
-
-				<TextView
-					android:id="@+id/viewPagerCityName"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:text="Petrozavodsk"
-					android:textColor="#ffffffff"
-					android:shadowColor="#ff000000"
-					android:shadowDx="1"
-					android:shadowDy="1"
-					android:shadowRadius="2"
-					android:textSize="20sp"
-					android:layout_alignParentBottom="true"
-					android:layout_marginBottom="9dp"
-					android:layout_marginLeft="10dp"
-					/>
-
-
-
-			</RelativeLayout>
-
-			<View
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:layout_alignParentBottom="true"
-				android:background="@color/dark_gray"/>
-
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/menu_list_layout"
-            android:layout_width="fill_parent"
+    <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-            android:gravity="center"
             android:orientation="vertical"
-            android:padding="10dip">
-
-			<RelativeLayout
-                android:id="@+id/fragment_home_currency_view"
-				android:layout_width="match_parent"
-				android:layout_height="75dp"
-				android:background="@drawable/card_background">
-
-				<TextView
-					android:gravity="center"
-					android:id="@+id/currency"
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:textSize="22sp"
-					android:text="123"/>
-
-				<!--<LinearLayout
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:orientation="horizontal"
-					android:weightSum="6"
-					android:layout_alignBottom="@+id/currency"
-					android:paddingTop="50dp"
-					>
-
-					<EditText
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:maxLength="5"
-						android:layout_weight="1"/>
-
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="RUR"
-						android:layout_weight="1"/>
-
-					<Button
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"/>
-
-					<EditText
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:maxLength="5"
-						android:layout_weight="1"/>
-
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="USD"/>
-
-					<Button
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"/>
-
-
-				</LinearLayout>-->
-
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:textSize="10sp"
-					android:textStyle="italic"
-					android:textColor="@color/dark_gray"
-					android:text="По данным на 12.05"
-					android:layout_alignParentBottom="true"
-					android:layout_alignParentRight="true"
-					android:layout_marginBottom="5dp"
-					android:layout_marginRight="5dp"/>
-
-			</RelativeLayout>
-
-
-
-
-
-			<RelativeLayout
-                android:id="@+id/fragment_home_currency"
-				android:layout_width="match_parent"
-				android:layout_height="75dp"
-				android:layout_marginTop="10dp"
-				android:background="@drawable/card_background">
-
-				<TextView
-					android:gravity="center"
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:id="@+id/weather"
-					android:textSize="22sp"/>
-
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:textSize="10sp"
-					android:textStyle="italic"
-					android:textColor="@color/dark_gray"
-					android:text="Типичные данные для региона"
-					android:layout_alignParentBottom="true"
-					android:layout_alignParentRight="true"
-					android:layout_marginBottom="5dp"
-					android:layout_marginRight="5dp"/>
-
-			</RelativeLayout>
-
-
-
-			<RelativeLayout
-				android:layout_width="match_parent"
-				android:layout_height="75dp"
-				android:layout_marginTop="10dp"
-				android:background="@drawable/card_background">
-
-				<TextView
-					android:gravity="center"
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:id="@+id/phrase"
-					android:padding="10dip"
-					android:textSize="22sp" />
-
-			</RelativeLayout>
-
-
-
-
-
-
+            android:background="@color/default_activity">
 
             <RelativeLayout
-                android:id="@+id/fragment_home_country_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:padding="10dp"
-                android:background="@drawable/card_background">
+                android:layout_width="fill_parent"
+                android:layout_height="300dp"
+                android:fitsSystemWindows="true"
+                android:clipToPadding="true">
 
-                <LinearLayout
-                    android:id="@+id/fragment_home_country_names"
-                    android:orientation="vertical"
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/gradient">
 
                     <TextView
-                        android:id="@+id/fragment_home_country_name"
+                        android:id="@+id/viewPagerCityName"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffffffff"
+                        android:shadowColor="#ff000000"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:shadowRadius="2"
+                        android:textSize="20sp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="9dp"
+                        android:layout_marginLeft="10dp"
+                        />
+
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/dark_gray"/>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/menu_list_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dip">
+
+                <RelativeLayout
+                    android:id="@+id/fragment_home_currency_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:background="@drawable/card_background">
+
+                    <TextView
+                        android:gravity="center"
+                        android:id="@+id/currency"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:textSize="22sp"
-                        android:text="Rossiya"/>
+                        android:textSize="22sp"/>
+
+                    <!--<LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="6"
+                        android:layout_alignBottom="@+id/currency"
+                        android:paddingTop="50dp"
+                        >
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLength="5"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="RUR"
+                            android:layout_weight="1"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxLength="5"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="USD"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+
+                    </LinearLayout>-->
 
                     <TextView
-                        android:id="@+id/fragment_home_country_name_more"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textSize="16sp"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:textStyle="italic"
                         android:textColor="@color/dark_gray"
-                        android:text="Россия, rossiya, RU, Russian Federation"/>
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="5dp"/>
+
+                </RelativeLayout>
 
 
-                <LinearLayout
+
+
+
+                <RelativeLayout
+                    android:id="@+id/fragment_home_currency"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/card_background">
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/weather"
+                        android:textSize="22sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="10sp"
+                        android:textStyle="italic"
+                        android:textColor="@color/dark_gray"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="5dp"/>
+
+                </RelativeLayout>
+
+
+
+                <RelativeLayout
+                    android:id="@+id/fragment_home_phrase"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:background="@drawable/card_background">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/population"/>
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/phrase"
+                        android:padding="10dip"
+                        android:textSize="22sp"/>
 
-                    <TextView
-                        android:id="@+id/fragment_home_country_population"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"/>
+                </RelativeLayout>
 
-                </LinearLayout>
 
-                <LinearLayout
+
+
+
+
+
+                <RelativeLayout
+                    android:id="@+id/fragment_home_country_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    android:background="@drawable/card_background">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/fragment_home_country_names"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/fragment_home_country_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="22sp"/>
+
+                        <TextView
+                            android:id="@+id/fragment_home_country_name_more"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textSize="16sp"
+                            android:textColor="@color/dark_gray"/>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/phone_code"/>
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/fragment_home_country_phone_code"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/population"/>
+
+                        <TextView
+                            android:id="@+id/fragment_home_country_population"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"/>
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
 
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/phone_code"/>
+
+                        <TextView
+                            android:id="@+id/fragment_home_country_phone_code"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"/>
+
+                    </LinearLayout>
 
 
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/domain"/>
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/fragment_home_country_domain"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/domain"/>
+
+                        <TextView
+                            android:id="@+id/fragment_home_country_domain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"/>
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"/>
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
 
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/languages"/>
 
+                        <TextView
+                            android:id="@+id/fragment_home_country_language"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"/>
 
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
+                 </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/languages"/>
+                </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/fragment_home_country_language"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"/>
-
-                </LinearLayout>
-
-             </LinearLayout>
-
-            </RelativeLayout>
-            
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
+    </RelativeLayout>
 
 </ScrollView>
