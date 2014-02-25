@@ -242,7 +242,9 @@ public class MainActivity extends FragmentActivity implements
 				
 			// Bottom drawer's ListView handler	
 			case(100):
-				Toast.makeText(context, "Going to plan new trip...", Toast.LENGTH_SHORT).show(); // TODO
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
+
 				break;
 			case(101):
 				ListView lv = (ListView) findViewById(R.id.left_drawer_list_service);
