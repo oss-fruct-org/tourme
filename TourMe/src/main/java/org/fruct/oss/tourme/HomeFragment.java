@@ -114,7 +114,7 @@ public class HomeFragment extends Fragment {
 		viewPager.setAdapter(new ImageAdapter(getActivity(), imagesArray));
 		viewPager.setCurrentItem(0);
 		
-		final int delayTime = 5000;
+		final int delayTime = 7000;
 		final Handler h = new Handler();
 		
 		// Loop sliding
@@ -139,7 +139,7 @@ public class HomeFragment extends Fragment {
 				h.removeCallbacks(r);
 				// If event is end, wait at current page for 2 dealyTime intervals
 				if (event.getAction() == MotionEvent.ACTION_UP) {
-                    h.postDelayed(r, delayTime*2);
+                    h.postDelayed(r, delayTime*3);
                     viewPager.getParent().requestDisallowInterceptTouchEvent(false);
                 }
                 return false;

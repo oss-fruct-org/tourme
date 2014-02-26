@@ -57,9 +57,10 @@ public class MainActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_fragment_container);
 		context = getApplicationContext();
 
+        ActionBar actionBar = getActionBar();
         // Enable translucent statusbar for KitKat [and later]
-        /*if (Build.VERSION.SDK_INT >= 19 ){
-            getActionBar().hide();
+        if (Build.VERSION.SDK_INT >= 19 ){
+            actionBar.hide();
             Window w = getWindow();
             w.setFlags(67108864, 67108864);
 
@@ -67,12 +68,12 @@ public class MainActivity extends FragmentActivity implements
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setTintColor(getResources().getColor(R.color.main_turquoise));
             tintManager.setStatusBarAlpha(0);
-        }*/
+        }
 
 
         HomeFragment firstFragment = new HomeFragment();
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container, firstFragment).commit();
-		
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container, firstFragment, "HOME_FRAGMENT").commit();
+
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		drawerToggle = new ActionBarDrawerToggle (this,	drawerLayout, R.drawable.ic_drawer,
 				R.string.drawer_open, R.string.drawer_close) {
@@ -81,7 +82,6 @@ public class MainActivity extends FragmentActivity implements
 		
 		drawerLayout.setDrawerListener(drawerToggle);
 
-        ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             getActionBar().setDisplayHomeAsUpEnabled(true);
             getActionBar().setHomeButtonEnabled(true);

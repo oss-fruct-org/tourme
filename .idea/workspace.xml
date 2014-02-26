@@ -107,51 +107,59 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="241" column="16" selection-start="7895" selection-end="7895" vertical-scroll-proportion="0.0" vertical-offset="3471" max-vertical-offset="4981">
+            <state line="129" column="12" selection-start="4500" selection-end="4500" vertical-scroll-proportion="0.0" vertical-offset="2577" max-vertical-offset="4981">
               <folding>
-                <element signature="e#2617#2637#0" expanded="true" />
-                <element signature="e#2639#2660#0" expanded="true" />
-                <element signature="e#3547#3723#0" expanded="true" />
-                <element signature="e#3718#3719#0" expanded="true" />
-                <element signature="e#3768#4027#0" expanded="true" />
-                <element signature="e#4022#4023#0" expanded="true" />
-                <element signature="e#8493#8539#0" expanded="true" />
-                <element signature="e#8714#8761#0" expanded="true" />
+                <element signature="e#2669#2689#0" expanded="true" />
+                <element signature="e#2691#2712#0" expanded="true" />
+                <element signature="e#3553#3729#0" expanded="true" />
+                <element signature="e#3724#3725#0" expanded="true" />
+                <element signature="e#3774#4033#0" expanded="true" />
+                <element signature="e#4028#4029#0" expanded="true" />
+                <element signature="e#8499#8545#0" expanded="true" />
+                <element signature="e#8720#8767#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AboutActivity.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/AboutActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="78" column="52" selection-start="2713" selection-end="2713" vertical-scroll-proportion="0.4610951" vertical-offset="843" max-vertical-offset="1751">
-              <folding>
-                <element signature="e#2280#2337#0" expanded="true" />
-                <element signature="e#2919#4081#0" expanded="true" />
-                <element signature="e#3187#3236#0" expanded="true" />
-                <element signature="e#3400#3683#0" expanded="true" />
-                <element signature="e#3660#3661#0" expanded="true" />
-                <element signature="e#4066#4067#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="fragment_about.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/layout/fragment_about.xml">
+      <file leaf-file-name="activity_fragment_container.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/layout/activity_fragment_container.xml">
           <provider editor-type-id="android-designer">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="42" selection-start="972" selection-end="985" vertical-scroll-proportion="-6.92" vertical-offset="218" max-vertical-offset="833">
+            <state line="23" column="35" selection-start="763" selection-end="763" vertical-scroll-proportion="-9.52" vertical-offset="153" max-vertical-offset="1139">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HomeFragment.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/HomeFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="130" column="47" selection-start="3974" selection-end="3974" vertical-scroll-proportion="0.19596542" vertical-offset="1326" max-vertical-offset="7973">
               <folding>
-                <element signature="e#231#266#0" expanded="true" />
-                <element signature="e#292#327#0" expanded="true" />
-                <element signature="e#351#384#0" expanded="true" />
-                <element signature="e#411#444#0" expanded="true" />
-                <element signature="e#1440#1464#0" expanded="true" />
+                <element signature="e#3679#3979#0" expanded="true" />
+                <element signature="e#3977#3978#0" expanded="true" />
+                <element signature="e#4064#4584#0" expanded="true" />
+                <element signature="e#4579#4580#0" expanded="true" />
+                <element signature="class#GetAndFIllCountryInfo#0;class#HomeFragment#0" expanded="false" />
+                <element signature="class#GetAndFillWeather#0;class#HomeFragment#0" expanded="false" />
+                <element signature="class#GetAndFillCurrency#0;class#HomeFragment#0" expanded="false" />
+                <element signature="class#GetNearImages#0;class#HomeFragment#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_home.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/layout/activity_home.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="50" selection-start="630" selection-end="630" vertical-scroll-proportion="-10.04" vertical-offset="89" max-vertical-offset="5525">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -731,14 +739,14 @@
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/TourMeGeocoder.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/ConstantsAndTools.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/DBHelper.java" />
-        <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/activity_home.xml" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MapFragment.java" />
-        <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/activity_fragment_container.xml" />
-        <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/HomeFragment.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/fragment_about.xml" />
-        <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MainActivity.java" />
         <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/AboutActivity.java" />
+        <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/activity_home.xml" />
+        <option value="$PROJECT_DIR$/TourMe/src/main/res/layout/activity_fragment_container.xml" />
+        <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MainActivity.java" />
+        <option value="$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/HomeFragment.java" />
       </list>
     </option>
   </component>
@@ -1292,7 +1300,7 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31623036" sideWeight="0.50027734" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24181919" sideWeight="0.50052357" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32542372" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3677966" sideWeight="0.49924472" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3677966" sideWeight="0.49924472" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984293" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1619,64 +1627,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/layout/activity_home.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="189" column="52" selection-start="7432" selection-end="7432" vertical-scroll-proportion="0.58074534" vertical-offset="3026" max-vertical-offset="5559">
-          <folding>
-            <element signature="e#9413#9433#0" expanded="true" />
-            <element signature="e#10252#10272#0" expanded="true" />
-            <element signature="e#11094#11110#0" expanded="true" />
-            <element signature="e#11927#11946#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MapFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="212" column="23" selection-start="7239" selection-end="7250" vertical-scroll-proportion="-0.30538923" vertical-offset="2856" max-vertical-offset="7820">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/layout/activity_fragment_container.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="33" selection-start="699" selection-end="699" vertical-scroll-proportion="0.38509318" vertical-offset="216" max-vertical-offset="1173">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TourMe/src/main/assets/phrasebook-fi-ru">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="34" selection-start="238" selection-end="238" vertical-scroll-proportion="-1.5269461" vertical-offset="561" max-vertical-offset="2227">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/HomeFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="201" column="8" selection-start="6681" selection-end="6681" vertical-scroll-proportion="-5.0576367" vertical-offset="4322" max-vertical-offset="8109">
-          <folding>
-            <element signature="e#4064#4584#0" expanded="true" />
-            <element signature="e#4579#4580#0" expanded="true" />
-            <element signature="e#4712#4824#0" expanded="true" />
-            <element signature="e#4819#4820#0" expanded="true" />
-            <element signature="class#GetAndFIllCountryInfo#0;class#HomeFragment#0" expanded="false" />
-            <element signature="class#GetAndFillWeather#0;class#HomeFragment#0" expanded="false" />
-            <element signature="e#13672#13720#0" expanded="true" />
-            <element signature="class#GetAndFillCurrency#0;class#HomeFragment#0" expanded="false" />
-            <element signature="e#16003#16051#0" expanded="true" />
-            <element signature="class#GetNearImages#0;class#HomeFragment#0" expanded="false" />
-            <element signature="e#19275#22767#0" expanded="true" />
-            <element signature="e#22279#22556#0" expanded="true" />
-            <element signature="e#22533#22534#0" expanded="true" />
-            <element signature="e#22760#22761#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1687,42 +1641,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="241" column="16" selection-start="7895" selection-end="7895" vertical-scroll-proportion="0.0" vertical-offset="3471" max-vertical-offset="4981">
-          <folding>
-            <element signature="e#2617#2637#0" expanded="true" />
-            <element signature="e#2639#2660#0" expanded="true" />
-            <element signature="e#3547#3723#0" expanded="true" />
-            <element signature="e#3718#3719#0" expanded="true" />
-            <element signature="e#3768#4027#0" expanded="true" />
-            <element signature="e#4022#4023#0" expanded="true" />
-            <element signature="e#8493#8539#0" expanded="true" />
-            <element signature="e#8714#8761#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="111" column="42" selection-start="5734" selection-end="5734" vertical-scroll-proportion="0.49101797" vertical-offset="1723" max-vertical-offset="2091">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/layout/fragment_about.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="42" selection-start="972" selection-end="985" vertical-scroll-proportion="-6.92" vertical-offset="218" max-vertical-offset="833">
-          <folding>
-            <element signature="e#231#266#0" expanded="true" />
-            <element signature="e#292#327#0" expanded="true" />
-            <element signature="e#351#384#0" expanded="true" />
-            <element signature="e#411#444#0" expanded="true" />
-            <element signature="e#1440#1464#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1735,7 +1657,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/AboutActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="52" selection-start="2713" selection-end="2713" vertical-scroll-proportion="0.4610951" vertical-offset="843" max-vertical-offset="1751">
+        <state line="75" column="8" selection-start="2499" selection-end="2499" vertical-scroll-proportion="0.0" vertical-offset="639" max-vertical-offset="1751">
           <folding>
             <element signature="e#2280#2337#0" expanded="true" />
             <element signature="e#2919#4081#0" expanded="true" />
@@ -1743,6 +1665,81 @@
             <element signature="e#3400#3683#0" expanded="true" />
             <element signature="e#3660#3661#0" expanded="true" />
             <element signature="e#4066#4067#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/layout/fragment_about.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="42" selection-start="972" selection-end="985" vertical-scroll-proportion="0.55987054" vertical-offset="218" max-vertical-offset="833">
+          <folding>
+            <element signature="e#231#266#0" expanded="true" />
+            <element signature="e#292#327#0" expanded="true" />
+            <element signature="e#351#384#0" expanded="true" />
+            <element signature="e#411#444#0" expanded="true" />
+            <element signature="e#1440#1464#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/layout/activity_home.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="50" selection-start="630" selection-end="630" vertical-scroll-proportion="-10.04" vertical-offset="89" max-vertical-offset="5525">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TourMe/src/main/res/layout/activity_fragment_container.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="35" selection-start="763" selection-end="763" vertical-scroll-proportion="-9.52" vertical-offset="153" max-vertical-offset="1139">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MapFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="275" column="8" selection-start="9913" selection-end="9963" vertical-scroll-proportion="0.0" vertical-offset="3731" max-vertical-offset="7820">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="129" column="12" selection-start="4500" selection-end="4500" vertical-scroll-proportion="0.0" vertical-offset="2577" max-vertical-offset="4981">
+          <folding>
+            <element signature="e#2669#2689#0" expanded="true" />
+            <element signature="e#2691#2712#0" expanded="true" />
+            <element signature="e#3553#3729#0" expanded="true" />
+            <element signature="e#3724#3725#0" expanded="true" />
+            <element signature="e#3774#4033#0" expanded="true" />
+            <element signature="e#4028#4029#0" expanded="true" />
+            <element signature="e#8499#8545#0" expanded="true" />
+            <element signature="e#8720#8767#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TourMe/src/main/java/org/fruct/oss/tourme/HomeFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="130" column="47" selection-start="3974" selection-end="3974" vertical-scroll-proportion="0.19596542" vertical-offset="1326" max-vertical-offset="7973">
+          <folding>
+            <element signature="e#3679#3979#0" expanded="true" />
+            <element signature="e#3977#3978#0" expanded="true" />
+            <element signature="e#4064#4584#0" expanded="true" />
+            <element signature="e#4579#4580#0" expanded="true" />
+            <element signature="class#GetAndFIllCountryInfo#0;class#HomeFragment#0" expanded="false" />
+            <element signature="class#GetAndFillWeather#0;class#HomeFragment#0" expanded="false" />
+            <element signature="class#GetAndFillCurrency#0;class#HomeFragment#0" expanded="false" />
+            <element signature="class#GetNearImages#0;class#HomeFragment#0" expanded="false" />
           </folding>
         </state>
       </provider>

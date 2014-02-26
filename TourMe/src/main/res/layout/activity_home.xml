@@ -3,8 +3,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_height="match_parent"
 	android:layout_width="match_parent"
-	android:fitsSystemWindows="true"
-	android:clipToPadding="true"
+
 	android:fillViewport="true"
     android:id="@+id/fragment_home_main"
 	>
@@ -24,8 +23,7 @@
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="300dp"
-                android:fitsSystemWindows="true"
-                android:clipToPadding="true">
+                >
 
 
                 <android.support.v4.view.ViewPager
