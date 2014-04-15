@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: javaproj-1.0.6-noawt">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/TourMe/src/main/libs/javaproj-1.0.6-noawt.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

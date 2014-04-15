@@ -9,6 +9,7 @@ public class PointInfo {
 	public String title;
 	public String latitude;
 	public String longitude;
+    public String category;
 	
 	// WikiLocation specific
 	public String type = null;	

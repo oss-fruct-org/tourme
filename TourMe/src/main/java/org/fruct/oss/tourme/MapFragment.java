@@ -68,6 +68,7 @@ public class MapFragment extends Fragment {
 	private boolean fromArticle = false;
 
     WikilocationPoints w;
+    gets_points g;
 
     Context context;
 
@@ -203,7 +204,6 @@ public class MapFragment extends Fragment {
 		this.setHasOptionsMenu(true);
 	}
 	
-
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		Double lon = MainActivity.currentLongitude;
@@ -263,7 +263,52 @@ public class MapFragment extends Fragment {
                     }
 				}
 			};
-			
+
+            //добавляем отображение точек из gets_points
+            g = new gets_points(getActivity(), lon, lat,
+                    ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
+                @Override
+                public void onPostExecute(String result){
+                    if(!isAdded()){
+                        return;
+                    }
+
+                    /*
+                    DBHelper dbHelper = new DBHelper(getActivity());
+                     \
+                    SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+                    String where = "";
+                    Double lat = MainActivity.currentLatitude;
+                    Double lon = MainActivity.currentLongitude;
+                    if (lat != 0) {
+                        where = "latitude < " + Double.toString(lat - 0.5d) +
+                        " and latitude > " + Double.toString(lat + 0.5d) + // TODO: degree depend on location
+                        " and longitude < " + Double.toString(lon - 0.5) +
+                        " and longitude > " + Double.toString(lon + 0.5d);
+                    }
+
+                    String[] columns = new String[] {"latitude", "longitude", "name", "url", "type"};
+                    Cursor c = db.query(true, ConstantsAndTools.TABLE_WIKIARTICLES, columns, null, null, null, null, null, null); // FIXME not distinct, filter in wiki class
+                    */
+                    if (this.cursor.moveToFirst()) {
+                        // Get text, image and location
+                        int idLatitude = this.cursor.getColumnIndex("latitude");
+                        int idLongitude = this.cursor.getColumnIndex("longitude");
+                        int idTitle = this.cursor.getColumnIndex("name");
+                        int idUrl = this.cursor.getColumnIndex("url");
+                        int idType = this.cursor.getColumnIndex("type");
+
+                        do {
+                            addMarker("gets_points", this.cursor.getString(idType), this.cursor.getString(idLongitude),
+                                    this.cursor.getString(idLatitude), this.cursor.getString(idTitle),
+                                    this.cursor.getString(idUrl), null);
+                        } while (this.cursor.moveToNext());
+                    }
+                }
+            };
+
+            g.execute();
 			w.execute();
 		}
 		
@@ -275,6 +320,7 @@ public class MapFragment extends Fragment {
 
         // Kill points downloading
         w.cancel(true);
+        g.cancel(true);
     }
 
 	
