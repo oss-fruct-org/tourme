@@ -48,7 +48,7 @@ public class MapFragment extends Fragment {
     private boolean fromArticle = false;
 
     WikilocationPoints w;
-    gets_points g;
+    GeTSPoints g;
 
     Context context;
 
@@ -111,6 +111,11 @@ public class MapFragment extends Fragment {
         return view;
     }
 
+
+    private double previusMapLat = 0;
+    private double previusMapLon = 0;
+
+
     public class MapEventListener extends MapListener {
         private Context context;
 
@@ -121,6 +126,56 @@ public class MapFragment extends Fragment {
 
         @Override
         public void onMapMoved() {
+
+            // TODO nothing works
+            /*MapPos cameraPosition = mapView.getCameraPos();
+            MapPos cameraPosition84 = mapLayer.getProjection().toWgs84(cameraPosition.x, cameraPosition.y);
+
+            double lat = cameraPosition84.x;
+            double lon = cameraPosition84.y;
+
+            if (lat >= previusMapLon + 0.5 ) {
+                previusMapLat = lat;
+                previusMapLon = lon;
+            }
+
+            if (lat > previusMapLat - 0.5 || lat < previusMapLat + 0.5 || lon > previusMapLon - 0.5 || lon < previusMapLon + 0.5) {
+                Log.e("tourme", "onMapMoved false " + lat + " " + lon);
+                if (lat >= previusMapLon + 0.5 ) {
+                    previusMapLat = lat;
+                    previusMapLon = lon;
+                }
+                return;
+            }
+
+
+            w = new WikilocationPoints(getActivity(), lon, lat,
+                    10, ConstantsAndTools.ARTICLES_RADIUS, "ru") {
+                @Override
+                public void onPostExecute(String result){
+                    if(!isAdded()){
+                        return;
+                    }
+
+                    if (this.cursor.moveToFirst()) {
+                        // Get text, image and location
+                        int idLatitude = this.cursor.getColumnIndex("latitude");
+                        int idLongitude = this.cursor.getColumnIndex("longitude");
+                        int idTitle = this.cursor.getColumnIndex("name");
+                        int idUrl = this.cursor.getColumnIndex("url");
+                        int idType = this.cursor.getColumnIndex("type");
+
+                        do {
+                            addMarker("wiki", this.cursor.getString(idType), this.cursor.getString(idLongitude),
+                                    this.cursor.getString(idLatitude), this.cursor.getString(idTitle),
+                                    this.cursor.getString(idUrl), null);
+                        } while (this.cursor.moveToNext());
+                    }
+                }
+            };
+
+
+                w.execute();*/
         }
 
         @Override
@@ -129,7 +184,7 @@ public class MapFragment extends Fragment {
 
         @Override
         public void onVectorElementClicked(VectorElement vectorElement, double v, double v2, boolean b) {
-            if (vectorElement.userData.equals("currentLocation"))
+            if (vectorElement.userData != null && vectorElement.userData.equals("currentLocation"))
                 return;
         }
 
@@ -202,31 +257,13 @@ public class MapFragment extends Fragment {
 
             // Show articles from Wiki on map
             w = new WikilocationPoints(getActivity(), lon, lat,
-                    ConstantsAndTools.ARTICLES_AMOUNT, ConstantsAndTools.ARTICLES_RADIUS, locale) {
+                    100, ConstantsAndTools.ARTICLES_RADIUS, locale) {
                 @Override
                 public void onPostExecute(String result){
                     if(!isAdded()){
                         return;
                     }
 
-                    /*
-                    DBHelper dbHelper = new DBHelper(getActivity());
-                     \
-                    SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-                    String where = "";
-                    Double lat = MainActivity.currentLatitude;
-                    Double lon = MainActivity.currentLongitude;
-                    if (lat != 0) {
-                        where = "latitude < " + Double.toString(lat - 0.5d) +
-                        " and latitude > " + Double.toString(lat + 0.5d) + // TODO: degree depend on location
-                        " and longitude < " + Double.toString(lon - 0.5) +
-                        " and longitude > " + Double.toString(lon + 0.5d);
-                    }
-
-                    String[] columns = new String[] {"latitude", "longitude", "name", "url", "type"};
-                    Cursor c = db.query(true, ConstantsAndTools.TABLE_WIKIARTICLES, columns, null, null, null, null, null, null); // FIXME not distinct, filter in wiki class
-                    */
                     if (this.cursor.moveToFirst()) {
                         // Get text, image and location
                         int idLatitude = this.cursor.getColumnIndex("latitude");
@@ -243,17 +280,21 @@ public class MapFragment extends Fragment {
                     }
                 }
             };
+            //w.execute();
 
             //добавляем отображение точек из gets_points
             GeTSAuthorization getsAuth = new GeTSAuthorization(getActivity(), "delzex@gmail.com", "delzex@gmail.com");
+            getsAuth.execute();
 
-            g = new gets_points(getActivity(), MainActivity.sh.getString(ConstantsAndTools.GETS_TOKEN, null), lon, lat,
-                    ConstantsAndTools.ARTICLES_RADIUS, locale, 10) {
+            g = new GeTSPoints(getActivity(), MainActivity.sh.getString(ConstantsAndTools.GETS_TOKEN, null), lon, lat,
+                    ConstantsAndTools.ARTICLES_RADIUS, locale, 12) {
                 @Override
                 public void onPostExecute(String result){
                     if(!isAdded()){
                         return;
                     }
+
+                    Log.d("tourme gets", result + " ");
 
                     if (this.cursor.moveToFirst()) {
                         // Get text, image and location
@@ -261,10 +302,10 @@ public class MapFragment extends Fragment {
                         int idLongitude = this.cursor.getColumnIndex("longitude");
                         int idTitle = this.cursor.getColumnIndex("name");
                         int idUrl = this.cursor.getColumnIndex("url");
-                        int idType = this.cursor.getColumnIndex("type");
+                        //int idType = this.cursor.getColumnIndex("type");
 
                         do {
-                            addMarker("gets_points", this.cursor.getString(idType), this.cursor.getString(idLongitude),
+                            addMarker("wiki", "any", this.cursor.getString(idLongitude),
                                     this.cursor.getString(idLatitude), this.cursor.getString(idTitle),
                                     this.cursor.getString(idUrl), null);
                         } while (this.cursor.moveToNext());
@@ -275,7 +316,7 @@ public class MapFragment extends Fragment {
 
             //getsAuth.execute();
             g.execute();
-            //w.execute();
+            w.execute();
         }
 
     }
@@ -299,6 +340,12 @@ public class MapFragment extends Fragment {
      * @param description
      */
     private void addMarker(String layerType, String category, String longitude, String latitude, String title, String url, String description) {
+
+        Log.e("tourme coord", " " + layerType + category + longitude + latitude+ title+ url+ description);
+
+        if (latitude == null || title == null)
+            return;
+
 
         // Select icon for category
         int iconFilename = R.drawable.ic_map_default;
@@ -350,6 +397,8 @@ public class MapFragment extends Fragment {
             markerLabel = new DefaultLabel(title, description, labelStyle);
 
         // define location of the marker, it must be converted to base map coordinate system
+
+        Log.e("tourme coord", longitude + "_" + latitude);
         MapPos markerLocation = mapLayer.getProjection().fromWgs84(Float.parseFloat(longitude), Float.parseFloat(latitude));
 
         // create layer and add object to the layer, finally add layer to the map.

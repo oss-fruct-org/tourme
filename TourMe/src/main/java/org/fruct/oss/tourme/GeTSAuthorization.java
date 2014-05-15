@@ -64,9 +64,9 @@ public class GeTSAuthorization extends AsyncTask<String, Void, String> {
             return EntityUtils.toString(resEntity);
 
         } catch (ClientProtocolException e) {
-            e.printStackTrace();
+            Log.e("tourme gets auth error", e.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("tourme gets auth error", e.toString());
         }
 
         return null;
@@ -76,6 +76,7 @@ public class GeTSAuthorization extends AsyncTask<String, Void, String> {
     // Parse JSON file
     @Override
     public void onPostExecute(String result) {
+        Log.d("tourme gets auth token", result + " ");
 
         try {
             XmlPullParser xpp = Xml.newPullParser();
@@ -91,7 +92,6 @@ public class GeTSAuthorization extends AsyncTask<String, Void, String> {
                         String name = xpp.getName();
                         if (name.equals("auth_token")) {
                             String token = xpp.nextText();
-                            Log.e("tourme gets auth token", token);
                             MainActivity.sh.edit().putString(ConstantsAndTools.GETS_TOKEN, token).commit();
                         }
                         break;

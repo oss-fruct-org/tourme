@@ -1,35 +1,21 @@
 package org.fruct.oss.tourme;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.JsonReader;
 import android.util.Log;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 /**
  * Get array with Wikipedia articles about N points for coordinates
@@ -90,14 +76,14 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
             Double lat = MainActivity.currentLatitude;
             Double lon = MainActivity.currentLongitude;
             if (lat != 0) {
-                where = "latitude < " + Double.toString(lat - 0.5d) +
-                        " and latitude > " + Double.toString(lat + 0.5d) + // TODO: degree depend on location
-                        " and longitude < " + Double.toString(lon - 0.5) +
-                        " and longitude > " + Double.toString(lon + 0.5d);
+                where = "latitude < " + Double.toString(lat + 0.5d) +
+                        " and latitude > " + Double.toString(lat - 0.5d) + // TODO: degree depend on location
+                        " and longitude < " + Double.toString(lon + 0.5) +
+                        " and longitude > " + Double.toString(lon - 0.5d);
             }
 
             String[] columns = new String[] {"latitude", "longitude", "name", "url", "type", "distance"};
-            this.cursor = db.query(true, ConstantsAndTools.TABLE_WIKIARTICLES, columns, null, null, null, null, null, null); // FIXME not distinct, filter in wiki class
+            this.cursor = db.query(true, ConstantsAndTools.TABLE_WIKIARTICLES, columns, where, null, null, null, null, null); // FIXME not distinct, filter in wiki class
 
             if (this.cursor.getCount() != 0) {
                 Log.e("tourme", "cursor not null " + cursor.getColumnCount() + " - " + cursor.toString());

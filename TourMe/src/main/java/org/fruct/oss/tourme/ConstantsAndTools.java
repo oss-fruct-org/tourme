@@ -1,22 +1,16 @@
 package org.fruct.oss.tourme;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Currency;
-import java.util.Locale;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
-
 import com.nutiteq.style.LabelStyle;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Locale;
 
 public class ConstantsAndTools {
 	
@@ -57,6 +51,8 @@ public class ConstantsAndTools {
     public static String TABLE_WIKIARTICLES = "wikiarticles";
     public static String TABLE_PHRASEBOOK = "phrasebook";
 
+    public static String GETS_TOKEN = "getstoken";
+
     public static String NUTITEQ_LICENSE_NO = "XTUMwQ0ZIRmhHUURKNVlGMndpK2xFYkZDNm5tRFVGcEVBaFVBcFd2WGhOWW5TeXorODFaWm5EZHRUMkZ3OUo0PQoKcGFja2FnZU5hbWU9b3JnLmZydWN0Lm9zcy50b3VybWUKd2F0ZXJtYXJrPU9TTQoK";
 
     // Wikipedia categories
@@ -77,6 +73,8 @@ public class ConstantsAndTools {
             .setTipSize(20)
             .setBorderRadius(5)
             .build();
+
+
 
 	
 	/**

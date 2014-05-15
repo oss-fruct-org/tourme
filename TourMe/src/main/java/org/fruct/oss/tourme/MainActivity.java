@@ -17,18 +17,12 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
+import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
-
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 
@@ -44,7 +38,7 @@ public class MainActivity extends FragmentActivity implements
 	ActionBarDrawerToggle drawerToggle;
 	DrawerLayout drawerLayout;
 	
-	SharedPreferences sh;
+	static SharedPreferences sh;
 	SharedPreferences.Editor ed;
 	
 	public static LocationManager mLocationManager;
@@ -193,7 +187,8 @@ public class MainActivity extends FragmentActivity implements
 		}
 
     }
-    
+
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
