@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="300dp"
+                android:layout_marginBottom="10dp">
+
+
+    <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/gradient">
+
+        <TextView
+                android:id="@+id/viewPagerCityName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffffff"
+                android:shadowColor="#ff000000"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:textSize="20sp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="9dp"
+                android:layout_marginLeft="10dp"
+                />
+
+
+    </RelativeLayout>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/dark_gray"/>
+
+
+</RelativeLayout>

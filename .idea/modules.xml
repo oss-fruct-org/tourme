@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TourMe/TourMe.iml" filepath="$PROJECT_DIR$/TourMe/TourMe.iml" />
       <module fileurl="file://$PROJECT_DIR$/tourme.iml" filepath="$PROJECT_DIR$/tourme.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tourme-master.iml" filepath="$PROJECT_DIR$/tourme-master.iml" />
     </modules>
   </component>
 </project>

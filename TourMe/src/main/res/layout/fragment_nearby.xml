@@ -1,0 +1,80 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/nearby_container"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                tools:context=".NearbyActivity"
+                tools:ignore="MergeRootFrame"
+                android:background="@drawable/card_background"
+                style="@style/TourMeCard">
+
+
+    <ListView
+            android:id="@+id/nearby_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+    </ListView>
+
+    <ProgressBar
+            android:id="@+id/nearby_progress"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+<!--    <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="10dp">
+
+
+        <TextView
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:textColor="@color/dark_gray"
+                android:text="@string/show_on_map"/>
+
+    </RelativeLayout>-->
+
+    <View
+            android:id="@+id/nearby_flow"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/gradient_white"
+            android:layout_above="@+id/nearby_bottom_pane"/>
+
+    <RelativeLayout
+            android:id="@+id/nearby_bottom_pane"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="10dp">
+
+        <TextView
+                android:id="@+id/nearby_show_more"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:textColor="@color/dark_gray"
+                android:text="@string/nearby_show_more"/>
+
+        <ImageView
+                android:id="@+id/nearby_on_map"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_menu_map"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

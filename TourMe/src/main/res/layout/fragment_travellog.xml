@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/travellog_container"
+                android:layout_width="match_parent"
+                android:layout_height="265dp"
+                tools:context=".TravellogActivity"
+                tools:ignore="MergeRootFrame"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:background="@drawable/card_background"
+                style="@style/TourMeCard">
+
+    <TextView
+            android:id="@+id/travellog_no_entries"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:padding="20dp"
+            android:gravity="center"
+            android:textColor="@color/dark_gray"
+            android:text="No travel log entries found. Create one and share with friends!"/>
+
+    <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:focusable="false"
+            android:descendantFocusability="blocksDescendants"/>
+
+    <RelativeLayout
+            android:id="@+id/travellog_bottom_pane"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="10dp">
+
+        <TextView
+                android:id="@+id/travellog_show_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:textColor="@color/dark_gray"
+                android:text="Show all entries"/>
+
+        <ImageView
+                android:id="@+id/travellog_new_post"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_content_edit_white"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

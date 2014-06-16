@@ -6,10 +6,13 @@
 	<color name="tumma_sininen">#ff004455</color>
 	<color name="dark_sea">#ff00222b</color>
 	<color name="dark_gray">#ff8c8c8c</color>
+	<color name="light_gray">#ffd8d8d8</color>
 	<color name="fresh_green">#ff94b21c</color>
 
 	<color name="main_turquoise">#ff4da4ad</color>
 	<color name="second_dark">#ff2C577D</color>
 	<color name="white">#ffffffff</color>
+
+    <color name="stroke">#dddddd</color>
 
 </resources>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/home/alexander/tourme-master/TourMe/build/pre-dexed/defaultFlavor/debug/universal-image-loader-1.8.6-93dfb6eacab675c185cfd488cc6221243c0fca67.jar"
+        jar="/home/alexander/tourme-master/TourMe/src/main/libs/universal-image-loader-1.8.6.jar"
+        jumboMode="false"
+        revision="19.0.0"
+        sha1="09995ba681982ca129af798c9eb21e79c4bffa45"/>
+    <item
+        dex="/home/alexander/tourme-master/TourMe/build/pre-dexed/defaultFlavor/debug/support-v4-19.1.0-eb1aa54f6fb7b1306a63b652cb1d6cd4b1a8dc64.jar"
+        jar="/home/alexander/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="false"
+        revision="19.0.0"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67"/>
+    <item
+        dex="/home/alexander/tourme-master/TourMe/build/pre-dexed/defaultFlavor/debug/nutiteq-3d-sdk-2.2.1-5d1ea28838fb9dd5f5b67fcbf455445c1064e109.jar"
+        jar="/home/alexander/tourme-master/TourMe/src/main/libs/nutiteq-3d-sdk-2.2.1.jar"
+        jumboMode="false"
+        revision="19.0.0"
+        sha1="8be0d89ef0d85d60ad222d7407a49701de23c306"/>
+    <item
+        dex="/home/alexander/tourme-master/TourMe/build/pre-dexed/defaultFlavor/debug/systembartint-1dc48bdafd8c4088c471f866840d51fc272996d5.jar"
+        jar="/home/alexander/tourme-master/TourMe/src/main/libs/systembartint.jar"
+        jumboMode="false"
+        revision="19.0.0"
+        sha1="cc862b70089d0404f7c03009922f23aa0906c991"/>
+    <item
+        dex="/home/alexander/tourme-master/TourMe/build/pre-dexed/defaultFlavor/debug/javaproj-1.0.6-noawt-5c82af51960979b2319679aa7bde2d7572e0d715.jar"
+        jar="/home/alexander/tourme-master/TourMe/src/main/libs/javaproj-1.0.6-noawt.jar"
+        jumboMode="false"
+        revision="19.0.0"
+        sha1="00f730e2a791fc6b37f8dd27e53efc31d5dd5af2"/>
+
+</pre-dex-items>

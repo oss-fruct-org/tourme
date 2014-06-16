@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/fragment_home_currency_view"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:background="@drawable/card_background"
+                style="@style/TourMeCard">
+
+    <TextView
+            android:gravity="center"
+            android:id="@+id/currency"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="22sp"/>
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textStyle="italic"
+            android:textColor="@color/dark_gray"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="5dp"/>
+
+</RelativeLayout>

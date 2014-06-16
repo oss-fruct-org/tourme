@@ -114,5 +114,7 @@
     <string name="title_activity_about">About</string>
 
     <string name="about_licenses">Open source licenses</string>
+    <string name="nearby_show_more">More...</string>
+    <string name="show_on_map">Show on map</string>
 
 </resources>

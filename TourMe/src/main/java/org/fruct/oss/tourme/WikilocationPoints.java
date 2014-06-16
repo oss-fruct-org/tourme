@@ -23,7 +23,7 @@ import java.net.URL;
  * @author alexander
  *
  */
-public class WikilocationPoints extends AsyncTask<String, Void, String> {
+public class WikilocationPoints extends AsyncTask<String, Integer, String> {
 	
 	public static Context cont = MainActivity.context;
 	
@@ -75,21 +75,30 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
             String where = "";
             Double lat = MainActivity.currentLatitude;
             Double lon = MainActivity.currentLongitude;
+
+            this.cursor = null;
+
             if (lat != 0) {
-                where = "latitude < " + Double.toString(lat + 0.5d) +
-                        " and latitude > " + Double.toString(lat - 0.5d) + // TODO: degree depend on location
-                        " and longitude < " + Double.toString(lon + 0.5) +
-                        " and longitude > " + Double.toString(lon - 0.5d);
+                // Location correction
+                double latitudeCorrection = ConstantsAndTools.getDegreesForKilometersLatitude(10);
+                double longitudeCorrection = ConstantsAndTools.getDegreesForKilometersLatitude(10);
+
+                where = "latitude < " + Double.toString(lat + latitudeCorrection) +
+                        " and latitude > " + Double.toString(lat - latitudeCorrection) +
+                        " and longitude < " + Double.toString(lon + latitudeCorrection) +
+                        " and longitude > " + Double.toString(lon - latitudeCorrection);
+                Log.d("tourme wiki original:", latitude + " " + longitude);
+                Log.d("tourme wiki", where);
             }
 
             String[] columns = new String[] {"latitude", "longitude", "name", "url", "type", "distance"};
             this.cursor = db.query(true, ConstantsAndTools.TABLE_WIKIARTICLES, columns, where, null, null, null, null, null); // FIXME not distinct, filter in wiki class
 
             if (this.cursor.getCount() != 0) {
-                Log.e("tourme", "cursor not null " + cursor.getColumnCount() + " - " + cursor.toString());
+                Log.d("tourme wiki", "cursor is not null " + cursor.getColumnCount() + " - " + cursor.toString());
                 return null;
             } else {
-                Log.e("tourme", "cursor is null");
+                Log.d("tourme wiki", "cursor is null");
             }
 
 
@@ -111,11 +120,15 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
 
                 String json;
 
+                int cnt = 0;
                 // Get
                 try {
+
                     BufferedReader reader = new BufferedReader(new InputStreamReader(input, "UTF-8"));
-                    while ((line = reader.readLine()) != null)
+                    while ((line = reader.readLine()) != null) {
                         sb.append(line);
+                        publishProgress(++cnt);
+                    }
 
                     json = sb.toString();
 
@@ -137,6 +150,7 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
                         JSONObject temp = elementsArray.getJSONObject(i);
                         ContentValues cv = new ContentValues();
 
+                        publishProgress(++cnt);
                         String title = temp.getString("title");
 
                         // Filter Wikipedia articles from bad words
@@ -152,8 +166,13 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
                             long rowID = db.insert(ConstantsAndTools.TABLE_WIKIARTICLES, null, cv);
                             //Log.d("tourme", "row inserted, ID = " + rowID);
                         }
-                        this.cursor = db.query(true, ConstantsAndTools.TABLE_WIKIARTICLES, columns, null, null, null, null, null, null); // FIXME not distinct, filter in wiki class
+                        this.cursor = db.query(true, ConstantsAndTools.TABLE_WIKIARTICLES, columns, where, null, null, null, null, null); // FIXME not distinct, filter in wiki class
 
+                        /*if (this.cursor.getCount() != 0) {
+                            Log.d("tourme wiki", "cursor NOW is not null");
+                        } else {
+                            Log.d("tourme wiki", "cursor STILL is null");
+                        }*/
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -170,8 +189,11 @@ public class WikilocationPoints extends AsyncTask<String, Void, String> {
         return null;
 	}
 
-    private void deleteDuplicates(SQLiteDatabase db) {
-        // TODO
+    @Override
+    protected void onProgressUpdate(Integer... value) {
+        super.onProgressUpdate(value);
+        // Do things when progress updates (task is running)
+
     }
 
 	// Parse JSON file

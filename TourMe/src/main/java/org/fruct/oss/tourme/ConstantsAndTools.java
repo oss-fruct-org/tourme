@@ -42,7 +42,7 @@ public class ConstantsAndTools {
 		"ru", "sk", "sl", "sr", "sv", "tr", "uk", "vi", "vo", "war", "zh"};
 
     // List of service labels. Now available for 3 locales (ru, en, fi) and 3 types of service articles
-    public static final String[] WIKI_SERVICE_ARTICLES = new String[] {"Проект:", "Участник:", "Категория:", "User:", "WikiProject",
+    public static final String[] WIKI_SERVICE_ARTICLES = new String[] {"Проект:", "Участник:", "Категория:", "User:", "WikiProject", "Википедия:", "Шаблон:", "Template:",
             "Category:", "Käyttäjä:", "Luokka:", "Wikiprojekti"};
 
     // Databases
@@ -59,7 +59,7 @@ public class ConstantsAndTools {
     public static String[] WIKI_CATEGORIES_ADM = new String[] {"adm1st", "adm2nd", "adm3rd"};
     public static String[] WIKI_CATEGORIES_WATER = new String[] {"river", "waterbody"};
     public static String[] WIKI_CATEGORIES_MOUNTAIN = new String[] {"mountain", "pass"};
-    public static String[] WIKI_CATEGORIES = new String[] {"city", "country", "edu", "event",
+    public static String[] WIKI_CATEGORIES = new String[] {"city", "edu", "event",
             "forest", "isle", "landmark", "railwaystation"};
     /* not used: "glacier", "satellite", "camera" (default icon) */
 
@@ -197,5 +197,23 @@ public class ConstantsAndTools {
         return false;
     }
 
-	
+    public static double getDegreesForKilometersLatitude(double kilometers) {
+        double kilometersInOneDegree = 111.11;
+
+        return kilometers/kilometersInOneDegree;
+    }
+
+    public static double getDegreesForKilometersLongitude(double longitude, double latitude, double kilometers) {
+        // Case of equator
+        if (latitude > -10 && latitude < 10)
+            return getDegreesForKilometersLatitude(kilometers);
+
+        // Case of polars
+        if (latitude > 165 || latitude < -165)
+            return getDegreesForKilometersLatitude(kilometers);
+
+        // Plain case
+        return longitude - Math.acos(kilometers / 111.11);
+    }
+
 }

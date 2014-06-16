@@ -20,7 +20,8 @@
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Tourme" >
+        android:theme="@style/Theme.Tourme">
+
         <activity
             android:name="org.fruct.oss.tourme.MainActivity"
             android:configChanges="orientation|screenSize"
@@ -28,22 +29,24 @@
             android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
-             <activity
-            android:name="org.fruct.oss.tourme.MapActivity"
+
+         <activity
+            android:name="org.fruct.oss.tourme.ActivityMap"
+            android:parentActivityName=".MainActivity"
             android:label="@string/map"
             android:launchMode="singleTask">
         </activity>
+
         <activity
-            android:name="org.fruct.oss.tourme.NearbyActivity"
+            android:name="org.fruct.oss.tourme.ActivityNearby"
+            android:parentActivityName=".MainActivity"
             android:label="@string/nearby"
             android:launchMode="singleTask" >
         </activity>
-        <activity
+        <!--<activity
             android:name="org.fruct.oss.tourme.FavourActivity"
             android:label="@string/favourites"
             android:launchMode="singleTask">
